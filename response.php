@@ -29,7 +29,7 @@
         global $response;
         $reports = array();
         $stmt->execute();
-        $stmt->bind_result($id, $address, $description, $state, $grade, $user, $typeReport,$lan, $lng, $city);
+        $stmt->bind_result($id, $address, $description, $state, $grade, $user, $typeReport,$lan, $lng, $city,$team);
         
         
         
@@ -53,6 +53,7 @@
             $temp['typeReport']     = $typeReport;
             $temp['location']       = $_location;
             $temp['city']           = $_city;
+            $temp['team']           = $team;
             
             array_push($reports, $temp);
         }

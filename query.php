@@ -10,8 +10,8 @@ abstract class ReportState
 }
 
 
-const QUERY_REPORT_BY_CITY =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name
-                                FROM city as c, report as r, cdt, type_report as t, location as l
+const QUERY_REPORT_BY_CITY =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name, tm.name
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
                                 WHERE   r.location      = l.id
                                     AND r.city          = c.id
                                     AND r.type_report   = t.id
@@ -19,8 +19,8 @@ const QUERY_REPORT_BY_CITY =  "SELECT r.id, r.address, r.description, r.state, r
                                 GROUP BY r.id
                                 ORDER BY r.id DESC";
 
-const QUERY_REPORT_BY_CDT =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name
-                                FROM city as c, report as r, cdt, type_report as t, location as l
+const QUERY_REPORT_BY_CDT =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name, tm.name
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
                                 WHERE   r.location      = l.id
                                     AND r.city          = c.id
                                     AND r.type_report   = t.id
@@ -81,8 +81,10 @@ const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
 const QUERY_FETCH_CDT       = " SELECT c.code
                                  FROM cdt as c
                                  WHERE c.code = ?";
-// //SELECT tm.name, count(r.id)
-// FROM report as r, team as tm
-// WHERE r.team = tm.id
-// group by r.team
+/*
+SELECT tm.name, count(r.id) as n_report
+FROM report as r, team as tm
+WHERE r.team = tm.id
+group by r.team
+*/
 ?>

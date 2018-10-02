@@ -2,7 +2,7 @@
 
 define('DB_HOST','localhost');
 define('DB_USER','root');
-define('DB_PASS','root');
+define('DB_PASS','');
 define('DB_NAME','my_civicsens');
 
 define('UPLOAD_PATH', 'uploads/');
@@ -21,23 +21,9 @@ if($_SERVER["SERVER_NAME"] == "192.168.1.181" ||
     $_SERVER["SERVER_NAME"] == "localhost" ){
     array_shift($request);   
 }
-// var_dump($request);
-// var_dump($_SERVER);
-// echo '<pre>' . var_export($request, true) . '</pre>';
+
 array_shift($request);
 array_shift($request);
-// echo '<pre>' . var_export($request, true) . '</pre>';
-// var_dump($request);
-// $response = array();
-
-
-
-
-
-//$con->close();
-
-//$con->close();
-
 
 
 ?>
