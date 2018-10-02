@@ -186,11 +186,11 @@ VALUES
 -- ('prova (23).jpg',8),
 -- ('prova (24).jpg',8);
 
-25	IMG_20180607_185856.jpg	1
-26	IMG_20180611_135255.jpg	2
-27	prova1.jpg	1
-28	prova2.jpg	2
-29	prova3.jpg	4
+-- 25	IMG_20180607_185856.jpg	1
+-- 26	IMG_20180611_135255.jpg	2
+-- 27	prova1.jpg	1
+-- 28	prova2.jpg	2
+-- 29	prova3.jpg	4
 
 
 INSERT INTO team(name, type_report) VALUES
@@ -201,8 +201,8 @@ INSERT INTO team(name, type_report) VALUES
 ('Enel5',1);
 
 
-cdt
-1KrGd0xQDUo	1
-EXvLpKS6V4M	2
-OE2rMzdBk8I	3
-sjk8J3ByDqW	4
+INSERT INTO cdt(code, report) VALUES
+('1KrGd0xQDUo',1),
+('EXvLpKS6V4M',2),
+('OE2rMzdBk8I',3),
+('sjk8J3ByDqW',4);

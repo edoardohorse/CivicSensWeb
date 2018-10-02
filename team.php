@@ -6,12 +6,6 @@ $teams = array( 'Team2'=>2,
                 'Team3'=>9,
                 'Team5'=>10);
 
-$teams2 = array( 'Team1'=>2,
-                'Team2'=>2,
-                'Team3'=>2,
-                'Team4'=>2,
-                'Team5'=>2);
-
 $nReportToAssign = 20;
 $teams = distruteInteger($teams,$nReportToAssign);
 var_dump($teams);
