@@ -1,8 +1,14 @@
 <html>
     <head>
-
+        <meta charset="utf-8">
     </head>
     <body>
+        <select id="select">
+            <option value="Indirizzo">Indirizzo</option>
+            <option value="Città">Città</option>
+            <option value="Cdt">Cdt</option>
+            <option value="Team">Team</option>
+        </select>
         <input type="search" id="search">
         <div id="result">
 
@@ -24,9 +30,22 @@
 
     let searchEl = document.getElementById('search')
     let resultEl = document.getElementById('result')
+    let selectEl = document.getElementById('select')
 
     function checkAddress(report){
         return report.address.startsWith(searchEl.value)
+    }
+
+    function checkCity(report){
+        return report.city.startsWith(searchEl.value)
+    }
+
+    function checkCdt(report){
+        return report.cdt.startsWith(searchEl.value)
+    }
+
+    function checkTeam(report){
+        return report.team.startsWith(searchEl.value)
     }
 
     function write(r){
@@ -48,10 +67,32 @@
     function clear(){
         resultEl.innerHTML =""
     }
+
+    function reset(){
+        searchEl.value =""
+        clear()
+        write(reports)
+    }
     
     searchEl.addEventListener('keyup',_=>{
-        write(reports.filter(checkAddress))
+        switch(selectEl.options[selectEl.selectedIndex].value){
+            case 'Indirizzo':{
+                write(reports.filter(checkAddress))
+                break;}
+            case 'Città':{
+                write(reports.filter(checkCity))
+                break;}
+            case 'Cdt':{
+                write(reports.filter(checkCdt))
+                break;}
+            case 'Team':{
+                write(reports.filter(checkTeam))
+                break;}
+        }
+        
     })
+
+    selectEl.addEventListener('change',reset)
 
     </script>
 </html>
