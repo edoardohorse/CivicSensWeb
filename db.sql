@@ -264,11 +264,23 @@ INSERT INTO cdt(code, report) VALUES
 -- ('prova (22).jpg',8),
 -- ('prova (23).jpg',8),
 -- ('prova (24).jpg',8);
-
--- 25	IMG_20180607_185856.jpg	1
--- 26	IMG_20180611_135255.jpg	2
--- 27	prova1.jpg	1
--- 28	prova2.jpg	2
--- 29	prova3.jpg	4
+INSERT INTO photo(name, report) VALUES
+('IMG_20180607_185856.jpg',1),
+('IMG_20180611_135255.jpg',1),
+('prova1.jpg',1);
 
 
+INSERT INTO history_report(note,team,date,report) VALUES
+('1 nota',1,NOW(),1);
+SELECT SLEEP(5);
+
+INSERT INTO history_report(note,team,date,report) VALUES
+('2 nota',1,NOW(),1);
+
+SELECT SLEEP(5);
+INSERT INTO history_report(note,team,date,report) VALUES
+('3 nota',1,NOW(),1);
+
+SELECT SLEEP(5);
+INSERT INTO history_report(note,team,date,report) VALUES
+('4 nota',1,NOW(),1);
