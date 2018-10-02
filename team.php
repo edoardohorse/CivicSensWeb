@@ -1,9 +1,9 @@
 <?php
 
-$teams = array( 'Team1'=>2,
-                'Team2'=>5,
-                'Team3'=>6,
-                'Team4'=>9,
+$teams = array( 'Team2'=>2,
+                'Team1'=>5,
+                'Team4'=>6,
+                'Team3'=>9,
                 'Team5'=>10);
 
 $teams2 = array( 'Team1'=>2,
@@ -13,11 +13,9 @@ $teams2 = array( 'Team1'=>2,
                 'Team5'=>2);
 
 $nReportToAssign = 20;
-$teamsIndex = $teams2;
-asort($teams);
-sort($teamsIndex);
-// var_dump($teams);
-var_dump($teamsIndex);
+$teams = distruteInteger($teams,$nReportToAssign);
+var_dump($teams);
+
 
 
 function regroup($teamsIndex,$indexStart=0){
@@ -34,8 +32,6 @@ function regroup($teamsIndex,$indexStart=0){
 
     return [$a,$i];
 }
-
-
 
 function sumToGroup($a, $toValue,$available){
         $i=0;   
@@ -61,23 +57,34 @@ function sumToGroup($a, $toValue,$available){
     return [$a,$available];
 }
     
+function distruteInteger($array, $toDistribute){
 
+    $copy = $array;
+    asort($array);
+    sort($copy);
 
-while($nReportToAssign > 0){
+    while($toDistribute > 0){
 
-    [$a,$indexEndGroup] = regroup($teamsIndex);
-    
-    
-    if(count($teamsIndex) == $indexEndGroup)
-        $toValue = $nReportToAssign + $teamsIndex[0];
-    else
-        $toValue = $teamsIndex[$indexEndGroup];
+        [$tmp,$indexEndGroup] = regroup($copy);
+        
+        
+        if(count($copy) == $indexEndGroup)
+            $toValue = $toDistribute + $copy[0];
+        else
+            $toValue = $copy[$indexEndGroup];
 
-    [$a, $nReportToAssign] = sumToGroup($a, $toValue,$nReportToAssign);
-    
-    $a = array_replace($teamsIndex,$a);
-    $teamsIndex = $a;
-    var_dump($teamsIndex);
-    var_dump($nReportToAssign);
+        [$tmp, $toDistribute] = sumToGroup($tmp, $toValue,$toDistribute);
+        
+        $copy = array_replace($copy,$tmp);
+    }
+
+    $arrayCombined = array_combine($array, $copy);
+
+    foreach($array as $key=>$value){
+        $array[$key] = $arrayCombined[$value];
+    }
+
+    return $array;
 }
+
 ?>
