@@ -1,0 +1,32 @@
+<input id="path" type="file"  multiple></input>
+<button onclick="invia()">Invia</button>
+
+<script>
+    var path = document.getElementById("path")
+    var req = new XMLHttpRequest
+
+    function invia(){
+        var file = path.files
+        var  formData = new FormData();
+        for(var i = 0 ; i<file.length;i++)
+            formData.append("photos[]",file[i])    
+        
+        
+        formData.append("idCity","2");
+        formData.append("description","Nuova descrizione3");
+        formData.append("lan","18.3");
+        formData.append("lng","23.9");
+        formData.append("user","lsdjvksld@.com");
+
+        req.open("POST", "api/report", true);
+        req.send(formData);
+        
+        }
+
+    req.onreadystatechange=function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.body.innerHTML += this.response;
+        }
+    }
+
+</script>
