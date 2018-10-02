@@ -8,7 +8,7 @@ $teams = array( 'Team2'=>2,
 
 $nReportToAssign = 20;
 var_dump($teams);
-$teams = distruteInteger($teams,$nReportToAssign);
+$teams = distributeInteger($teams,$nReportToAssign);
 var_dump($teams);
 
 

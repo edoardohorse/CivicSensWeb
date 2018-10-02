@@ -146,19 +146,96 @@ INSERT INTO user (email) VALUES
 ('edoardohorse@gmail.com'),
 ('iweek16@gmail.com');
 
+INSERT INTO team(name, type_report) VALUES
+('Enel1',1),
+('Enel2',1),
+('Enel3',1),
+('Enel4',1),
+('Enel5',1);
+
+
+
 -- Report --
 INSERT INTO report (city, description, address, location, user,grade,type_report,team)
 VALUES
+(1,'Descrizione prova 1','Via prova 1',11, null,'LOW',1,1),
+(1,'Descrizione prova 2','Via prova 2',11, null,'LOW',1,1),
+(1,'Descrizione prova 3','Via prova 3',11, null,'LOW',1,1),
+(1,'Descrizione prova 4','Via prova 4',11, null,'LOW',1,1),
+(1,'Descrizione prova 5','Via prova 5',11, null,'LOW',1,1),
+
+(1,'Descrizione prova 6','Via prova 6',11, null,'LOW',1,2),
+(1,'Descrizione prova 7','Via prova 7',11, null,'LOW',1,2),
+
+(1,'Descrizione prova 8','Via prova 8',11, null,'LOW',1,3),
+(1,'Descrizione prova 9','Via prova 9',11, null,'LOW',1,3),
+(1,'Descrizione prova 10','Via prova 10',11, null,'LOW',1,3),
+(1,'Descrizione prova 11','Via prova 11',11, null,'LOW',1,3),
+(1,'Descrizione prova 12','Via prova 12',11, null,'LOW',1,3),
+(1,'Descrizione prova 13','Via prova 13',11, null,'LOW',1,3),
+(1,'Descrizione prova 14','Via prova 14',11, null,'LOW',1,3),
+(1,'Descrizione prova 15','Via prova 15',11, null,'LOW',1,3),
+(1,'Descrizione prova 16','Via prova 16',11, null,'LOW',1,3),
+
+(1,'Descrizione prova 17','Via prova 17',11, null,'LOW',1,4),
+(1,'Descrizione prova 18','Via prova 18',11, null,'LOW',1,4),
+(1,'Descrizione prova 19','Via prova 19',11, null,'LOW',1,4),
+(1,'Descrizione prova 20','Via prova 20',11, null,'LOW',1,4),
+(1,'Descrizione prova 21','Via prova 21',11, null,'LOW',1,4),
+(1,'Descrizione prova 22','Via prova 22',11, null,'LOW',1,4),
+
+(1,'Descrizione prova 23','Via prova 23',11, null,'LOW',1,5),
+(1,'Descrizione prova 24','Via prova 24',11, null,'LOW',1,5),
+(1,'Descrizione prova 25','Via prova 25',11, null,'LOW',1,5),
+(1,'Descrizione prova 26','Via prova 26',11, null,'LOW',1,5),
+(1,'Descrizione prova 27','Via prova 27',11, null,'LOW',1,5),
+(1,'Descrizione prova 28','Via prova 28',11, null,'LOW',1,5),
+(1,'Descrizione prova 29','Via prova 29',11, null,'LOW',1,5),
+(1,'Descrizione prova 30','Via prova 30',11, null,'LOW',1,5),
+(1,'Descrizione prova 31','Via prova 31',11, null,'LOW',1,5),
+(1,'Descrizione prova 32','Via prova 32',11, null,'LOW',1,5);
+
+
+
+
+INSERT INTO cdt(code, report) VALUES
+('quijgj6bIz1',72),
+('PAI8WpHJfDR',73),
+('emBIK3vaxuk',74),
+('8EDrcP92Sbm',75),
+('J2LX3S9XQmI',76),
+('wlhTbNYQnz5',77),
+('ajRv3128cIc',78),
+('vPAOj5RdDbz',79),
+('i7eSIj72UZi',80),
+('3v1OQd6i213',81),
+('7vh1CmZbz9Z',82),
+('gHWN4QOCAeQ',83),
+('r6wmUCVNbSN',84),
+('aY2zm6IVwMM',85),
+('OOIZEv5lfRY',86),
+('ev9xE7JGVWE',87),
+('Ja4rMkCbkhr',88),
+('LRfPXieXjYC',89),
+('8sxQpHR4iUK',90),
+('yYbZXu0UEwW',91),
+('c51H3JjpOcq',92),
+('tEm48YTQ0sh',93),
+('6Xp5N1FuHu2',94),
+('FkPaoAZvC3C',95),
+('2RDHSgGIPwX',96),
+('wS8aWokOKdN',97),
+('jZKTjGi3pTS',98),
+('wL7Hun0IARC',99),
+('EtxRBE0FXYu',100),
+('d3uBSMpstGh',101),
+('3ADUeIK79bt',102),
+('b0XJBiNQd9i',103);
+
 -- (2,'Buca in via Dante, vergogna',null,7, null),                                                     -- 1
 -- (2,'Lampione spento, riparatelo',null,8,null),                                                      -- 2
 -- (2,'Cavo scoperto in via Pitagora, qualcuno potrebbe toccarlo',null,9,null),                        -- 3
 -- (2,'Tubo esploso, è tutto allagato in via Istria',null,10,null),                                    -- 4
-
-(1,'Buca in via Matteoti, vergogna','Viale Giacomo Matteotti, 37',11, null,'HIGH',1),                        -- 5
-(1,'Lampione spento in via Ennio, riparatelo','Via Ennio, 177',12, null,'INTERMEDIATE',2),                           -- 6
-(1,'Cavo scoperto in via Diaz, qualcuno potrebbe toccarlo','SP72, 20',13,null,'LOW',2),                     -- 7
-(1,'Tubo esploso, è tutto allagato in via Colombo','Via Cristoforo Colombo, 71',14,null,'LOW',3);           -- 8
-
 -- -- Photos --
 -- INSERT INTO photo(name, report) VALUES
 -- ('prova (1).jpg',1),
@@ -193,16 +270,3 @@ VALUES
 -- 29	prova3.jpg	4
 
 
-INSERT INTO team(name, type_report) VALUES
-('Enel1',1),
-('Enel2',1),
-('Enel3',1),
-('Enel4',1),
-('Enel5',1);
-
-
-INSERT INTO cdt(code, report) VALUES
-('1KrGd0xQDUo',1),
-('EXvLpKS6V4M',2),
-('OE2rMzdBk8I',3),
-('sjk8J3ByDqW',4);

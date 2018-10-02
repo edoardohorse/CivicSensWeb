@@ -19,6 +19,12 @@
                     };
                     case 'cdt':{               // api/report/cdt/{cdt}
                         getReportByCDT($request[2]);    
+                        // echo "qui";
+                        // $i=0;
+                        // while($i<32){
+                        //  echo generateRandomString(11)."<br>";
+                        //  $i++;
+                        // } 
                         // newCDT($request[2]);    
                         break;
                     };
@@ -78,7 +84,7 @@
 
     // var_dump($response);
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
+    // header('Content-Type: application/json');
+    // echo json_encode($response);
 
 ?>
