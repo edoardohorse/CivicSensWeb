@@ -1,41 +1,50 @@
 <?php
 
 
-abstract class ReportState
-{
-    const InAttesa = 'In attesa';
-    const InLavorazione = 'In lavorazione';
-    const Finito = 'Finito';
-    
-}
 
 
-const QUERY_REPORT_BY_CITY =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name, tm.name
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
-                                    AND r.type_report   = t.id
-                                    AND c.name          = ?
-                                GROUP BY r.id
-                                ORDER BY r.id DESC";
+const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
 
-const QUERY_REPORT_BY_CDT =  "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name, tm.name
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
-                                    AND r.type_report   = t.id
-                                    AND cdt.report		= r.id
-                                    AND cdt.code        = ?
-                                    ";
-
-const QUERY_REPORT_BY_TEAM = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name, l.lan, l.lng, c.name, tm.name
+const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                 FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
                                 WHERE   r.location      = l.id
                                     AND r.city          = c.id
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
+                                    AND cdt.report		= r.id
+                                    AND c.name          = ?
+                                GROUP BY r.id
+                                ORDER BY r.id DESC";
+
+const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
+                                WHERE   r.location      = l.id
+                                    AND r.city          = c.id
+                                    AND r.type_report   = t.id
+                                    AND cdt.report		= r.id
+                                    AND r.team          = tm.id
+                                    AND cdt.code        = ?
+                                    ";
+
+const QUERY_REPORT_BY_TEAM = QUERY_HEADER_REPORT."
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
+                                WHERE   r.location      = l.id
+                                    AND r.city          = c.id
+                                    AND r.type_report   = t.id
+                                    AND r.team          = tm.id
+                                    AND cdt.report		= r.id
                                     AND tm.name         = ?
                                     GROUP BY r.id
+                                    ";
+
+const QUERY_REPORT_BY_ID = QUERY_HEADER_REPORT."
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
+                                WHERE   r.location      = l.id
+                                    AND r.city          = c.id
+                                    AND r.type_report   = t.id
+                                    AND r.team          = tm.id
+                                    AND cdt.report		= r.id
+                                    AND r.id            = ?
                                     ";
 
 
@@ -70,9 +79,14 @@ const QUERY_NEW_REPORT      = "INSERT INTO report(city, description, location, a
 
 const QUERY_NEW_PHOTOS      = "INSERT INTO photo(name, report) VALUES ( ? , ? )";
 
-const QUERY_PHOTOS_BY_REPORT = "SELECT name
+const QUERY_FETCH_PHOTOS = "SELECT name
                                  FROM photo as p
                                  WHERE report = ?";
+
+const QUERY_FETCH_HISTORY = "SELECT note, date, team
+                                FROM history_report
+                                WHERE report = ?
+                                ORDER BY date DESC";
 
                                  
 const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
@@ -81,6 +95,13 @@ const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
 const QUERY_FETCH_CDT       = " SELECT c.code
                                  FROM cdt as c
                                  WHERE c.code = ?";
+
+const QUERY_EDIT_REPORT_TEAM = "UPDATE report
+                                SET team = ? 
+                                WHERE id = ?";
+const QUERY_EDIT_REPORT_STATE = "UPDATE report
+                                SET state = ? 
+                                WHERE id = ?";
 /*
 SELECT tm.name, count(r.id) as n_report
 FROM report as r, team as tm

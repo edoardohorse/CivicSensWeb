@@ -159,6 +159,14 @@ class Report{
             // echo "Fatto";
         }
     }
+
+    public function serialize(){
+        $serialize = array();
+        foreach($this as $key=>$value){
+            $serialize[$key] = $value;
+        }
+        return $serialize;
+    }
         
 }
 

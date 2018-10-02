@@ -1,5 +1,35 @@
 <?php
 
+include_once("admin.php");
+
+
+class Team extends Admin{
+
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $teams = array( 'Team2'=>2,
                 'Team1'=>5,
                 'Team4'=>6,

@@ -1,0 +1,57 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <input type="search" id="search">
+        <div id="result">
+
+        </div>
+    </body>
+    <script src="hub.js"></script>
+    <script>
+        var reports
+    let hub = new Hub(`fetchReport.php`, "GET",
+    {
+        onsuccess: (result) => {
+            reports  = JSON.parse(result.response)
+            write(reports)
+        },
+        ondone: (result) => { console.log("end") },
+        onstart: (result) => { console.log("start") }
+    }
+    ).connect()
+
+    let searchEl = document.getElementById('search')
+    let resultEl = document.getElementById('result')
+
+    function checkAddress(report){
+        return report.address.startsWith(searchEl.value)
+    }
+
+    function write(r){
+        clear()
+        r.forEach(report=>{
+            resultEl.innerHTML += stringify(report)+"<br>"
+        })
+    }
+
+    function stringify(report){
+        let str ="";
+        
+        for(let value in report){
+            str += `${value}: ${report[value]}  `
+        }
+        return str
+    }
+
+    function clear(){
+        resultEl.innerHTML =""
+    }
+    
+    searchEl.addEventListener('keyup',_=>{
+        write(reports.filter(checkAddress))
+    })
+
+    </script>
+</html>
