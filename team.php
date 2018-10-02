@@ -7,6 +7,7 @@ $teams = array( 'Team2'=>2,
                 'Team5'=>10);
 
 $nReportToAssign = 20;
+var_dump($teams);
 $teams = distruteInteger($teams,$nReportToAssign);
 var_dump($teams);
 
@@ -51,7 +52,7 @@ function sumToGroup($a, $toValue,$available){
     return [$a,$available];
 }
     
-function distruteInteger($array, $toDistribute){
+function distributeInteger($array, $toDistribute){
 
     $copy = $array;
     asort($array);
