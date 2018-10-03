@@ -15,56 +15,50 @@
         <?php
 
             include_once("query.php");
-            include_once("response.php");
             include_once("connect.php");
+            include_once("report.php");
 
-
+            $reports = array();
+            $city = 'Grottaglie';
+            $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
+            $stmt->bind_param("s",$city);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
             
             
-            getReportByCity('Grottaglie');
+            while($row = $result->fetch_assoc()){
+                // var_dump($row);
+                array_push($reports, new Report($row));
+            }
             
-
             // Report da finire
+            
+            ;
             echo '<aside class="list__report" id="report--notfinished">';
-            foreach($response['report'] as $key=>$value){
-                $result = $response['report'][$key];
-                if($result['state'] == ReportState::InLavorazione ||
-                    $result['state'] == ReportState::InAttesa){
+            for($i=0; $i< count($reports); $i++){
+                $report= $reports[$i];
+                // var_dump($report);
+                if($report->getState() == ReportState::InLavorazione ||
+                    $report->getState() == ReportState::InAttesa){
                     
-                    getPhotosByReport($result['id']);
-                    $result['photos'] = $response['photos'];
-
                     include('resultEnte.php');
 
                 }
-                // var_dump($result);
+                
                 // var_dump($result['photo']);
             }
             echo '</aside>';
 
             echo '<aside class="list__report list__report--hide" id="report--finished">';
-            foreach($response['report'] as $key=>$value){
-                $result = $response['report'][$key];
-                if($result['state'] == ReportState::Finito){
-                    
-                    getPhotosByReport($result['id']);
-                    $result['photos'] = $response['photos'];
-
+            for($i=0; $i< count($reports); $i++){
+                $report= $reports[$i];
+                if($report->getState() == ReportState::Finito){                    
                     include('resultEnte.php');
                 }
-
-                // var_dump($result);
-                // var_dump($result['photo']);
             }
             echo '</aside>';
-            // var_dump($response);
-
-
-
-
-
-
-
 
         ?>
 

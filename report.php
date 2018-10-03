@@ -37,14 +37,21 @@ class Report{
     private $photos = array();
     private $history = array();
 
-   /*  function __construct($id){
-        $this->id = $id;
+    public function getId(){return $this->id;}
+    public function getCity(){return $this->city;}
+    public function getAddress(){return $this->address;}
+    public function getDescription(){return $this->description;}
+    public function getState(){return $this->state;}
+    public function getGrade(){return $this->grade;}
+    public function getLocation(){return $this->location;}
+    public function getUser(){return $this->user;}
+    public function getType(){return $this->type;}
+    public function getTeam(){return $this->team;}
+    public function getCdt(){return $this->cdt;}
+    public function getPhotos(){return $this->photos;}
+    public function getHistory(){return $this->history;}
 
-        $this->fetchInfo();
-        $this->fetchPhotos();
-    } */
-
-    function __construct(array $data){
+       function __construct(array $data){
 
         $data['location'] = location($data['lan'],$data['lng']);
         unset($data['lan']);
@@ -64,6 +71,8 @@ class Report{
         $stmt->bind_param("i",$this->id);
         $stmt->execute();
         $result = $stmt->get_result();
+
+
         while($row = $result->fetch_assoc())
             foreach($row as $value)
                 array_push($this->photos,$value);

@@ -14,13 +14,20 @@
 
         </div>
     </body>
+    
+    <script src="report.js"></script>
     <script src="hub.js"></script>
     <script>
+    const manager = new ManagerReport()
+    manager.fetchAllReports()
+    </script>
+    <!-- <script>
         var reports
     let hub = new Hub(`fetchReport.php`, "GET",
     {
         onsuccess: (result) => {
             reports  = JSON.parse(result.response)
+            
             write(reports)
         },
         ondone: (result) => { console.log("end") },
@@ -98,5 +105,5 @@
 
     selectEl.addEventListener('change',reset)
 
-    </script>
+    </script> -->
 </html>

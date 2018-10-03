@@ -7,8 +7,8 @@ include_once("report.php");
 
 
 $reports = array();
-$city = 'Grottaglie';
-$stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
+$city = 'quijgj6bIz1';
+$stmt = $conn->prepare(QUERY_REPORT_BY_CDT);
 $stmt->bind_param("s",$city);
 
 $stmt->execute();
