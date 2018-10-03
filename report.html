@@ -15,95 +15,11 @@
         </div>
     </body>
     
-    <script src="report.js"></script>
-    <script src="hub.js"></script>
+    <script src="js/report.js"></script>
+    <script src="js/hub.js"></script>
     <script>
     const manager = new ManagerReport()
     manager.fetchAllReports()
     </script>
-    <!-- <script>
-        var reports
-    let hub = new Hub(`fetchReport.php`, "GET",
-    {
-        onsuccess: (result) => {
-            reports  = JSON.parse(result.response)
-            
-            write(reports)
-        },
-        ondone: (result) => { console.log("end") },
-        onstart: (result) => { console.log("start") }
-    }
-    ).connect()
-
-    let searchEl = document.getElementById('search')
-    let resultEl = document.getElementById('result')
-    let selectEl = document.getElementById('select')
-
-    function checkAddress(report){
-        return report.address.startsWith(searchEl.value)
-    }
-
-    function checkCity(report){
-        return report.city.startsWith(searchEl.value)
-    }
-
-    function checkCdt(report){
-        return report.cdt.startsWith(searchEl.value)
-    }
-
-    function checkTeam(report){
-        return report.team.startsWith(searchEl.value)
-    }
-
-    function write(r){
-        clear()
-        r.forEach(report=>{
-            resultEl.innerHTML += stringify(report)+"<br>"
-        })
-    }
-
-    function stringify(obj){
-        let str ="";
-        for(let value in obj){
-            if(typeof obj[value] ==  "object"){
-                str += `${value}: ${stringify(obj[value])}  `
-            }
-            else{
-                str += `${value}: ${obj[value]}  `
-            }
-        }
-        return str
-    }
-
-    function clear(){
-        resultEl.innerHTML =""
-    }
-
-    function reset(){
-        searchEl.value =""
-        clear()
-        write(reports)
-    }
     
-    searchEl.addEventListener('keyup',_=>{
-        switch(selectEl.options[selectEl.selectedIndex].value){
-            case 'Indirizzo':{
-                write(reports.filter(checkAddress))
-                break;}
-            case 'Città':{
-                write(reports.filter(checkCity))
-                break;}
-            case 'Cdt':{
-                write(reports.filter(checkCdt))
-                break;}
-            case 'Team':{
-                write(reports.filter(checkTeam))
-                break;}
-        }
-        
-    })
-
-    selectEl.addEventListener('change',reset)
-
-    </script> -->
 </html>
