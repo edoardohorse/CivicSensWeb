@@ -74,7 +74,14 @@ class ManagerReport{
     }
 
     addRow(report){
-        let row = document.createElement('tr')
+
+        if(report.state == 'In Attesa' ||
+            report.state == 'In Lavorazione')
+            let row = tbodyReportNotFinished.insertRow(row)
+        else
+        let row = tbodyReportFinished.insertRow(row)
+
+         = document.createElement('tr')
         row.classList.add('row100')
         row.classList.add('body')
 
@@ -92,11 +99,7 @@ class ManagerReport{
         row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
         row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
 
-        if(report.state == 'In Attesa' ||
-            report.state == 'In Lavorazione')
-            tbodyReportNotFinished.insertRow(row)
-        else
-            tbodyReportFinished.insertRow(row)
+        
     }
 }
 
