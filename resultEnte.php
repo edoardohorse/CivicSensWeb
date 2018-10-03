@@ -8,56 +8,11 @@
 
 ?>
 
-
-
-        
-
-            <article class="report" id="report<?php echo $report->getId()?>">
-            
-            <p class="report__address">
-                <label>Indirizzo :</label>
-                <?php echo $report->getAddress() ?>
-            </p>
-
-            <p class="report__email">
-                <label>Email :</label>
-                <?php echo $report->getUser() ?>
-            </p>
-
-            <p class="report__team">
-                <label>Team :</label>
-                <?php echo $report->getType() ?>
-            </p>
-
-            <p class="report__description">
-                <label>Descrizione :</label>
-                <?php echo $report->getDescription() ?>
-            </p>
-
-            <p class="report__city">
-                <label>Città :</label>
-                <?php echo $report->getCity()?>
-            </p>
-
-            <p class="report__state">
-                <label>Stato :</label>
-                <?php echo $report->getState() ?>
-            </p>
-
-            <p class="report__grade">
-                <label>Grado :</label>
-                <i class="report__grade__ball" title="Gravità <?php echo $grade?>" data-grade=<?php echo $report->getGrade()?>></i>
-            </p>
-
-            <a class="report__photo__opener" onclick="toggleReportPhoto('report<?php echo $report->getId() ?>')" href="#report<?php echo $report->getId()?>" >Vedi foto</a>
-            <div class="report__photo__wrapper">
-                <div class="report__photo report__photo--hide">
-                    
-                    <?php
-                        foreach($report->getPhotos() as $img){
-                            echo "<img src=uploads/".$img.">";
-                        }
-                    ?>
-                </div>
-            </div> 
-            </article>
+<td class="cell100 column1"><?php echo $report->getCity()?></td>
+<td class="cell100 column2"><?php echo $report->getAddress() ?></td>
+<td class="cell100 column3"><?php echo $report->getDescription() ?></td>
+<td class="cell100 column4"><?php echo $report->getState() ?></td>
+<td class="cell100 column5"><?php echo $report->getType() ?></td>
+<!-- <td class="cell100 column6"><?php echo $report->getTeam() ?></td> -->
+<td class="cell100 column6"><i class="report__grade__ball" title="Gravità <?php echo $grade?>" data-grade=<?php echo $report->getGrade()?>></i></td>
+<!-- <td class="cell100 column8"><?php echo ($report->getUser() == "")?"Non fornita": $report->getUser() ?></td> -->
