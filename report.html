@@ -55,11 +55,15 @@
         })
     }
 
-    function stringify(report){
+    function stringify(obj){
         let str ="";
-        
-        for(let value in report){
-            str += `${value}: ${report[value]}  `
+        for(let value in obj){
+            if(typeof obj[value] ==  "object"){
+                str += `${value}: ${stringify(obj[value])}  `
+            }
+            else{
+                str += `${value}: ${obj[value]}  `
+            }
         }
         return str
     }
