@@ -83,9 +83,10 @@ const QUERY_FETCH_PHOTOS = "SELECT name
                                  FROM photo as p
                                  WHERE report = ?";
 
-const QUERY_FETCH_HISTORY = "SELECT note, date, team
-                                FROM history_report
-                                WHERE report = ?
+const QUERY_FETCH_HISTORY = "SELECT h.note, h.date, tm.name as team
+                                FROM history_report as h, team as tm
+                                WHERE h.team = tm.id
+                                AND report = ?
                                 ORDER BY date DESC";
 
                                  
