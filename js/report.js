@@ -2,6 +2,9 @@ const URL_FETCH_REPORTS = 'fetchReport.php'
 const URL_FETCH_REPORT = 'fetchReport.php'
 const URL_FETCH_PHOTOS_REPORT = 'fetchReport.php'
 
+const tbodyReportNotFinished = document.getElementById('report--notfinished').querySelector('tbody')
+const tbodyReportFinished = document.getElementById('report--finished').querySelector('tbody')
+
 class ManagerReport{
 
 
@@ -9,6 +12,8 @@ class ManagerReport{
         this.reports = []
         // this.$ = document.getElementById('manager')
         this.hub = new Hub(URL_FETCH_REPORTS, "GET")
+
+        
     }
 
     fetchAllReports(){
@@ -66,6 +71,32 @@ class ManagerReport{
                 reportToDelete.deleteReport
              }
         })
+    }
+
+    addRow(report){
+        let row = document.createElement('tr')
+        row.classList.add('row100')
+        row.classList.add('body')
+
+        let gradeText = "";
+        switch(report.grade){
+            case 'LOW': {gradeText='bassa';break;}
+            case 'INTERMEDIATE': {gradeText='media';break;}
+            case 'HIGH':{gradeText='alta';break;}
+        }
+        
+        row.innerHTML += `<td class="cell100 column1">${report.city}</td>`
+        row.innerHTML += `<td class="cell100 column2">${report.address}</td>`
+        row.innerHTML += `<td class="cell100 column3">${report.description}</td>`
+        row.innerHTML += `<td class="cell100 column4">${report.state}</td>`
+        row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
+        row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
+
+        if(report.state == 'In Attesa' ||
+            report.state == 'In Lavorazione')
+            tbodyReportNotFinished.insertRow(row)
+        else
+            tbodyReportFinished.insertRow(row)
     }
 }
 

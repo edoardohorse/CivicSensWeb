@@ -54,9 +54,7 @@ while($row = $result->fetch_assoc()){
 									<th class="cell100 column3">Descrizione</th>
 									<th class="cell100 column4">Stato</th>
 									<th class="cell100 column5">Tipo</th>
-									<!-- <th class="cell100 column6">Team</th> -->
 									<th class="cell100 column6">Grado</th>
-									<!-- <th class="cell100 column8">Email</th> -->
 								</tr>
 							</thead>
 						</table>
