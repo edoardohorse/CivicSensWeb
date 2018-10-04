@@ -62,19 +62,19 @@ class ManagerReport{
     
     
     checkAddress(report){
-        return report.address.startsWith(searchBar.value)
+        return report.address.includes(searchBar.value)
     }
 
     checkCity(report){
-        return report.city.startsWith(searchBar.value)
+        return report.city.includes(searchBar.value)
     }
 
     checkType(report){
-        return report.type.startsWith(searchBar.value)
+        return report.type.includes(searchBar.value)
     }
 
     checkGrade(report){
-        return report.grade.startsWith(searchBar.value)
+        return report.grade.includes(searchBar.value)
     }
 
     
