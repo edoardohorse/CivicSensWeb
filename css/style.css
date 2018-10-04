@@ -21,6 +21,17 @@ body {
     /* box-shadow: 0px 5px 13px -8px black; */
 }
 
+#refresh__button{
+    width: 25px;
+    height: 25px;
+    background-image: url('../media/icon/refresh.svg');
+    background-size: cover;
+    display: inline-block;
+    cursor: pointer;
+    float: right;
+    margin-top: 1em;
+}
+
 .chooser__list__report {
     font-size: 20px;
     display: inline-block;
@@ -126,4 +137,8 @@ tr.row100.body{
 tr.row100.body:hover > * {
     background-color: #7f9bff;
     color: white !important;
+}
+
+.row--hide{
+    display: none;
 }

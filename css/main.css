@@ -214,6 +214,7 @@ th, td {
 .table100 {
   position: relative;
   padding-top: 60px;
+  min-height: 90%;
 }
 
 .table100-head {
@@ -226,6 +227,7 @@ th, td {
 .table100-body {
   max-height: 585px;
   overflow: auto;
+  min-height: 85%;
 }
 
 
