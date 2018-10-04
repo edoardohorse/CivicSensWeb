@@ -1,6 +1,15 @@
-const URL_FETCH_REPORTS = 'fetchReport.php'
-const URL_FETCH_REPORT = 'fetchReport.php'
-const URL_FETCH_PHOTOS_REPORT = 'fetchReport.php'
+// ============== GET
+const URL_FETCH_REPORT_BY_CITY  =  'apiReport.php/api/report/city/'
+const URL_FETCH_REPORT_BY_ID    =  'apiReport.php/api/report/id/'
+const URL_FETCH_PHOTOS_REPORT   =  'apiReport.php/api/report/photos/'
+const URL_FETCH_HISTORY_REPORT  =  'apiReport.php/api/report/history/'
+const URL_DELETE_REPORT         =  'apiReport.php/api/report/delete/'
+
+
+// ============== POST
+const URL_EDIT_TEAM_REPORT      =  'apiReport.php/api/report/{id}/team/#'
+const URL_EDIT_STATE_REPORT     =  'apiReport.php/api/report/{id}/state/#'
+const URL_UPDATE_HISTORY_REPORT =  'apiReport.php/api/report/{id}/history/#'
 
 const CLASS_ROW_HIDDEN = 'row--hide'
 
@@ -11,12 +20,13 @@ const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 
 
+
 class ManagerReport{
 
 
     constructor(){
         this.reports = []
-        this.hub = new Hub(URL_FETCH_REPORTS, "GET")
+        this.hub = new Hub(URL_FETCH_REPORT_BY_CITY+'Grottaglie', "GET") //TODO
         this.reportSelected = null
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
@@ -188,7 +198,7 @@ class Report{
     
 
     fetchInfo(){
-        Hub.connect(`${URL_FETCH_REPORT}/${this.id}`, 'GET',{
+        Hub.connect(URL_FETCH_REPORT_BY_ID+this.id, 'GET',{
             onsuccess: (result) => { 
                 obj = JSON.parse(result.response)
                 for(let value in obj){
@@ -198,14 +208,14 @@ class Report{
         })
     }
     fetchPhotos(){
-        Hub.conncet(`${URL_FETCH_PHOTOS_REPORT}/photos/${this.id}`, 'GET',{
+        Hub.conncet(URL_FETCH_PHOTOS_REPORT+this.id, 'GET',{
             onsuccess: (result) => { 
                 this.photos = JSON.parse(result.response)                       
              }
         })
     }
     fetchHistory(){
-        Hub.connect(`${URL_FETCH_HISTORY_REPORT}/history/${this.id}`, 'GET',{
+        Hub.connect(URL_FETCH_HISTORY_REPORT+.this.id, 'GET',{
             onsuccess: (result) => { 
                 this.history = JSON.parse(result.response)                       
              }
@@ -228,7 +238,14 @@ class Report{
         })
     }
 
+    addToHistory(){}// TODO
+
     deleteReport(){
+        Hub.connect(URL_DELETE_REPORT, 'GET',{
+            onsuccess: (result) => { 
+                // TODO
+             }
+        })
         this.el.parentEl.removeChild(this.el)
     }
 

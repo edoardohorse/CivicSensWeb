@@ -3,6 +3,7 @@
 include_once("query.php");
 include_once("connect.php");
 
+
 function location($lan,$lng){
     return array('lan'=>$lan,'lng'=>$lng);    
 }
@@ -51,7 +52,7 @@ class Report{
     public function getPhotos(){return $this->photos;}
     public function getHistory(){return $this->history;}
 
-       function __construct(array $data){
+    function __construct(array $data){
 
         $data['location'] = location($data['lan'],$data['lng']);
         unset($data['lan']);
@@ -61,8 +62,8 @@ class Report{
             $this->{$key} = $value;
         }
 
-        $this->fetchPhotos();
-        $this->fetchHistory();
+        // $this->fetchPhotos();
+        // $this->fetchHistory();
     }
 
     private function fetchPhotos(){
@@ -121,20 +122,26 @@ class Report{
     }
 
     public function editTeam($newTeam){
+        if($newTeam == $this->team)
+            return;
+
         global $conn;
         $stmt = $conn->prepare(QUERY_EDIT_REPORT_TEAM);
         $stmt->bind_param("si",$newTeam, $this->id);
         $stmt->execute();
         if($stmt->affected_rows > 0){
             $this->fetchInfo();
-            // echo "Fatto";
+            return true;
+        }
+        else{
+            return false;
         }
 
     }
 
     public function editState($newState){
-        // if($newState == $this->state)
-        //     return;
+        if($newState == $this->state)
+            return;
         // switch($newState){
         //     case ReportState::InAttesa:{
         //         break;}
@@ -150,13 +157,23 @@ class Report{
         $stmt->execute();
         if($stmt->affected_rows > 0){
             $this->fetchInfo();
-            // echo "Fatto";
+            return true;
+        }
+        else{
+            return false;
         }
 
-        $this->fetchInfo();
+        
     }
 
-    public function deleteReport(){}
+    public function deleteReport(){
+
+        // return true;
+        // }
+        // else{
+        //     return false;
+        // }
+    }
     
     public function updateHistory($message){
         global $conn;
@@ -165,7 +182,10 @@ class Report{
         $stmt->execute();
         if($stmt->affected_rows > 0){
             $this->fetchInfo();
-            // echo "Fatto";
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
