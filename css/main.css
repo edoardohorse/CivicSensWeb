@@ -56,11 +56,7 @@ ul, li {
 
 
 /* ------------------------------------ */
-input {
-  display: block;
-	outline: none;
-	border: none !important;
-}
+
 
 textarea {
   display: block;
@@ -144,7 +140,6 @@ iframe {
   width: 100%;
   min-height: 100vh;
   background: #fff;
-
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -153,7 +148,7 @@ iframe {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 0px 30px;
+  /* padding: 0px 30px; */
 }
 
 .wrap-table100 {

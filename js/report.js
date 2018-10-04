@@ -20,6 +20,7 @@ class ManagerReport{
         this.reportSelected = null
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
+        searchBar.addEventListener('keyup', this.searchBy.bind(this))
     }
 
     fetchAllReports(){
@@ -37,39 +38,43 @@ class ManagerReport{
 
     }
 
-    searchBy(filter){
+    searchBy(){
+        const filter = selectSearch.options[selectSearch.selectedIndex].value
+        this.showAllRow()
+        if(searchBar.value == "")
+            return 
+
         switch(filter){
-            case 'Indirizzo':{
-                
-                write(reports.filter(checkAddress))
+            case 'Indirizzo':{                
+                this.hideRowButThese(this.reports.filter(this.checkAddress))
                 break;}
             case 'Città':{
-                write(reports.filter(checkCity))
+                this.hideRowButThese(this.reports.filter(this.checkCity))
                 break;}
-            case 'Cdt':{
-                write(reports.filter(checkCdt))
+            case 'Tipo':{
+                this.hideRowButThese(this.reports.filter(this.checkType))
                 break;}
-            case 'Team':{
-                write(reports.filter(checkTeam))
+            case 'Grado':{
+                this.hideRowButThese(this.reports.filter(this.checkGrade))
                 break;}
         }
     }
     
     
     checkAddress(report){
-        return report.address.startsWith(searchEl.value)
+        return report.address.startsWith(searchBar.value)
     }
 
     checkCity(report){
-        return report.city.startsWith(searchEl.value)
+        return report.city.startsWith(searchBar.value)
     }
 
-    checkCdt(report){
-        return report.cdt.startsWith(searchEl.value)
+    checkType(report){
+        return report.type.startsWith(searchBar.value)
     }
 
-    checkTeam(report){
-        return report.team.startsWith(searchEl.value)
+    checkGrade(report){
+        return report.grade.startsWith(searchBar.value)
     }
 
     
@@ -117,7 +122,7 @@ class ManagerReport{
         this.getParent(report).deleteRow(this.reports.indexOf(report))
     }
 
-    hideRowButThese(...reportsToShow){
+    hideRowButThese(reportsToShow){
         this.reports.forEach(rep=>{
             if(reportsToShow.indexOf(rep) == -1 ){
                 this.hideRow(rep)

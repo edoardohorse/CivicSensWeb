@@ -142,3 +142,9 @@ tr.row100.body:hover > * {
 .row--hide{
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .list__report__wrapper{
+        width: 100%;
+    }
+  }
