@@ -2,8 +2,8 @@ const URL_FETCH_REPORTS = 'fetchReport.php'
 const URL_FETCH_REPORT = 'fetchReport.php'
 const URL_FETCH_PHOTOS_REPORT = 'fetchReport.php'
 
-const tbodyReportNotFinished = document.getElementById('report--notfinished').querySelector('tbody')
-const tbodyReportFinished = document.getElementById('report--finished').querySelector('tbody')
+const tbodyReportNotFinished = document.getElementById('report--notfinished').querySelectorAll('table')[1]
+const tbodyReportFinished = document.getElementById('report--finished').querySelectorAll('table')[1]
 
 class ManagerReport{
 
@@ -22,7 +22,9 @@ class ManagerReport{
             let reports  = JSON.parse(result.response)
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
+                manager.addRow(this.reports[this.reports.length-1])
             })
+            
         }
         
         this.hub.connect()
@@ -30,7 +32,7 @@ class ManagerReport{
     }
 
     searchBy(filter){
-        switch(selectEl.options[selectEl.selectedIndex].value){
+        switch(filter){
             case 'Indirizzo':{
                 write(reports.filter(checkAddress))
                 break;}
@@ -74,14 +76,12 @@ class ManagerReport{
     }
 
     addRow(report){
+        
+        
+        let parent = this.getParent(report)
+        let row = parent.insertRow(parent.children)
 
-        if(report.state == 'In Attesa' ||
-            report.state == 'In Lavorazione')
-            let row = tbodyReportNotFinished.insertRow(row)
-        else
-        let row = tbodyReportFinished.insertRow(row)
-
-         = document.createElement('tr')
+         
         row.classList.add('row100')
         row.classList.add('body')
 
@@ -99,7 +99,26 @@ class ManagerReport{
         row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
         row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
 
-        
+        row.report = report
+        report.el = row
+
+        row.addEventListener('click',this.showReport.bind(this,report))
+    }
+
+    deleteRow(report){
+        this.getParent(report).deleteRow(this.reports.indexOf(report))
+    }
+
+    deleteAllRows(){
+        this.getParent(report).tBodies[0].innerHTML = ""
+    }
+
+    getParent(report){
+        return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
+    }
+
+    showReport(report){
+        console.log(report)
     }
 }
 
