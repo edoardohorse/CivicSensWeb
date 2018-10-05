@@ -45,10 +45,10 @@ class ManagerReport{
 
             let res  = JSON.parse(result.response)
             if(res.error){
-                console.log('errore: '+res.result)
+                console.log('errore: '+res.message)
             }
             else{
-                reports = res.result
+                reports = res.data
             }
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
@@ -210,7 +210,7 @@ class Report{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
-                    console.log('errore: '+res.result)
+                    console.log('errore: '+res.message)
                 }
                 else{
                     this.fetchInfo()
@@ -225,10 +225,10 @@ class Report{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)
                 if(res.error){
-                    console.log('errore: '+res.result)
+                    console.log('errore: '+res.message)
                 }
                 else{
-                    var report = res.result
+                    var report = res.data
                 }
                 for(let value in report){
                     this[value] = report[value]
@@ -241,10 +241,10 @@ class Report{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
-                    console.log('errore: '+res.result)
+                    console.log('errore: '+res.message)
                 }
                 else{
-                    this.photos = res.result
+                    this.photos = res.data
                 }                   
              }
         })
@@ -254,10 +254,10 @@ class Report{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
-                    console.log('errore: '+res.result)
+                    console.log('errore: '+res.message)
                 }
                 else{
-                    this.history = res.result
+                    this.history = res.data
                 }              
              }
         })

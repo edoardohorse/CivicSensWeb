@@ -9,6 +9,8 @@ abstract class MessageSuccess{
     const EditState        = 'Modifica dello stato avvenuta con successo';
     const DeleteReport     = 'Segnalazione eliminata';
     const UpdateHistory    = 'Nota aggiunta alla segnalazione';    
+    const AddedReport      = 'Report aggiunto con successo';    
+    const NoMessage        = '';
 }
 
 abstract class MessageError{
@@ -18,9 +20,9 @@ abstract class MessageError{
     const UpdateHistory      = 'Errore! Nota non aggiunta alla segnalazione';
 }
 
-function reply($result, $isInError){
+function reply($message, $isInError, $data = null){
     global $response;
-    $response = array('error'=>$isInError, 'result'=>$result);
+    $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
 function getReportByCity($city){
@@ -39,7 +41,7 @@ function getReportByCity($city){
         array_push($result, $reports[$key]->serialize());
     }
 
-    reply($result,false);
+    reply(MessageSuccess::NoMessage,false,$result);
 
 }
 
@@ -55,7 +57,7 @@ function getReportById($id){
     $report = new Report($row);
     $reportStr = $report->serialize();
 
-    reply($reportStr,false);
+    reply(MessageSuccess::NoMessage,false,$reportStr);
 
     return $report;
 }
@@ -65,7 +67,7 @@ function getPhotosOfReport($id){
     $report->fetchPhotos();
     $reportStr = $report->serialize();
 
-    reply($reportStr,false);
+    reply(MessageSuccess::NoMessage,false,$reportStr);
 }
 
 function getHistoryOfReport($id){
@@ -73,7 +75,7 @@ function getHistoryOfReport($id){
     $report->fetchHistory();
     $reportStr = $report->serialize();
 
-    reply($reportStr,false);
+    reply(MessageSuccess::NoMessage,false,$reportStr);
 }
 
 
@@ -115,6 +117,15 @@ function updateHistory($id, $message){
     else{
         reply(MessageError::UpdateHistory,true);
     }
+}
+
+function newReport(array $data){
+   $report = Report::newReport($data);
+   reply(MessageSuccess::AddedReport,
+            false,
+            array('cdt'=>$report->getCdt())
+        );
+   
 }
 
 
