@@ -1,8 +1,11 @@
 <?php
-
+    // echo "debug";
     include_once("query.php");
     include_once("report.php");
     include_once("connect.php");
+    include_once("responseReport.php");
+
+    $response = array();
 
     if(count($_POST) == 0){                 // fetch info
         switch($request[0]){                    // api/   0   / 1
@@ -41,15 +44,15 @@
         switch($request[0]){
             case 'report':{                         // api/report    [POST]
                 switch($request[2]){
-                    case 'team':{                   // api/report/{id}/team/{newTeam}    => editTeam
+                    case 'team':{                   // api/report/{id}/team/    => editTeam [POST] {newTeam}
                         editTeam($request[1], $request[3]);
                         break;
                     };
-                    case 'state':{                  // api/report/{id}/state/{newState}  => editState
+                    case 'state':{                  // api/report/{id}/state/  => editState [POST] {newState}
                         editState($request[1], $request[3]);    
                         break;
                     };
-                    case 'history':{               // api/report/{id}/history/{newNote}  => addToHistory
+                    case 'history':{               // api/report/{id}/history/  => addToHistory [POST] {newNote}
                         updateHistory($request[1], $request[3]);    
                         break;
                     };    

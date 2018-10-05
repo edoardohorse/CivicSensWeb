@@ -66,7 +66,7 @@ class Report{
         // $this->fetchHistory();
     }
 
-    private function fetchPhotos(){
+    public function fetchPhotos(){
         global $conn;
         $stmt = $conn->prepare(QUERY_FETCH_PHOTOS);
         $stmt->bind_param("i",$this->id);
@@ -80,7 +80,7 @@ class Report{
         
     }
 
-    private function fetchHistory(){
+    public function fetchHistory(){
         global $conn;
         $stmt = $conn->prepare(QUERY_FETCH_HISTORY);
         $stmt->bind_param("i",$this->id);
@@ -95,7 +95,7 @@ class Report{
         
     }
 
-    private function fetchInfo(){
+    public function fetchInfo(){
         global $conn;
         $stmt = $conn->prepare(QUERY_REPORT_BY_ID);
         $stmt->bind_param("i",$this->id);
@@ -109,7 +109,7 @@ class Report{
     }
 
     // TODO
-    private function sendEmailToUser(){
+    public function sendEmailToUser(){
         if($this->user != null){
             $to = $this->user;
             $subject = "My subject";

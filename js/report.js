@@ -1,15 +1,15 @@
 // ============== GET
-const URL_FETCH_REPORT_BY_CITY  =  'apiReport.php/api/report/city/'
-const URL_FETCH_REPORT_BY_ID    =  'apiReport.php/api/report/id/'
-const URL_FETCH_PHOTOS_REPORT   =  'apiReport.php/api/report/photos/'
-const URL_FETCH_HISTORY_REPORT  =  'apiReport.php/api/report/history/'
-const URL_DELETE_REPORT         =  'apiReport.php/api/report/delete/'
+const URL_FETCH_REPORTS_BY_CITY  =  'apiReport/report/city/{#}/'
+const URL_FETCH_REPORT_BY_ID    =  'apiReport/report/id/{#}/'
+const URL_FETCH_PHOTOS_REPORT   =  'apiReport/report/photos/{#}/'
+const URL_FETCH_HISTORY_REPORT  =  'apiReport/report/history/{#}/'
+const URL_DELETE_REPORT         =  'apiReport/report/delete/{#}/'
 
 
 // ============== POST
-const URL_EDIT_TEAM_REPORT      =  'apiReport.php/api/report/{id}/team/#'
-const URL_EDIT_STATE_REPORT     =  'apiReport.php/api/report/{id}/state/#'
-const URL_UPDATE_HISTORY_REPORT =  'apiReport.php/api/report/{id}/history/#'
+const URL_EDIT_TEAM_REPORT      =  'apiReport/report/{#}/team/'
+const URL_UPDATE_HISTORY_REPORT =  'apiReport/report/{#}/history/'
+const URL_EDIT_STATE_REPORT     =  'apiReport/report/{#}/state/'
 
 const CLASS_ROW_HIDDEN = 'row--hide'
 
@@ -19,14 +19,19 @@ const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 
-
+function substitute(str,param){
+    param.forEach(p=>{
+        str = str.replace('{#}',p.toString())
+    })
+    return str
+}
 
 class ManagerReport{
 
 
     constructor(){
         this.reports = []
-        this.hub = new Hub(URL_FETCH_REPORT_BY_CITY+'Grottaglie', "GET") //TODO
+        this.hub = new Hub(substitute(URL_FETCH_REPORTS_BY_CITY,['Grottaglie']), "GET") 
         this.reportSelected = null
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
@@ -36,7 +41,15 @@ class ManagerReport{
     fetchAllReports(){
         this.deleteAllRows()
         this.hub.onsuccess = (result) => {
-            let reports  = JSON.parse(result.response)
+            let reports
+
+            let res  = JSON.parse(result.response)
+            if(res.error){
+                console.log('errore: '+res.result)
+            }
+            else{
+                reports = res.result
+            }
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
                 manager.addRow(this.reports[this.reports.length-1])
@@ -45,7 +58,7 @@ class ManagerReport{
         }
         
         this.hub.connect()
-
+        
     }
 
     searchBy(){
@@ -198,7 +211,7 @@ class Report{
     
 
     fetchInfo(){
-        Hub.connect(URL_FETCH_REPORT_BY_ID+this.id, 'GET',{
+        Hub.connect(substitute(URL_FETCH_REPORT_BY_ID,[this.id]), 'GET',{
             onsuccess: (result) => { 
                 obj = JSON.parse(result.response)
                 for(let value in obj){
@@ -208,14 +221,14 @@ class Report{
         })
     }
     fetchPhotos(){
-        Hub.conncet(URL_FETCH_PHOTOS_REPORT+this.id, 'GET',{
+        Hub.conncet(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
                 this.photos = JSON.parse(result.response)                       
              }
         })
     }
     fetchHistory(){
-        Hub.connect(URL_FETCH_HISTORY_REPORT+.this.id, 'GET',{
+        Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
                 this.history = JSON.parse(result.response)                       
              }

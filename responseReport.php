@@ -19,16 +19,38 @@ abstract class MessageError{
 }
 
 function reply($result, $isInError){
-    $response = array('error'=>$isInError, 'result'=>$result)
+    global $response;
+    $response = array('error'=>$isInError, 'result'=>$result);
 }
 
-function getReportById($id){
+function getReportByCity($city){
+    global $conn;
+    $reports = array();
+    $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
+    $stmt->bind_param("s",$city);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($row = $result->fetch_assoc()){
+        array_push($reports, new Report($row));
+    }
 
+    $result = array();
+    foreach($reports as $key=>$value){
+        array_push($result, $reports[$key]->serialize());
+    }
+
+    reply($result,false);
+
+}
+
+
+function getReportById($id){
+    global $conn;
     $stmt = $conn->prepare(QUERY_REPORT_BY_ID);
     $stmt->bind_param("s",$id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc()
+    $row = $result->fetch_assoc();
 
     $report = new Report($row);
     $reportStr = $report->serialize();
@@ -41,11 +63,17 @@ function getReportById($id){
 function getPhotosOfReport($id){
     $report = getReportById($id);
     $report->fetchPhotos();
+    $reportStr = $report->serialize();
+
+    reply($reportStr,false);
 }
 
 function getHistoryOfReport($id){
     $report = getReportById($id);
     $report->fetchHistory();
+    $reportStr = $report->serialize();
+
+    reply($reportStr,false);
 }
 
 
