@@ -74,8 +74,21 @@ const QUERY_CITY_ID         = "SELECT id FROM city WHERE name = ?";
 
 const QUERY_NEW_LOCATION    = "INSERT INTO location(lan, lng) VALUES( ?, ? )";
 
-const QUERY_NEW_REPORT      = "INSERT INTO report(city, description, location, address,grade)
-                                VALUES( ? , ? , ? , ?, ?)";                            
+const QUERY_NEW_REPORT      = "INSERT INTO report(city, description, location, address,grade,date,type_report, team)
+                                VALUES( ? , ? , ? , ?, ?, NOW(), ?, ?)";    
+                                
+const QUERY_FETCH_LIST_TEAM = " SELECT tm.id, tm.name, count(r.id) as n_report
+                                    FROM report as r, team as tm
+                                    WHERE r.team = tm.id
+                                    group by r.team";
+
+// Usata per la creazione di un report
+// permette di ottenere l'id del team con il minor numero
+// di segnalazioni
+const QUERY_TEAM_MIN_REPORT = "SELECT list.*
+                                FROM (".QUERY_FETCH_LIST_TEAM."
+                                ORDER BY n_report ASC) as list
+                                LIMIT 1";
 
 const QUERY_NEW_PHOTOS      = "INSERT INTO photo(name, report) VALUES ( ? , ? )";
 
@@ -121,10 +134,6 @@ const QUERY_EDIT_REPORT_TEAM = "UPDATE report
 const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
-/*
-SELECT tm.name, count(r.id) as n_report
-FROM report as r, team as tm
-WHERE r.team = tm.id
-group by r.team
-*/
+
+
 ?>

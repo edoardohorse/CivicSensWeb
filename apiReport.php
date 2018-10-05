@@ -9,7 +9,7 @@
 
     // var_dump($_POST);
     // var_dump($request);
-    // die();
+    
 
     if(count($_POST) == 0){                 // fetch info
         switch($request[0]){                    // api/   0   / 1
@@ -47,21 +47,24 @@
     else{                                           // push info
         switch($request[0]){
             case 'report':{                         // api/report    [POST]
-                switch($request[2]){
-                    case 'team':{                   // api/report/{id}/team/    => editTeam [POST] {newTeam}
-                        editTeam($request[1], $_POST[$request[2]]);
-                        break;
-                    };
-                    case 'state':{                  // api/report/{id}/state/  => editState [POST] {newState}
-                        editState($request[1], $_POST[$request[2]]);
-                        break;
-                    };
-                    case 'history':{               // api/report/{id}/history/  => addToHistory [POST] {newNote}
-                        updateHistory($request[1], $_POST[$request[2]]);
-                        break;
-                    };    
-                }
-                break;
+                if(isset($request[2]))
+                    switch($request[2]){
+                        case 'team':{                   // api/report/{id}/team    => editTeam [POST] {newTeam}
+                            editTeam($request[1], $_POST[$request[2]]);
+                            break;
+                        };
+                        case 'state':{                  // api/report/{id}/state  => editState [POST] {newState}
+                            editState($request[1], $_POST[$request[2]]);
+                            break;
+                        };
+                        case 'history':{               // api/report/{id}/history  => addToHistory [POST] {newNote}
+                            updateHistory($request[1], $_POST[$request[2]]);
+                            break;
+                        };   
+                    }
+                else
+                    newReport($_POST);                            // api/report => newReport [POST] {report data}
+
             }
         }
     }

@@ -20,6 +20,17 @@ abstract class ReportState
     
 }
 
+function newLocation($lan, $lng){
+    global $conn;
+
+    $stmt = $conn->prepare(QUERY_NEW_LOCATION);
+    $stmt->bind_param("dd",$lan, $lng);
+    $stmt->execute();
+    // $stmt->bind_result($id);
+    return $conn->insert_id;
+    
+}
+
 class Report{
 
     
@@ -53,7 +64,11 @@ class Report{
     public function getHistory(){return $this->history;}
 
     function __construct(array $data){
-
+        if(count($data) == 1){
+            $this->id = $data[0];
+            return;
+        }
+        
         $data['location'] = location($data['lan'],$data['lng']);
         unset($data['lan']);
         unset($data['lng']);
@@ -64,6 +79,96 @@ class Report{
 
         // $this->fetchPhotos();
         // $this->fetchHistory();
+    }
+
+    static public function newReport(array $data){
+        global $conn;
+
+        $location = newLocation($_POST['lan'], $_POST['lng']);
+
+        $stmt = $conn->prepare(QUERY_TEAM_MIN_REPORT);
+        $stmt->execute();
+        $idTeam = $stmt->get_result()->fetch_assoc()['id'];
+
+        // var_dump($idTeam);
+        // var_dump($data);
+        $stmt = $conn->prepare(QUERY_NEW_REPORT);
+        $stmt->bind_param("isisssi",$_POST['idCity'],
+                                    $_POST['description'],
+                                    $location,
+                                    $_POST['address'],
+                                    $_POST['grade'],
+                                    $_POST['typeReport'],
+                                    $idTeam);
+        $stmt->execute();
+        
+        $id = $conn->insert_id;
+        
+        $newReport = new Report([$conn->insert_id]);
+        $newReport->pushPhotos($id);
+        $newReport->newCDT($id);
+        $newReport->fetchInfo();
+
+        
+        return $newReport;
+        
+    }
+
+    private function generateRandomString($length = 11) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
+    private function newCDT($idReport){
+        global $conn;
+    
+        $cdtExisted = true;
+        $newCDT = "";
+        $stmt = $conn->prepare(QUERY_FETCH_CDT);
+        while($cdtExisted){
+    
+            $newCDT  = $this->generateRandomString();
+            // var_dump($newCDT);
+            $stmt->bind_param("s",$newCDT);
+            $stmt->execute();
+            $n = $stmt->get_result()->num_rows;
+            if($n == 0){
+                $cdtExisted = false;
+                break;
+            }
+    
+        }
+        
+        $stmt = $conn->prepare(QUERY_NEW_CDT);
+        $stmt->bind_param("ss",$newCDT,$idReport);
+        $stmt->execute();    
+    }
+    
+    
+    private function pushPhotos($idReport){
+        global $conn;
+        // var_dump($_FILES);
+        if(isset($_FILES['photos']['name'])){
+            $count = count($_FILES['photos']['name']);
+            for ($i = 0; $i < $count; $i++) {
+            
+                try{
+                    move_uploaded_file($_FILES['photos']['tmp_name'][$i], UPLOAD_PATH . $_FILES['photos']['name'][$i]);
+                    $stmt = $conn->prepare(QUERY_NEW_PHOTOS);
+                    $stmt->bind_param("si", $_FILES['photos']['name'][$i], $idReport);
+                    $stmt->execute();
+                    
+                }catch(Exception $e){
+                    
+                }
+                
+            }
+        }
     }
 
     public function fetchPhotos(){
@@ -102,6 +207,7 @@ class Report{
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
+        // var_dump($row);die();
         foreach($row as $key=>$value){
             $this->{$key} = $value;
         }
