@@ -140,16 +140,18 @@ class Report{
     }
 
     public function editState($newState){
-        if($newState == $this->state)
+        if($newState == $this->state )
             return;
-        // switch($newState){
-        //     case ReportState::InAttesa:{
-        //         break;}
-        //     case ReportState::InLavorazione:{
-        //         break;}
-        //     case ReportState::Finito:{
-        //         break;}
-        // }
+        switch($newState){
+            case ReportState::InAttesa:
+            case ReportState::InLavorazione:
+            case ReportState::Finito:{
+                break;}
+            default:{
+                return;
+                break;
+            }
+        }
 
         global $conn;
         $stmt = $conn->prepare(QUERY_EDIT_REPORT_STATE);
@@ -167,18 +169,54 @@ class Report{
     }
 
     public function deleteReport(){
+        global $conn;
 
-        // return true;
-        // }
-        // else{
-        //     return false;
-        // }
+        $this->fetchPhotos();
+        $stmt =  $conn->prepare(QUERY_DELETE_REPORT);
+        $stmt->bind_param("i",$this->id);
+        $stmt->execute();
+        if($stmt->affected_rows > 0){
+            $this->deletePhotosFromFileSystem();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private function deletePhotosFromFileSystem(){
+        foreach($this->photos as $value){
+            // var_dump($value);
+            $path = UPLOAD_PATH.$value;
+            if(file_exists($path)){
+                unlink($path);
+            }
+        }
     }
     
     public function updateHistory($message){
         global $conn;
-        $stmt = $conn->prepare(QUERY_EDIT_REPORT_STATE);
-        $stmt->bind_param("si",$newState, $this->id);
+        
+        /* $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_NAME);
+        $stmt->bind_param("s",$this->team);
+        $stmt->execute();
+        $row  = $stmt->get_result()->fetch_assoc();
+        $idTeam = $row['id'];
+
+
+        $stmt = $conn->prepare(QUERY_ADD_HISTORY_REPORT);
+        $stmt->bind_param("sii",$message, $idTeam, $this->id);
+        $stmt->execute();
+        if($stmt->affected_rows > 0){
+            $this->fetchInfo();
+            return true;
+        }
+        else{
+            return false;
+        } */
+
+        $stmt = $conn->prepare(QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM);
+        $stmt->bind_param("sis",$message, $this->id, $this->team);
         $stmt->execute();
         if($stmt->affected_rows > 0){
             $this->fetchInfo();

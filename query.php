@@ -89,6 +89,24 @@ const QUERY_FETCH_HISTORY = "SELECT h.note, h.date, tm.name as team
                                 AND report = ?
                                 ORDER BY date DESC";
 
+const QUERY_ADD_HISTORY_REPORT = "INSERT INTO history_report(note,team,date,report)
+                                    VALUES ( ? , ? ,NOW() ,? )";
+
+
+const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM = 
+                                "INSERT INTO history_report(note,report,date,team)
+                                    VALUES ( ? , ? ,NOW() , (
+                                        SELECT id
+                                            FROM team
+                                            WHERE name = ?
+                                        )
+                                        )";
+
+const QUERY_DELETE_REPORT = "DELETE FROM location WHERE id = (SELECT location FROM report WHERE  id =  ?)";
+
+const QUERY_FETCH_TEAM_BY_NAME = "SELECT id
+                                    FROM team
+                                    WHERE name = ?";
                                  
 const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
                                     VALUES( ? , ? )";

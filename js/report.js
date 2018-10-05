@@ -206,16 +206,32 @@ class Report{
             this[value] = obj[value]
         }
 
-        
+        this.tmpHub = new Hub(" ", 'POST',{
+            onsuccess: (result) => { 
+                let res = JSON.parse(result.response)    
+                if(res.error){
+                    console.log('errore: '+res.result)
+                }
+                else{
+                    this.fetchInfo()
+                }              
+             }
+        })
     }
     
 
     fetchInfo(){
         Hub.connect(substitute(URL_FETCH_REPORT_BY_ID,[this.id]), 'GET',{
             onsuccess: (result) => { 
-                obj = JSON.parse(result.response)
-                for(let value in obj){
-                    this[value] = obj[value]
+                let res = JSON.parse(result.response)
+                if(res.error){
+                    console.log('errore: '+res.result)
+                }
+                else{
+                    var report = res.result
+                }
+                for(let value in report){
+                    this[value] = report[value]
                 }       
              }
         })
@@ -223,48 +239,63 @@ class Report{
     fetchPhotos(){
         Hub.conncet(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
-                this.photos = JSON.parse(result.response)                       
+                let res = JSON.parse(result.response)    
+                if(res.error){
+                    console.log('errore: '+res.result)
+                }
+                else{
+                    this.photos = res.result
+                }                   
              }
         })
     }
     fetchHistory(){
         Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
-                this.history = JSON.parse(result.response)                       
+                let res = JSON.parse(result.response)    
+                if(res.error){
+                    console.log('errore: '+res.result)
+                }
+                else{
+                    this.history = res.result
+                }              
              }
         })
     }
 
     editTeam(newTeam){
-       Hub.connect(`${URL_EDIT_TEAM_REPORT}/${this.id}/${newTeam}`, 'POST',{
-            onsuccess: (result) => { 
-                this.fetchInfo()
-             }
-        })
+        this.tmpHub.method = "POST"
+        this.tmpHub.url = substitute(URL_EDIT_TEAM_REPORT,[this.id])
+        this.tmpHub.cleanParam()
+        this.tmpHub.addParam('team',newTeam)
+        this.tmpHub.connect()
     }
 
-    editState(){
-        Hub.connect(`${URL_EDIT_STATE_REPORT}/${this.id}/${newTeam}`, 'POST',{
-            onsuccess: (result) => { 
-                this.fetchInfo()
-             }
-        })
+    editState(newState){
+        this.tmpHub.method = "POST"
+        this.tmpHub.url = substitute(URL_EDIT_STATE_REPORT,[this.id])
+        this.tmpHub.cleanParam()
+        this.tmpHub.addParam('state',newState)
+        this.tmpHub.connect()
     }
 
-    addToHistory(){}// TODO
+    addToHistory(newMessage){
+        this.tmpHub.method = "POST"
+        this.tmpHub.url = substitute(URL_UPDATE_HISTORY_REPORT,[this.id])
+        this.tmpHub.cleanParam()
+        this.tmpHub.addParam('state',newMessage)
+        this.tmpHub.connect()
+    }
 
     deleteReport(){
-        Hub.connect(URL_DELETE_REPORT, 'GET',{
-            onsuccess: (result) => { 
-                // TODO
-             }
-        })
-        this.el.parentEl.removeChild(this.el)
+        this.tmpHub.method = "GET"
+        this.tmpHub.url = substitute(URL_DELETE_REPORT,[this.id])
+        this.tmpHub.cleanParam()
+        this.tmpHub.connect()
+
+        // this.el.parentEl.removeChild(this.el)
     }
 
-    draw(){
-
-    }
     
 
 }

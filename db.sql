@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS report(
     CONSTRAINT fk_report_type_report       FOREIGN KEY(type_report)         REFERENCES type_report(id),
     CONSTRAINT fk_report_team              FOREIGN KEY(team)                REFERENCES team(id)
     -- CONSTRAINT fk_report_city       FOREIGN KEY(city)       REFERENCES city(id),
-    -- CONSTRAINT fk_report_location   FOREIGN KEY(location)   REFERENCES location(id) ON DELETE CASCADE, 
+    CONSTRAINT fk_report_location   FOREIGN KEY(location)   REFERENCES location(id) ON DELETE CASCADE 
     -- CONSTRAINT fk_report_user       FOREIGN KEY(user)   REFERENCES user(email)
 );
 

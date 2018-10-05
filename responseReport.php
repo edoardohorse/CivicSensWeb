@@ -6,14 +6,14 @@ include_once("report.php");
 
 abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
-    const EditState        = 'Modica dello stato avvenuta con successo';
+    const EditState        = 'Modifica dello stato avvenuta con successo';
     const DeleteReport     = 'Segnalazione eliminata';
     const UpdateHistory    = 'Nota aggiunta alla segnalazione';    
 }
 
 abstract class MessageError{
-    const EditTeam           = 'Modifica del gruppo avvenuta fallita';
-    const EditState          = 'Modica dello stato avvenuta fallita';
+    const EditTeam           = 'Modifica del gruppo fallita';
+    const EditState          = 'Modifica dello stato fallita';
     const DeleteReport       = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
     const UpdateHistory      = 'Errore! Nota non aggiunta alla segnalazione';
 }
