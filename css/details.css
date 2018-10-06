@@ -5,7 +5,7 @@
     top: 75px;
     overflow: auto;
     position: fixed;
-    min-width: 350px;
+    width: 480px;
     box-shadow: -3px 0px 6px -3px #00000036;
     background-color: #F5F5F5;
 }
@@ -97,7 +97,16 @@
     /* border: 0; */
 }
 
-.details__item[data-slider="true"]{}
+.details__item[data-slider="true"] > div{
+    overflow-x: auto;
+}
+
+img {
+    width: 300px !important;
+    margin-right: 1em;
+}
+
+
 
 .details[data-grade='LOW'] > .details__title{
     background-color: #64DD17;

@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.css">
-	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/details.css">
@@ -95,6 +93,7 @@
                                             
                                     
         </main>
+       
         <aside class="details" id="detail__report" data-grade="LOW">
             <nav class="details__title col-12">
                 <span>Via Socrate, 15</span>
@@ -133,10 +132,12 @@
                 <div class="details__row">
                     <article class="details__item col-12" divided data-slider=true>
                         <label>Foto</label>
-                        <div >
-                            <img src="uploads/IMG_20180607_185856.jpg">
-                            <img src="uploads/IMG_20180611_135255.jpg">
-                            <img src="uploads/prova1.jpg">
+                        <div>
+                            <div class="photo">
+                                <img src="uploads/IMG_20180607_185856.jpg">
+                                <img src="uploads/IMG_20180611_135255.jpg">
+                                <img src="uploads/prova1.jpg">
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -176,6 +177,15 @@
     <script>
     let manager = new ManagerReport()
     manager.fetchAllReports()
+
+    function init(){
+        [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
+            let n = wrapper.childElementCount
+            wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
+        })
+    }
+
+    init();
     
     </script>
     
