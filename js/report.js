@@ -1,5 +1,6 @@
 // ============== GET
-const URL_FETCH_REPORTS_BY_CITY  =  'apiReport/report/city/{#}/'
+const URL_FETCH_REPORTS_BY_CITY =  'apiReport/report/city/{#}/'
+const URL_FETCH_REPORTS_BY_TEAM =  'apiReport/report/team/{#}/'
 const URL_FETCH_REPORT_BY_ID    =  'apiReport/report/id/{#}/'
 const URL_FETCH_PHOTOS_REPORT   =  'apiReport/report/photos/{#}/'
 const URL_FETCH_HISTORY_REPORT  =  'apiReport/report/history/{#}/'

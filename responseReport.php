@@ -25,11 +25,33 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
-function getReportByCity($city){
+function getReportsByCity($city){
     global $conn;
-    $reports = array();
+   
     $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
     $stmt->bind_param("s",$city);
+    
+    $result = getReports($stmt);
+
+    reply(MessageSuccess::NoMessage,false,$result);
+
+}
+
+function getReportsByTeam($team){
+    global $conn;
+    
+    $stmt = $conn->prepare(QUERY_REPORT_BY_TEAM);
+    $stmt->bind_param("s",$team);
+
+    $result = getReports($stmt);
+
+    reply(MessageSuccess::NoMessage,false,$result);
+
+}
+
+function getReports($stmt){
+    global $conn;
+    $reports = array();
     $stmt->execute();
     $result = $stmt->get_result();
     while($row = $result->fetch_assoc()){
@@ -40,9 +62,8 @@ function getReportByCity($city){
     foreach($reports as $key=>$value){
         array_push($result, $reports[$key]->serialize());
     }
-
-    reply(MessageSuccess::NoMessage,false,$result);
-
+    
+    return $result;
 }
 
 

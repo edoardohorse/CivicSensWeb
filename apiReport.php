@@ -17,23 +17,27 @@
             case 'report':{                 
     
                 switch($request[1]){
-                    case 'city':{               // api/report/city/{cityName}
-                        getReportByCity($request[2]);
+                    case 'city':{                       // apiReport/report/city/{cityName}
+                        getReportsByCity($request[2]);
                         break;
                     };
-                    case 'id':{               // api/report/id/{id}
+                    case 'team':{                       // apiReport/report/team/{nameTeam}
+                        getReportsByTeam($request[2]);
+                        break;
+                    };
+                    case 'id':{                         // apiReport/report/id/{id}
                         getReportById($request[2]);
                         break;
                     };
-                    case 'photos':{               // api/report/photos/{id}
+                    case 'photos':{                     // apiReport/report/photos/{id}
                         getPhotosOfReport($request[2]);
                         break;
                     };
-                    case 'history':{               // api/report/history/{id}
+                    case 'history':{                    // apiReport/report/history/{id}
                         getHistoryOfReport($request[2]);
                         break;
                     };
-                    case 'delete':{               // api/report/id/{id} => deleteReport
+                    case 'delete':{                     // apiReport/report/delete/{id} => deleteReport
                         deleteReport($request[2]);
                         break;
                     };
@@ -44,26 +48,26 @@
     
         }
     }
-    else{                                           // push info
+    else{                                                   // push info
         switch($request[0]){
-            case 'report':{                         // api/report    [POST]
+            case 'report':{                                 //  apiReport/report    [POST]
                 if(isset($request[2]))
                     switch($request[2]){
-                        case 'team':{                   // api/report/{id}/team    => editTeam [POST] {newTeam}
+                        case 'team':{                       //  apiReport/report/{id}/team    => editTeam [POST] {newTeam}
                             editTeam($request[1], $_POST[$request[2]]);
                             break;
                         };
-                        case 'state':{                  // api/report/{id}/state  => editState [POST] {newState}
+                        case 'state':{                      //  apiReport/report/{id}/state  => editState [POST] {newState}
                             editState($request[1], $_POST[$request[2]]);
                             break;
                         };
-                        case 'history':{               // api/report/{id}/history  => addToHistory [POST] {newNote}
+                        case 'history':{                    //  apiReport/report/{id}/history  => addToHistory [POST] {newNote}
                             updateHistory($request[1], $_POST[$request[2]]);
                             break;
                         };   
                     }
                 else
-                    newReport($_POST);                            // api/report => newReport [POST] {report data}
+                    newReport($_POST);                            // apiReport/report => newReport [POST] {report data}
 
             }
         }
