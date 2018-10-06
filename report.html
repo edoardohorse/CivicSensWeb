@@ -1,7 +1,7 @@
 <html>
     <head>
     <title>Report</title>
-    <link rel="stylesheet" href="css/style.css">
+    
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -9,7 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.css">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/details.css">
     </head>
     <body>
         <nav>
@@ -88,10 +89,84 @@
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
+
+
                                             
                                     
-    </main>
+        </main>
+        <aside class="details" id="detail__report" data-grade="LOW">
+            <nav class="details__title col-12">
+                <span>Via Socrate, 15</span>
+                <div class="details__options"></div>
+            </nav>
+            <main class="details__body col-12" >
+                <div class="details__row">
+                    <article class="details__item col-6" divided >
+                        <label>Creato il</label>
+                        <div> 17:01 21/05/2018</div>
+                    </article>
+
+                    <article class="details__item col-6"   data-orientation="right">                    
+                        <div class="report__badge">In Attesa</div>
+                    </article>
+                </div>
+
+                <div class="details__row">
+                    <article class="details__item col-6" divided>                    
+                        <label>Tipo</label>
+                        <div>Guasti elettrici</div>
+                    </article>
+
+                    <article class="details__item col-6" divided>                    
+                        <label>Team</label>
+                        <div>Enel1</div>
+                    </article>
+                </div>
+
+                <div class="details__row">
+                    <article class="details__item col-12"  divided >                    
+                        <label>Descrizione</label>
+                        <div><textarea disabled>Il lampione in questa via naaaaaaaaaaaaaaaaaaaaaaaaaon funziona da un mese. Da aggiustare.</textarea></div>
+                    </article>
+                </div>
+                <div class="details__row">
+                    <article class="details__item col-12" divided data-slider=true>
+                        <label>Foto</label>
+                        <div >
+                            <img src="uploads/IMG_20180607_185856.jpg">
+                            <img src="uploads/IMG_20180611_135255.jpg">
+                            <img src="uploads/prova1.jpg">
+                        </div>
+                    </article>
+                </div>
+            </main>
+            <footer class="details__chooser">
+                <ol>
+                    <li></li>
+                </ol>
+            </footer>
+        </aside>
+
+        <!-- <aside class="details" id="detail__report">
+            <nav class="col-12">
+                <span></span>
+                <div class="details__options"></div>
+            </nav>
+            <main class="col-12">
+                <article class="details__item">
+                    <label></label>
+                    <div></div>
+                </article>
+            </main>
+            <footer class="details__chooser">
+                <ol>
+                    <li></li>
+                </ol>
+            </footer>
+        </aside> -->
+
+        
     </body>
 
     

@@ -9,10 +9,9 @@ html {
 }
 
 body {
-    
-    margin: 0;
-    height: 100%;
-    background-color: rgb(250, 250, 250);
+    margin: 0;
+    height: 100%;
+    /* background-color: rgb(250, 250, 250); */
 }
 
 .nav__report {
@@ -47,14 +46,15 @@ body {
 
 .list__report__wrapper {
     width: 75%;
-    /* float: right; */
     overflow: hidden;
+    display: inline-block;
+    position: relative;
 }
 
 .list__report {
     width: 90%;
     margin: 0 auto;
-    height: calc(100% - 75px);
+    height: calc(100% - 90px);
     /* overflow: auto; */
     transition: transform 200ms, opacity 150ms;
 }
@@ -69,6 +69,26 @@ body {
 
 .list__report--hide {
     display: none;
+}
+
+
+
+
+.report__badge{
+    left: 2em;
+    font-style: normal;
+    text-transform: uppercase;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 15px;
+    height: 35px !;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    background-color: rgb(87, 122, 243);
 }
 
 .report {
@@ -147,4 +167,20 @@ tr.row100.body:hover > * {
     .list__report__wrapper{
         width: 100%;
     }
-  }
+}
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+    float: left;
+}
+.col-12 {width: 100%;}
+.col-11 {width: 91.66666667%;}
+.col-10 {width: 83.33333333%;}
+.col-9 {width: 75%;}
+.col-8 {width: 66.66666667%;}
+.col-7 {width: 58.33333333%;}
+.col-6 {width: 50%;}
+.col-5 {width: 41.66666667%;}
+.col-4 {width: 33.33333333%;}
+.col-3 {width: 25%;}
+.col-2 {width: 16.66666667%;}
+.col-1 {width: 8.33333333%;}
