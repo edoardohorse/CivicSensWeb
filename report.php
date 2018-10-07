@@ -32,9 +32,6 @@ function newLocation($lan, $lng){
 }
 
 class Report{
-
-    
-
     private $id;
     private $city;
     private $address;
@@ -46,22 +43,9 @@ class Report{
     private $type;
     private $team;
     private $cdt;
+    private $date;
     private $photos = array();
     private $history = array();
-
-    public function getId(){return $this->id;}
-    public function getCity(){return $this->city;}
-    public function getAddress(){return $this->address;}
-    public function getDescription(){return $this->description;}
-    public function getState(){return $this->state;}
-    public function getGrade(){return $this->grade;}
-    public function getLocation(){return $this->location;}
-    public function getUser(){return $this->user;}
-    public function getType(){return $this->type;}
-    public function getTeam(){return $this->team;}
-    public function getCdt(){return $this->cdt;}
-    public function getPhotos(){return $this->photos;}
-    public function getHistory(){return $this->history;}
 
     function __construct(array $data){
         if(count($data) == 1){
@@ -339,6 +323,21 @@ class Report{
             $serialize[$key] = $value;
         }
         return $serialize;
+    }
+
+
+    public function __toString(){
+        return json_encode($this->serialize());
+    }
+
+    public function __call($function, $args){
+        // Definisci tutti i getter anche se inesistenti
+        if(substr($function,0,3) == 'get'){
+            $method = strtolower(substr($function,3));
+            if(isset($this->{$method})){
+                return $this->{$method};
+            }
+        }
     }
         
 }
