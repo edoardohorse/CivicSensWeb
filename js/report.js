@@ -5,6 +5,7 @@ const URL_FETCH_REPORT_BY_ID    =  'apiReport/report/id/{#}/'
 const URL_FETCH_PHOTOS_REPORT   =  'apiReport/report/photos/{#}/'
 const URL_FETCH_HISTORY_REPORT  =  'apiReport/report/history/{#}/'
 const URL_DELETE_REPORT         =  'apiReport/report/delete/{#}/'
+const URL_DELETE_REPORTS         =  'apiReport/report/delete'
 
 
 // ============== POST
@@ -20,7 +21,7 @@ const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 
-function substitute(str,param){
+function substitute(str,param = []){
     param.forEach(p=>{
         str = str.replace('{#}',p.toString())
     })

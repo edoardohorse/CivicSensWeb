@@ -51,7 +51,7 @@
     else{                                                   // push info
         switch($request[0]){
             case 'report':{                                 //  apiReport/report    [POST]
-                if(isset($request[2]))
+                if(isset($request[2])){
                     switch($request[2]){
                         case 'team':{                       //  apiReport/report/{id}/team    => editTeam [POST] {newTeam}
                             editTeam($request[1], $_POST[$request[2]]);
@@ -66,8 +66,19 @@
                             break;
                         };   
                     }
-                else
-                    newReport($_POST);                            // apiReport/report => newReport [POST] {report data}
+                }
+                else{
+                    switch($request[1]){
+                        case 'new':{                            // apiReport/report/new => newReport [POST] {report data}
+                            newReport($_POST);                            
+                            break;
+                        };
+                        case 'delete':{                         // apiReport/report/delete => newReport [POST] {ids of reports}
+                            deleteReports($_POST);                            
+                            break;
+                        };
+                    }
+                }
 
             }
         }

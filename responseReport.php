@@ -8,6 +8,7 @@ abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
     const EditState        = 'Modifica dello stato avvenuta con successo';
     const DeleteReport     = 'Segnalazione eliminata';
+    const DeleteReports    = 'Segnalazioni eliminate';
     const UpdateHistory    = 'Nota aggiunta alla segnalazione';    
     const AddedReport      = 'Report aggiunto con successo';    
     const NoMessage        = '';
@@ -147,6 +148,17 @@ function newReport(array $data){
             array('cdt'=>$report->getCdt())
         );
    
+}
+
+function deleteReports(array $data){
+    global $response;
+    $ids = json_decode($data['id']);
+
+    foreach($ids as $value){
+        deleteReport($value);
+    }
+
+    reply(MessageSuccess::DeleteReports,false);
 }
 
 
