@@ -20,12 +20,91 @@ const tbodyReportFinished       = document.getElementById('report--finished').qu
 const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
+const detailsAside              = document.getElementById('details')
 
 function substitute(str,param = []){
     param.forEach(p=>{
         str = str.replace('{#}',p.toString())
     })
     return str
+}
+
+class ManagerDetails{
+    constructor(el){
+        this.el = el
+        this.details = []
+        this.detailsSelected = null
+    }
+
+    addDetails(){
+
+    }
+
+    clean(){}
+    
+    show(){}
+}
+
+class Details{
+    constructor(){
+        this.titleEl    = null
+        this.bodyEl     = null
+        this.footerEl   = null
+        
+        this.el = newEl('aside,,details')
+        this.bodyEl = newEl('main,,details__body col-12')
+        this.footerEl = newEl('footer,,details__chooser')
+    }
+
+    build(){
+        this.el.innerHTML = ""
+        this.titleEl    ? this.el.appendChild(this.titleEl)   :null
+        this.bodyEl     ? this.el.appendChild(this.bodyEl)    :null
+        this.footerEl   ? this.el.appendChild(this.footerEl)  :null
+    }
+
+    setTitle(title, options = null){
+        this.titleEl = newEl('nav,,details__title col-12', this.el)
+        
+        newEl('span', this.titleEl).call('textContent',title)
+        newEl('i,,details__close', this.titleEl)
+
+        /* let options = document.createElement('div')
+        div.classList.add('details__options') */        
+    }
+
+    setFooter(){}
+
+    addItem(row, item){
+        let {label, content, col = 12, divided = false, slider = false} = item
+        
+        let itemEl = newEl(`article,, details__item col-${col}, data-slider=${slider}`, row)
+
+        if(divided)
+            itemEl.setAttribute('divided','')
+
+        if(typeof label == 'string')
+            newEl('label', itemEl).call('textContent', label)
+        else
+            newEl('label', itemEl).appendChild(label)
+
+
+        if(typeof content == 'string')
+            newEl('div', itemEl).call('textContent', content)
+        else
+            newEl('div', itemEl).appendChild(content)
+
+        
+    }
+
+    addRow(...items){
+        let row = newEl('div,, details__row', this.bodyEl)
+        
+        for(let item of items){
+            this.addItem(row, item)
+        }
+
+    }
 }
 
 class ManagerReport{
@@ -35,6 +114,8 @@ class ManagerReport{
         this.reports = []
         this.hub = new Hub(substitute(URL_FETCH_REPORTS_BY_CITY,['Grottaglie']), "GET") 
         this.reportSelected = null
+        
+        this.details = new Details()
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
