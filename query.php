@@ -3,7 +3,8 @@
 
 
 
-const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
+const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, r.date,
+                                    t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
 
 const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                 FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
