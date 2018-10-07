@@ -51,9 +51,18 @@
     overflow-x: hidden;
 }
 
+.details__item.col-6{
+    width:calc(50% - 1em);
+}
+
 .details__item.col-6[divided]{
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
+
+.details__item.col-6[divided]:first-child{
+    margin-right:1em;
+}
+
 .details__item.col-12[divided] > div{
     padding-bottom: .5em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -73,10 +82,6 @@
     padding-top: 0.5em;
 }
 
-
-.details__item.col-6[data-orientation="right"] > *{
-    float: right;
-}
 
 .details__item.col-12 > *{
     font-size: 16px;
