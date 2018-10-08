@@ -49,8 +49,13 @@ class ManagerDetails{
         if(this.details.indexOf(detail) > -1){
             this.el.appendChild(detail.el)
             this.detailsSelected = detail
-            
+            this.detailsSelected.el.classList.remove('details--hide')
+            this.detailsSelected.el.querySelector('.details__close').addEventListener('click',this.hide.bind(this))
         }
+    }
+
+    hide(){
+        this.detailsSelected.el.classList.add('details--hide')
     }
 }
 
@@ -161,6 +166,7 @@ class ManagerReport{
                 content : newEl({
                                     el:'textarea',
                                     id:'report__description',
+                                    thieclass:'col-12',
                                     data:{
                                         disabled:null
                                     }
@@ -350,8 +356,12 @@ class ManagerReport{
     showReport(report){
         this.reportSelected = report
 
+        this.detail.setTitle(this.reportSelected.address)
+        this.detail.el.setAttribute('data-grade', this.reportSelected.grade)
+        this.detail.build()
+        
         managerDet.show(this.detail)
-
+        
         let reportDate          = document.getElementById('report__date')
         let reportState         = document.getElementById('report__state')
         let reportType          = document.getElementById('report__type')

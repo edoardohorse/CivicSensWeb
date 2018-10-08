@@ -157,10 +157,10 @@ VALUES
 (1,'Descrizione prova 2','Via prova 2',11, null,'LOW',1,1,NOW()),
 (1,'Descrizione prova 3','Via prova 3',11, null,'LOW',1,1,NOW()),
 (1,'Descrizione prova 4','Via prova 4',11, null,'LOW',1,1,NOW()),
-(1,'Descrizione prova 5','Via prova 5',11, null,'LOW',1,1,NOW()),NOW(),
+(1,'Descrizione prova 5','Via prova 5',11, null,'LOW',1,1,NOW()),
 
 (1,'Descrizione prova 6','Via prova 6',11, null,'LOW',1,2,NOW()),
-(1,'Descrizione prova 7','Via prova 7',11, null,'LOW',1,2,NOW()),NOW(),
+(1,'Descrizione prova 7','Via prova 7',11, null,'LOW',1,2,NOW()),
 
 (1,'Descrizione prova 8','Via prova 8',11, null,'LOW',1,3,NOW()),
 (1,'Descrizione prova 9','Via prova 9',11, null,'LOW',1,3,NOW()),
@@ -170,14 +170,14 @@ VALUES
 (1,'Descrizione prova 13','Via prova 13',11, null,'INTERMEDIATE',1,3,NOW()),
 (1,'Descrizione prova 14','Via prova 14',11, null,'INTERMEDIATE',1,3,NOW()),
 (1,'Descrizione prova 15','Via prova 15',11, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova 16','Via prova 16',11, null,'INTERMEDIATE',1,3,NOW()),NOW(),
+(1,'Descrizione prova 16','Via prova 16',11, null,'INTERMEDIATE',1,3,NOW()),
 
 (1,'Descrizione prova 17','Via prova 17',11, null,'INTERMEDIATE',1,4,NOW()),
 (1,'Descrizione prova 18','Via prova 18',11, null,'INTERMEDIATE',1,4,NOW()),
 (1,'Descrizione prova 19','Via prova 19',11, null,'INTERMEDIATE',1,4,NOW()),
 (1,'Descrizione prova 20','Via prova 20',11, null,'HIGH',1,4,NOW()),
 (1,'Descrizione prova 21','Via prova 21',11, null,'HIGH',1,4,NOW()),
-(1,'Descrizione prova 22','Via prova 22',11, null,'HIGH',1,4,NOW()),NOW(),
+(1,'Descrizione prova 22','Via prova 22',11, null,'HIGH',1,4,NOW()),
 
 (1,'Descrizione prova 23','Via prova 23',11, null,'HIGH',1,5,NOW()),
 (1,'Descrizione prova 24','Via prova 24',11, null,'HIGH',1,5,NOW()),
@@ -232,31 +232,6 @@ INSERT INTO cdt(code, report) VALUES
 -- (2,'Cavo scoperto in via Pitagora, qualcuno potrebbe toccarlo',null,9,null),                        -- 3
 -- (2,'Tubo esploso, è tutto allagato in via Istria',null,10,null),                                    -- 4
 -- -- Photos --
--- INSERT INTO photo(name, report) VALUES
--- ('prova (1).jpg',1),
--- ('prova (2).jpg',1),
--- ('prova (3).jpg',1),
--- ('prova (4).jpg',2),
--- ('prova (5).jpg',2),
--- ('prova (6).jpg',2),
--- ('prova (7).jpg',3),
--- ('prova (8).jpg',3),
--- ('prova (9).jpg',3),
--- ('prova (10).jpg',4),
--- ('prova (11).jpg',4),
--- ('prova (12).jpg',4),
--- ('prova (13).jpg',5),
--- ('prova (14).jpg',5),
--- ('prova (15).jpg',5),
--- ('prova (16).jpg',6),
--- ('prova (17).jpg',6),
--- ('prova (18).jpg',6),
--- ('prova (19).jpg',7),
--- ('prova (20).jpg',7),
--- ('prova (21).jpg',7),
--- ('prova (22).jpg',8),
--- ('prova (23).jpg',8),
--- ('prova (24).jpg',8);
 INSERT INTO photo(name, report) VALUES
 ('IMG_20180607_185856.jpg',1),
 ('IMG_20180611_135255.jpg',1),

@@ -17,7 +17,7 @@ $conn->set_charset("utf8");
 
 $request =explode('/',$_SERVER['REQUEST_URI']);
 
-if($_SERVER["SERVER_NAME"] == "192.168.1.181" ||
+if(substr($_SERVER["SERVER_NAME"],0,3) == "192" ||
     $_SERVER["SERVER_NAME"] == "localhost" ){
     array_shift($request);   
 }
