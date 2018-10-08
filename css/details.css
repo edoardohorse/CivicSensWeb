@@ -34,7 +34,7 @@
 
 .details__item > label{
     color: rgb(95, 99, 104);
-    font-size: 13px;
+    /* font-size: 13px; */
     font-weight: 500;
     margin-right: .25em;
     margin-bottom: 0;
