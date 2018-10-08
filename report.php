@@ -165,7 +165,7 @@ class Report{
 
         while($row = $result->fetch_assoc())
             foreach($row as $value)
-                array_push($this->photos,$value);
+                array_push($this->photos,UPLOAD_PATH.$value);
         
     }
 

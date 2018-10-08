@@ -87,17 +87,17 @@ function getReportById($id){
 function getPhotosOfReport($id){
     $report = getReportById($id);
     $report->fetchPhotos();
-    $reportStr = $report->serialize();
+    // $reportStr = $report->serialize();
 
-    reply(MessageSuccess::NoMessage,false,$reportStr);
+    reply(MessageSuccess::NoMessage,false,$report->getPhotos());
 }
 
 function getHistoryOfReport($id){
     $report = getReportById($id);
     $report->fetchHistory();
-    $reportStr = $report->serialize();
+    // $reportStr = $report->serialize();
 
-    reply(MessageSuccess::NoMessage,false,$reportStr);
+    reply(MessageSuccess::NoMessage,false,$report->getHistory());
 }
 
 
