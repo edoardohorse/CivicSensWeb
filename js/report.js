@@ -175,6 +175,13 @@ class ManagerReport{
                 col     : 12,
                 slider  : true
             })
+
+        this.detail.addRow({
+                label   :'Storico',
+                content : newEl('div,report__history'),
+                divided : true,
+                col     : 12
+            })
     
         this.detail.build()
         this.detail.el.setAttribute('data-grade','LOW')
@@ -346,7 +353,7 @@ class ManagerReport{
         managerDet.show(this.detail)
 
         let reportDate          = document.getElementById('report__date')
-        let reportState          = document.getElementById('report__state')
+        let reportState         = document.getElementById('report__state')
         let reportType          = document.getElementById('report__type')
         let reportTeam          = document.getElementById('report__team')
         let reportDescription   = document.getElementById('report__description')
@@ -370,6 +377,22 @@ class ManagerReport{
                         { src: this.reportSelected.photos}
             ))
             calcPhoto()
+        })
+
+
+        this.reportSelected.fetchHistory();
+        document.addEventListener("onHubSuccess", (result)=>{
+            let reportHistory   = document.getElementById('report__history')
+            reportHistory.innerHTML =""
+            
+            for(let i=0; i< this.reportSelected.history.length;i++){
+                
+                newEl('span,, report__history__date', reportHistory).call('textContent', this.reportSelected.history[i].date)
+                newEl('span,, report__history__team', reportHistory).call('textContent', this.reportSelected.history[i].team)
+                newEl('p,, report__history__note', reportHistory).call('textContent', this.reportSelected.history[i].note)
+            }
+
+
         })
 
         

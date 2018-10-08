@@ -87,7 +87,7 @@
     font-size: 16px;
 }
 
-.details__item.col-12  *{
+.details__item.col-12 *{
     width: 100%;
     
 }
@@ -149,4 +149,8 @@ img {
         height: auto;
         padding: 0.5em;
     }
+}
+
+.report__history__team {
+    float: right;
 }
