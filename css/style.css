@@ -136,6 +136,7 @@ body {
     height: 25px;
     border-radius: 50%;
     display: inline-block;
+    /* text-align: center; */
 }
 
 .report__grade__ball[data-grade=LOW] {

@@ -287,12 +287,11 @@ class ManagerReport{
             case 'HIGH':{gradeText='alta';break;}
         }
         
-        row.innerHTML += `<td class="cell100 column1">${report.city}</td>`
-        row.innerHTML += `<td class="cell100 column2">${report.address}</td>`
-        row.innerHTML += `<td class="cell100 column3">${report.description}</td>`
-        row.innerHTML += `<td class="cell100 column4">${report.state}</td>`
-        row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
-        row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
+        row.innerHTML += `<td class="cell100 column1">${report.address}</td>`
+        row.innerHTML += `<td class="cell100 column2">${report.date}</td>`
+        row.innerHTML += `<td class="cell100 column3">${report.state}</td>`
+        row.innerHTML += `<td class="cell100 column4">${report.type}</td>`
+        row.innerHTML += `<td class="cell100 column5"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
 
         row.report = report
         report.el = row

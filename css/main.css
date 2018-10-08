@@ -171,37 +171,38 @@ th, td {
 }
 
 .column1 {
-  width: 16%;
+  width: 20%;
   padding-left: 40px;
 }
 
 .column2 {
-  width: 16%;
+  width: 25%;
 }
 
 .column3 {
-  width: 22%;
+  width: 20%;
 }
 
 .column4 {
-  width: 16%;
+  width: 25%;
 }
 
 .column5 {
-  width: 16%;
-}
-.column6 {
   width: 10%;
 }
 
 .table100-head th {
   padding-top: 18px;
   padding-bottom: 18px;
+  text-align: center;
+  /* border-right: 2px solid white; */
 }
 
 .table100-body td {
   padding-top: 16px;
   padding-bottom: 16px;
+  width:;
+  text-align: center;
 }
 
 /*==================================================================
@@ -523,4 +524,9 @@ th, td {
 
 .table100.ver5 .ps__rail-y .ps__thumb-y::before {
   background-color: #cccccc;
+}
+
+
+td.cell100.column6 {
+    text-align: center;
 }
