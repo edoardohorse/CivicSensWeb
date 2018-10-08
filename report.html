@@ -180,17 +180,19 @@
     <script src="js/report.js"></script>
     <script src="js/hub.js"></script>
     <script>
+
+    let managerDet = new ManagerDetails(document.body)
     let manager = new ManagerReport()
     manager.fetchAllReports()
 
-    function init(){
+    function calcPhoto(){
         [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
             let n = wrapper.childElementCount
             wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
         })
     }
 
-    let det = new Details()
+/*     let det = new Details()
     det.setTitle("Via Socrate, 15")
     det.addRow(
         {
@@ -253,8 +255,11 @@
     det.build()
     det.el.setAttribute('data-grade','LOW')
     document.body.appendChild(det.el)
-    init();
+    calcPhoto(); */
     
+
+    
+
     </script>
     
 </html>

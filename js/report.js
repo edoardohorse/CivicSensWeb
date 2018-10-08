@@ -36,13 +36,22 @@ class ManagerDetails{
         this.detailsSelected = null
     }
 
-    addDetails(){
-
+    addDetails(detail){
+        this.details.push(detail)
     }
 
-    clean(){}
+    clean(){
+        this.el.removeChild(this.detailsSelected)
+        this.detailsSelected = null
+    }
     
-    show(){}
+    show(detail){
+        if(this.details.indexOf(detail) > -1){
+            this.el.appendChild(detail.el)
+            this.detailsSelected = detail
+            
+        }
+    }
 }
 
 class Details{
@@ -115,7 +124,62 @@ class ManagerReport{
         this.hub = new Hub(substitute(URL_FETCH_REPORTS_BY_CITY,['Grottaglie']), "GET") 
         this.reportSelected = null
         
-        this.details = new Details()
+        this.detail = new Details()
+        this.detail.setTitle("Via Socrate, 15")
+        this.detail.addRow(             // report__date
+            {
+                label   :'Creato il',
+                content :newEl('span, report__date'),
+                divided : true,
+                col     : 6
+            },
+            {
+                label   :'Stato',
+                content : newEl('div, report__state,report__badge'),
+                divided : true,
+                col     : 6,
+                divided : false
+            }
+    
+        )
+        this.detail.addRow({
+                label   :'Tipo',
+                content :newEl('span, report__type'),
+                divided : true,
+                col     : 12
+            })
+    
+        this.detail.addRow({
+                label   :'Team',
+                content :newEl('span,report__team'),
+                divided : true,
+                col     : 12
+            })
+        
+        this.detail.addRow({
+                label   :'Descrizione',
+                content : newEl({
+                                    el:'textarea',
+                                    id:'report__description',
+                                    data:{
+                                        disabled:null
+                                    }
+                                }),
+                divided : true,
+                col     : 12
+            },)
+        this.detail.addRow({
+                label   :'Foto',
+                content : newEl('div, report__photos,photo'),
+                divided : true,
+                col     : 12,
+                slider  : true
+            })
+    
+        this.detail.build()
+        this.detail.el.setAttribute('data-grade','LOW')
+
+        managerDet.addDetails(this.detail)
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
@@ -278,7 +342,39 @@ class ManagerReport{
 
     showReport(report){
         this.reportSelected = report
-        console.log(report)
+
+        managerDet.show(this.detail)
+
+        let reportDate          = document.getElementById('report__date')
+        let reportState          = document.getElementById('report__state')
+        let reportType          = document.getElementById('report__type')
+        let reportTeam          = document.getElementById('report__team')
+        let reportDescription   = document.getElementById('report__description')
+        
+        
+
+        reportDate.textContent = this.reportSelected.date
+        reportState.textContent = this.reportSelected.state
+        reportType.textContent = this.reportSelected.type
+        reportTeam.textContent = this.reportSelected.team
+        reportDescription.textContent = this.reportSelected.description
+
+        this.reportSelected.fetchPhotos();
+        document.addEventListener("onHubSuccess", (result)=>{
+            let reportPhotos   = document.getElementById('report__photos')
+            reportPhotos.innerHTML =""
+            reportPhotos
+                .appendChildren(
+                    repeatEl('img',
+                        this.reportSelected.photos.length,
+                        { src: this.reportSelected.photos}
+            ))
+            calcPhoto()
+        })
+
+        
+
+        // console.log(report)
     }
 }
 
@@ -320,7 +416,7 @@ class Report{
         })
     }
     fetchPhotos(){
-        Hub.conncet(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
+        Hub.connect(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
