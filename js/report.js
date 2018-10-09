@@ -123,11 +123,24 @@ class Details{
 
 class ManagerReport{
 
+    get reportSelected(){ return this._reportSelected[this._reportSelected.length-1]}
+    set reportSelected(rep){
+
+        if(!this.isMultipleSelection && this._reportSelected.length > 0){
+            this.deselectReport(this.reportSelected)
+        }
+        
+        this._reportSelected.push(rep)
+        rep.el.classList.add('tr--selected')
+        
+               
+    }
 
     constructor(){
         this.reports = []
         this.hub = new Hub(substitute(URL_FETCH_REPORTS_BY_CITY,['Grottaglie']), "GET") 
-        this.reportSelected = null
+        this._reportSelected = []
+        this.isMultipleSelection = false
         
         this.detail = new Details()
         this.detail.setTitle("Via Socrate, 15")
@@ -287,17 +300,28 @@ class ManagerReport{
             case 'HIGH':{gradeText='alta';break;}
         }
         
-        row.innerHTML += `<td class="cell100 column1">${report.address}</td>`
-        row.innerHTML += `<td class="cell100 column2">${report.date}</td>`
-        row.innerHTML += `<td class="cell100 column3">${report.state}</td>`
-        row.innerHTML += `<td class="cell100 column4">${report.type}</td>`
-        row.innerHTML += `<td class="cell100 column5"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
+        row.innerHTML += `<td class="cell100 column1"><input type="checkbox"></td>`
+        row.innerHTML += `<td class="cell100 column2">${report.address}</td>`
+        row.innerHTML += `<td class="cell100 column3">${report.date}</td>`
+        row.innerHTML += `<td class="cell100 column4">${report.state}</td>`
+        row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
+        row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
 
         row.report = report
         report.el = row
         report.el.hide = false
 
-        row.addEventListener('click',this.showReport.bind(this,report))
+        // row.children[0].querySelector('input').addEventListener('click',this.showReport.bind(this,report))
+        row.children[0].addEventListener('click',(event)=>{
+            debugger
+            this.deselectReport(this.reportSelected)
+            if(event.target.checked){
+                this.isMultipleSelection = true
+            }
+            
+            
+        })
+        row.addEventListener('click', this.selectReport.bind(this,report))
     }
 
     deleteRow(report){
@@ -352,11 +376,23 @@ class ManagerReport{
         return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
     }
 
-    showReport(report){
+    selectReport(report){
         this.reportSelected = report
+        this.showReport(this.reportSelected)
 
-        this.detail.setTitle(this.reportSelected.address)
-        this.detail.el.setAttribute('data-grade', this.reportSelected.grade)
+    }
+
+    deselectReport(report){
+        report.el.classList.remove('tr--selected')
+        this._reportSelected.splice( this._reportSelected.indexOf(report), 1)
+    }
+
+
+    showReport(report){
+        
+
+        this.detail.setTitle(report.address)
+        this.detail.el.setAttribute('data-grade', report.grade)
         this.detail.build()
         
         managerDet.show(this.detail)
@@ -369,36 +405,36 @@ class ManagerReport{
         
         
 
-        reportDate.textContent = this.reportSelected.date
-        reportState.textContent = this.reportSelected.state
-        reportType.textContent = this.reportSelected.type
-        reportTeam.textContent = this.reportSelected.team
-        reportDescription.textContent = this.reportSelected.description
+        reportDate.textContent = report.date
+        reportState.textContent = report.state
+        reportType.textContent = report.type
+        reportTeam.textContent = report.team
+        reportDescription.textContent = report.description
 
-        this.reportSelected.fetchPhotos();
+        report.fetchPhotos();
         document.addEventListener("onHubSuccess", (result)=>{
             let reportPhotos   = document.getElementById('report__photos')
             reportPhotos.innerHTML =""
             reportPhotos
                 .appendChildren(
                     repeatEl('img',
-                        this.reportSelected.photos.length,
-                        { src: this.reportSelected.photos}
+                        report.photos.length,
+                        { src: report.photos}
             ))
             calcPhoto()
         })
 
 
-        this.reportSelected.fetchHistory();
+        report.fetchHistory();
         document.addEventListener("onHubSuccess", (result)=>{
             let reportHistory   = document.getElementById('report__history')
             reportHistory.innerHTML =""
             
-            for(let i=0; i< this.reportSelected.history.length;i++){
+            for(let i=0; i< report.history.length;i++){
                 
-                newEl('span,, report__history__date', reportHistory).call('textContent', this.reportSelected.history[i].date)
-                newEl('span,, report__history__team', reportHistory).call('textContent', this.reportSelected.history[i].team)
-                newEl('p,, report__history__note', reportHistory).call('textContent', this.reportSelected.history[i].note)
+                newEl('span,, report__history__date', reportHistory).call('textContent', report.history[i].date)
+                newEl('span,, report__history__team', reportHistory).call('textContent', report.history[i].team)
+                newEl('p,, report__history__note', reportHistory).call('textContent', report.history[i].note)
             }
 
 
