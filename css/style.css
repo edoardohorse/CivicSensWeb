@@ -236,7 +236,9 @@ input[type="checkbox"] {
 }
 
 .dropbtn {
-    background-color: #3498DB;
+    /* background-color: #3498DB; */
+    background-image: url('../media/icon/edit.svg');
+    background-size: contain;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -245,7 +247,7 @@ input[type="checkbox"] {
 }
 
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
+    /* background-color: #2980B9; */
 }
 
 .dropdown {
@@ -256,7 +258,8 @@ input[type="checkbox"] {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
+    right: 2em;
+    background-color: #2e7786;
     min-width: 160px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -271,3 +274,4 @@ input[type="checkbox"] {
 }
 
 .dropdown a:hover {background-color: #ddd;}
+.show{display:block;}

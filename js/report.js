@@ -77,29 +77,29 @@ class Details{
         this.footerEl   ? this.el.appendChild(this.footerEl)  :null
     }
 
-    toggleOption(){
-        document.getElementById("myDropdown").classList.toggle("show");
+    toggleOption(el){
+        el.classList.toggle("show");
     }
 
     setTitle(title, options = null){
-        this.titleEl = newEl('nav,,details__title col-12', this.el)
-        
+        // debugger 
+        this.titleEl = newEl('nav,,details__title col-12')
         newEl('span', this.titleEl).call('textContent',title)
         newEl('i,,details__close', this.titleEl)
 
         
-        let options = newEl('div,,details__options', this.titleEl)
-        let button  = newEl('button,, dropbtn', )
+        let optionsEl = newEl('div,,details__options', this.titleEl)
+        let button  = newEl('button,, dropbtn', optionsEl )
         button.classList.add('dropbtn')     
 
-        let content  = newEl('div,,dropdown-content')
+        let content  = newEl('div,,dropdown-content',optionsEl)
         for(let value of options){
             newEl('a',content).call('textContent',value)
         }
 
 
 
-        button.addEventListener('click',this.toggleOption.bind(this))
+        button.addEventListener('click',this.toggleOption.bind(this, content))
     }
 
     setFooter(){}
@@ -149,7 +149,7 @@ class ManagerReport{
         this.isMultipleSelection = false
         
         this.detail = new Details()
-        this.detail.setTitle("Via Socrate, 15",['1','2','3'])
+        // this.detail.setTitle("Via Socrate, 15",[1,2])
         this.detail.addRow(             // report__date
             {
                 label   :'Creato il',
@@ -430,7 +430,7 @@ class ManagerReport{
     showReport(report){
         
 
-        this.detail.setTitle(report.address)
+        this.detail.setTitle(report.address,[1,2])
         this.detail.el.setAttribute('data-grade', report.grade)
         this.detail.build()
         

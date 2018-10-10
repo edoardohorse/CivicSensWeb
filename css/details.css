@@ -174,3 +174,10 @@ img {
     }
 }
 
+
+
+.details__options {
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+}
