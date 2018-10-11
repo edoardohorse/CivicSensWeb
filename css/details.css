@@ -136,6 +136,8 @@ img {
     float: right;
 }
 
+
+
 .details__close {
     background-image: url('../media/icon/close--white.svg');
     display: inline-block;
@@ -150,6 +152,61 @@ img {
 .details[data-grade='INTERMEDIATE'] .details__close {
     background-image: url('../media/icon/close--black.svg');
 }
+
+
+
+.details__options {
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+}
+
+.dropbtn {
+    /* background-color: #3498DB; */
+    background-image: url('../media/icon/edit--white.svg');
+    background-size: contain;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: black;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    /* background-color: #2980B9; */
+}
+
+
+.details[data-grade='INTERMEDIATE']  .dropbtn {
+    background-image: url('../media/icon/edit--black.svg');
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 3em;
+    background-color: rgb(188, 203, 206);
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    color: black;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+.show{display:block;}
+
 
 @media screen and (max-width: 768px) {
 
@@ -174,10 +231,3 @@ img {
     }
 }
 
-
-
-.details__options {
-    display: inline-block;
-    float: right;
-    margin-right: 1em;
-}
