@@ -199,12 +199,13 @@ img {
     z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content li {
     padding: 12px 16px;
     display: block;
+    cursor: pointer;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown-content li:hover {background-color: rgb(221, 221, 221);}
 .show{display:block;}
 
 

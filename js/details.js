@@ -39,6 +39,8 @@ class Details{
         this.footerEl = newEl('footer,,details__chooser')
     }
 
+
+
     build(){
         this.el.innerHTML = ""
         this.titleEl    ? this.el.appendChild(this.titleEl)   :null
@@ -63,7 +65,7 @@ class Details{
 
         let content  = newEl('div,,dropdown-content',optionsEl)
         for(let value of options){
-            newEl('a',content).call('textContent',value)
+            newEl('li',content).call('textContent',value)
         }
 
 
