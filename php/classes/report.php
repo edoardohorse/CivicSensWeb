@@ -13,9 +13,9 @@ function note($message,$date,$team){
 
 abstract class ReportState
 {
-    const InAttesa = 'In attesa';
-    const InLavorazione = 'In lavorazione';
-    const Finito = 'Finito';
+    const Waiting = 'In attesa';
+    const InCharge = 'In lavorazione';
+    const Done = 'Finito';
     
 }
 
@@ -197,7 +197,7 @@ class Report{
 
     }
 
-    // TODO
+    // TODO:
     public function sendEmailToUser(){
         if($this->user != null){
             $to = $this->user;
@@ -232,9 +232,9 @@ class Report{
         if($newState == $this->state )
             return;
         switch($newState){
-            case ReportState::InAttesa:
-            case ReportState::InLavorazione:
-            case ReportState::Finito:{
+            case ReportState::Waiting:
+            case ReportState::InCharge:
+            case ReportState::Done:{
                 break;}
             default:{
                 return;

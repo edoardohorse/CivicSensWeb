@@ -3,6 +3,9 @@
 include_once("../db/query.php");
 include_once("../db/connect.php");
 include_once("../classes/report.php");
+include_once("../classes/team.php");
+
+const teamName = 'Enel1';
 
 abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
@@ -39,14 +42,9 @@ function getReportsByCity($city){
 }
 
 function getReportsByTeam($team){
-    global $conn;
-    
-    $stmt = $conn->prepare(QUERY_REPORT_BY_TEAM);
-    $stmt->bind_param("s",$team);
-
-    $result = getReports($stmt);
-
-    reply(MessageSuccess::NoMessage,false,$result);
+    $team = new Team(teamName);
+    $team->fetchReports();      // TODO: to remove
+    reply(MessageSuccess::NoMessage,false,$team->serializeReports());
 
 }
 
@@ -112,8 +110,20 @@ function editTeam($id, $newTeam){
 }
 
 function editState($id, $newState){
-    $report = getReportById($id);
-    if($report->editState($newState)){
+    $team = new Team(teamName);
+    $team->fetchReports(); 
+    
+    $res = null;
+
+    switch($newState){
+        case ReportState::InCharge:{
+            $res = $team->setReportAsInCharge($id); break;}
+
+        case ReportState::Done:{ 
+            $res = $team->setReportAsDone($id); break;}
+    }
+
+    if($res){
         reply(MessageSuccess::EditState,false);
     }
     else{
@@ -132,8 +142,10 @@ function deleteReport($id){
 }
 
 function updateHistory($id, $message){
-    $report = getReportById($id);
-    if($report->updateHistory($message)){
+    $team = new Team(teamName);
+    $team->fetchReports(); 
+    
+    if($team->updateHistoryOfReport($id,$message)){
         reply(MessageSuccess::UpdateHistory,false);
     }
     else{

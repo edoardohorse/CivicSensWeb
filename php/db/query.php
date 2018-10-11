@@ -27,14 +27,14 @@ const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
                                     AND cdt.code        = ?
                                     ";
 
-const QUERY_REPORT_BY_TEAM = QUERY_HEADER_REPORT."
+const QUERY_REPORT_BY_TEAM_BY_ID = QUERY_HEADER_REPORT."
                                 FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
                                 WHERE   r.location      = l.id
                                     AND r.city          = c.id
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                     AND cdt.report		= r.id
-                                    AND tm.name         = ?
+                                    AND tm.id         = ?
                                     GROUP BY r.id
                                     ";
 
@@ -118,7 +118,7 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM location WHERE id = (SELECT location FROM report WHERE  id =  ?)";
 
-const QUERY_FETCH_TEAM_BY_NAME = "SELECT id
+const QUERY_FETCH_TEAM_BY_NAME = "SELECT id, type_report, n_member
                                     FROM team
                                     WHERE name = ?";
                                  
