@@ -142,12 +142,12 @@ INSERT INTO user (email) VALUES
 ('edoardohorse@gmail.com'),
 ('iweek16@gmail.com');
 
-INSERT INTO team(name, type_report) VALUES
+INSERT INTO team(name, type_report,n_member) VALUES
 ('Enel1',1,5),
 ('Enel2',1,6),
 ('Enel3',1,3),
 ('Enel4',1,10),
-('Enel5',1,)7;
+('Enel5',1,7);
 
 
 

@@ -9,6 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/details.css">
+    <link rel="stylesheet" href="css/vex.css" />
+    <link rel="stylesheet" href="css/vex-theme-default.css" />
+    
     </head>
     <body>
         <nav>
@@ -111,7 +114,10 @@
     <script src="js/team.js"></script>
     <script src="js/report.js"></script>
     <script src="js/hub.js"></script>
+    <script src="js/vex.combined.min.js"></script>
+
     <script>
+        
 
     let managerDet = new ManagerDetails(document.body)
     let team = new Team('Enel1')
@@ -122,7 +128,12 @@
             wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
         })
     }
-
+    
+    
+    vex.dialog.alert({
+        message: 'Testing the wireframe theme.',
+        className: 'vex-theme-default' // Overwrites defaultOptions
+    })
   /*   let det = new Details()
     det.setTitle("Via Socrate, 15")
     det.addRow(
