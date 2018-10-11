@@ -107,14 +107,14 @@
     
     <script src="js/utils.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/team.js"></script>
     <script src="js/details.js"></script>
     <script src="js/report.js"></script>
     <script src="js/hub.js"></script>
     <script>
 
     let managerDet = new ManagerDetails(document.body)
-    let manager = new ManagerReport()
-    manager.fetchAllReports()
+    let team = new Team('Enel1')
 
     function calcPhoto(){
         [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
