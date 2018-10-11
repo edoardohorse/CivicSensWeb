@@ -28,6 +28,23 @@ class ManagerDetails{
     }
 }
 
+class ActionOption{
+    constructor(title, callback, description = "" ,isCritic = false){   //TODO: Define dialog for callback execution
+        this.el = newEl('li,, option')
+        this.title = title,
+        this.description = description
+        this.isCritic = isCritic
+        this.action = callback
+
+        this.el.textContent = this.title
+        this.el.title = this.description
+        this.el.addEventListener('click',callback)
+
+        if(this.isCritic)
+            this.el.classList.add('option--critic')
+    }
+}
+
 class Details{
     constructor(){
         this.titleEl    = null
@@ -49,11 +66,20 @@ class Details{
     }
 
     toggleOption(el){
+        
+        el.addEventListener('blur',this.closeOption.bind(this,el))
+        el.focus()
         el.classList.toggle("show");
     }
 
+    closeOption(el){
+        el.removeEventListener('blur',this.closeOption)
+        el.classList.remove("show");
+    }
+
+    
+
     setTitle(title, options = null){
-        // debugger 
         this.titleEl = newEl('nav,,details__title col-12')
         newEl('span', this.titleEl).call('textContent',title)
         newEl('i,,details__close', this.titleEl)
@@ -64,8 +90,9 @@ class Details{
         button.classList.add('dropbtn')     
 
         let content  = newEl('div,,dropdown-content',optionsEl)
-        for(let value of options){
-            newEl('li',content).call('textContent',value)
+        content.tabIndex = 0
+        for(let action of options){
+            content.appendChild(action.el)
         }
 
 
@@ -95,6 +122,10 @@ class Details{
             newEl('div', itemEl).appendChild(content)
 
         
+    }
+
+    swapItem(item, newItem){
+
     }
 
     addRow(...items){

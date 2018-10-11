@@ -13,6 +13,10 @@ const URL_EDIT_TEAM_REPORT      =  'apiReport/report/{#}/team/'
 const URL_UPDATE_HISTORY_REPORT =  'apiReport/report/{#}/history/'
 const URL_EDIT_STATE_REPORT     =  'apiReport/report/{#}/state/'
 
+
+const ReportState = {Waiting:'In attesa', InCharge:'In lavorazione', Done:'Finito'}
+Object.freeze(ReportState)
+
 const CLASS_ROW_HIDDEN = 'row--hide'
 
 const tbodyReportNotFinished    = document.getElementById('report--notfinished').querySelectorAll('table')[1]
@@ -322,10 +326,23 @@ class ManagerReport{
 
     showReport(report){
         
+        var options = []
+        switch(report.state){
+            case ReportState.Waiting:{
+                options = ACTIONS_TEAM_REPORT_AS_WAITING
+                break;
+            }
+            case ReportState.InCharge:{
+                options = ACTIONS_TEAM_REPORT_AS_INCHARGE
+                break;
+            }
+            case ReportState.Done:{
+                options = ACTIONS_TEAM_REPORT_AS_DONE
+                break;
+            }
+        }
 
-        this.detail.setTitle(report.address,[
-            {'Cambia team': ''}
-        ])
+        this.detail.setTitle(report.address,options)
         this.detail.el.setAttribute('data-grade', report.grade)
         this.detail.build()
         
