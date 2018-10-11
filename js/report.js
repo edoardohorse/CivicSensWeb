@@ -324,7 +324,9 @@ class ManagerReport{
     showReport(report){
         
 
-        this.detail.setTitle(report.address,[1,2])
+        this.detail.setTitle(report.address,[
+            {'Cambia team': ''}
+        ])
         this.detail.el.setAttribute('data-grade', report.grade)
         this.detail.build()
         
