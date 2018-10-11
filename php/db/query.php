@@ -15,7 +15,7 @@ const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                     AND cdt.report		= r.id
                                     AND c.name          = ?
                                 GROUP BY r.id
-                                ORDER BY r.id DESC";
+                                ORDER BY r.state DESC, r.date DESC";
 
 const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
                                 FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
@@ -35,7 +35,7 @@ const QUERY_REPORT_BY_TEAM_BY_ID = QUERY_HEADER_REPORT."
                                     AND r.team          = tm.id
                                     AND cdt.report		= r.id
                                     AND tm.id         = ?
-                                    GROUP BY r.id
+                                    ORDER BY r.state DESC, r.date DESC
                                     ";
 
 const QUERY_REPORT_BY_ID = QUERY_HEADER_REPORT."

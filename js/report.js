@@ -34,9 +34,9 @@ class ManagerReport{
 
     get nReportSelected(){ return this.checkboxes.filter(this.checkSelected) }
 
-    constructor(){
+    constructor(url, name){
         this.reports = []
-        this.hub = new Hub(substitute(URL_FETCH_REPORTS_BY_CITY,['Grottaglie']), "GET") 
+        this.hub = new Hub(substitute( url, [name]), "GET") 
         this.reportsSelected = []
         this.checkboxes = []
         this.reportLastSelected = false
@@ -115,6 +115,7 @@ class ManagerReport{
 
     fetchAllReports(){
         this.deleteAllRows()
+        this.reports = []
         this.hub.onsuccess = (result) => {
             let reports
 
@@ -127,7 +128,7 @@ class ManagerReport{
             }
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
-                manager.addRow(this.reports[this.reports.length-1])
+                this.addRow(this.reports[this.reports.length-1])
             })
             
         }
@@ -191,9 +192,8 @@ class ManagerReport{
 
     addRow(report){
         
-        
         let parent = this.getParent(report)
-        let row = parent.insertRow(parent.children)
+        let row = parent.insertRow(parent.children[0].children.length)
 
          
         row.classList.add('row100')
@@ -318,27 +318,6 @@ class ManagerReport{
         let index =  this.reportsSelected.indexOf(report)
         this.reportsSelected[index].el.classList.remove('tr--selected') 
         this.reportsSelected.splice(index, 1)
-    }
-
-    fetchTeams(){
-        Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
-            onsuccess: (result) => { 
-                let res = JSON.parse(result.response)    
-                if(res.error){
-                    console.log('errore: '+res.message)
-                }
-                else{
-                    this.history = res.data
-                }              
-             }
-        })  
-    }
-
-    editTeam(){
-        let reportTeam          = document.getElementById('report__team')
-
-
-        newEl('option')
     }
 
     showReport(report){
