@@ -320,6 +320,26 @@ class ManagerReport{
         this.reportsSelected.splice(index, 1)
     }
 
+    fetchTeams(){
+        Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
+            onsuccess: (result) => { 
+                let res = JSON.parse(result.response)    
+                if(res.error){
+                    console.log('errore: '+res.message)
+                }
+                else{
+                    this.history = res.data
+                }              
+             }
+        })  
+    }
+
+    editTeam(){
+        let reportTeam          = document.getElementById('report__team')
+
+
+        newEl('option')
+    }
 
     showReport(report){
         
