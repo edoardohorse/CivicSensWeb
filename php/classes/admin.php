@@ -7,7 +7,7 @@ class Admin{
     private $reports = array();
 
 
-    function __constructor($name){
+    function __construct($name){
         $this->name = name;
     }
 
