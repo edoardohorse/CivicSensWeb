@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS team(
     id int NOT NULL AUTO_INCREMENT,
     name varchar(150) not null,
     type_report int,
+    n_member int not null,
 
     PRIMARY KEY(id),
     CONSTRAINT fk_team_type_report FOREIGN KEY(type_report) REFERENCES type_report(id) 
@@ -142,11 +143,11 @@ INSERT INTO user (email) VALUES
 ('iweek16@gmail.com');
 
 INSERT INTO team(name, type_report) VALUES
-('Enel1',1),
-('Enel2',1),
-('Enel3',1),
-('Enel4',1),
-('Enel5',1);
+('Enel1',1,5),
+('Enel2',1,6),
+('Enel3',1,3),
+('Enel4',1,10),
+('Enel5',1,)7;
 
 
 
