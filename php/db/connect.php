@@ -5,7 +5,7 @@ define('DB_USER','root');
 define('DB_PASS','');
 define('DB_NAME','my_civicsens');
 
-define('UPLOAD_PATH', 'uploads/');
+define('UPLOAD_PATH', '../../uploads/');
 
 
 $conn = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME) or die ('Could not connect to the database server' . mysqli_connect_error());

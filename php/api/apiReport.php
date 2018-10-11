@@ -1,9 +1,9 @@
 <?php
     // echo "debug";
-    include_once("query.php");
-    include_once("report.php");
-    include_once("connect.php");
-    include_once("responseReport.php");
+    include_once("../db/query.php");
+    include_once("../db/connect.php");
+    include_once("../classes/report.php");
+    include_once("../api/responseReport.php");
 
     $response = array();
 

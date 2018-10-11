@@ -2,7 +2,7 @@
 
 <?php
 
-$files = scandir("uploads");
+$files = scandir("../../uploads");
 unset($files[0]);
 unset($files[1]);
 var_dump($files);

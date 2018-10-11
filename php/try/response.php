@@ -1,5 +1,5 @@
 <?php
-    include_once("query.php");
+    include_once("../db/query.php");
 
     function getReportByCity($city){
         global $conn;

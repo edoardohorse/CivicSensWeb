@@ -1,8 +1,7 @@
 <?php
 
-include_once("query.php");
-include_once("connect.php");
-
+include_once("../db/query.php");
+include_once("../db/connect.php");
 
 function location($lan,$lng){
     return array('lan'=>$lan,'lng'=>$lng);    

@@ -1,7 +1,7 @@
 <?php
-    include_once("query.php");
+    include_once("../db/query.php");
+    include_once("../db/connect.php");
     include_once("response.php");
-    include_once("connect.php");
 
 
 
