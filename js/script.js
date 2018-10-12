@@ -53,6 +53,8 @@ function enable(el){
     window.managerDet = new ManagerDetails(document.body)
     window.team = new Team('Enel1')
 
+   
+
 })()
 function calcPhoto(){
     [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
@@ -60,3 +62,8 @@ function calcPhoto(){
         wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
     })
 }
+
+vex.dialog.buttons.YES.text = 'Finito'
+vex.dialog.buttons.NO.text = 'Annulla'
+
+vex.defaultOptions.className = 'vex-theme-default'

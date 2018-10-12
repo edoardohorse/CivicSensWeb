@@ -44,7 +44,7 @@ class ManagerReport{
         this.hub = new Hub(substitute( url, [name]), "GET") 
         this.reportsSelected = []
         this.checkboxes = []
-        this.reportLastSelected = false
+        this.reportLastSelected = null
         this.isMultipleSelection = false
         
         this.detail = new Details()
@@ -135,10 +135,17 @@ class ManagerReport{
                 this.reports.push(new Report(report))
                 this.addRow(this.reports[this.reports.length-1])
             })
+
+            //Aggiorno anche quello segnalato
+            this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
+
+            if(this.reportLastSelected)
+                this.showReport(this.reportLastSelected)
             
         }
         
         this.hub.connect()
+        
         
     }
 
@@ -163,7 +170,6 @@ class ManagerReport{
                 break;}
         }
     }
-    
     
     checkAddress(report){
         return report.address.includes(searchBar.value)
@@ -196,8 +202,7 @@ class ManagerReport{
         let callback = (result)=>{
             result = JSON.parse(result.response)
                 vex.dialog.alert({
-                        message: result.message,
-                        className: 'vex-theme-default'
+                        message: result.message
                 })
             
             this.fetchAllReports()
@@ -219,8 +224,7 @@ class ManagerReport{
         let callback = (result)=>{
             result = JSON.parse(result.response)
                 vex.dialog.alert({
-                        message: result.message,
-                        className: 'vex-theme-default'
+                        message: result.message
                 })
             
             this.fetchAllReports()
@@ -234,8 +238,7 @@ class ManagerReport{
                             }
                             ))
         vex.dialog.alert({
-            unsafeMessage: el,
-            className: 'vex-theme-default'
+            unsafeMessage: el
         })
         
         // reportToEdit.tmpHub.onsuccess = callback.bind(this)
@@ -247,6 +250,7 @@ class ManagerReport{
         Hub.connect(URL_FETCH_LIST_TEAM, "GET",
         {onsuccess:(result)=>{ this.teams = JSON.parse(result.response).data}})
     }
+
     addRow(report){
         
         let parent = this.getParent(report)
@@ -352,6 +356,7 @@ class ManagerReport{
 
     deselectLastReport(){
         this.reportLastSelected.el.classList.remove('tr--selected')
+        this.reportLastSelected = null
     }   
 
     selectLastReport(report){
@@ -399,7 +404,7 @@ class ManagerReport{
         this.detail.el.setAttribute('data-grade', report.grade)
         this.detail.build()
         
-        managerDet.show(this.detail)
+        managerDet.show(this.detail, this.deselectLastReport.bind(this))
         
         let reportDate          = document.getElementById('report__date')
         let reportState         = document.getElementById('report__state')
@@ -487,6 +492,7 @@ class Report{
              }
         })
     }
+    
     fetchPhotos(){
         Hub.connect(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
@@ -500,6 +506,7 @@ class Report{
              }
         })
     }
+
     fetchHistory(){
         Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
             onsuccess: (result) => { 
@@ -534,7 +541,7 @@ class Report{
         this.tmpHub.method = "POST"
         this.tmpHub.url = substitute(URL_UPDATE_HISTORY_REPORT,[this.id])
         this.tmpHub.cleanParam()
-        this.tmpHub.addParam('state',newMessage)
+        this.tmpHub.addParam('history',newMessage)
         this.tmpHub.connect()
     }
 

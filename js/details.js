@@ -14,17 +14,21 @@ class ManagerDetails{
         this.detailsSelected = null
     }
     
-    show(detail){
+    show(detail, onClose = null){
         if(this.details.indexOf(detail) > -1){
             this.el.appendChild(detail.el)
             this.detailsSelected = detail
             this.detailsSelected.el.classList.remove('details--hide')
-            this.detailsSelected.el.querySelector('.details__close').addEventListener('click',this.hide.bind(this))
+            this.detailsSelected.el.querySelector('.details__close').addEventListener('click',this.hide.bind(this, onClose))
         }
     }
 
-    hide(){
-        this.detailsSelected.el.classList.add('details--hide')
+    hide(callback){
+        if(this.detailsSelected)
+            this.detailsSelected.el.classList.add('details--hide')
+
+        if(callback)
+            callback()
     }
 }
 
