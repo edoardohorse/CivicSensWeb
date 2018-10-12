@@ -286,7 +286,8 @@ class ManagerReport{
         row.addEventListener('click', this.selectLastReport.bind(this,report))
         row.children[0].querySelector('input').addEventListener('click',(event)=>{
             
-            this.deselectLastReport()
+            if(this.reportLastSelected)
+                this.deselectLastReport()
             
 
             if(event.target.checked){

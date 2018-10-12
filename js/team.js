@@ -61,7 +61,9 @@ class Team{
         
     }
 
-    
+    deleteReports(){
+        
+    }
 }
 
 
