@@ -62,12 +62,13 @@ function newEl(node, toWrite) {
 
             if (node.data != undefined) {
                 for (var i in node.data) {
-                    var attr = document.createAttribute(i);
-                    // Don't use setAttribute( string, string) cause
-                    // doesn't respect the uppercase
-                    if(node.data[i])
-                        attr.value = node.data[i];
-                    el.setAttributeNode(attr);
+                    el[Object.keys(node.data)[0]] = node.data[i]
+                    // var attr = document.createAttribute(i);
+                    // // Don't use setAttribute( string, string) cause
+                    // // doesn't respect the uppercase
+                    // if(node.data[i])
+                    //     attr.value = node.data[i];
+                    // el.setAttributeNode(attr);
                 }
             }
 
@@ -142,7 +143,6 @@ function repeatEl(el, n, data = null, toWrite = undefined){
         }
 
         let e = newEl({el:el, data: attrs}, toWrite)
-
         d.appendChild(e)
     }
     return [].slice.call(d.children)

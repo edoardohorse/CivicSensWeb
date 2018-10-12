@@ -1,6 +1,7 @@
 // ============== GET
 const URL_FETCH_REPORTS_BY_CITY =  'apiReport/report/city/{#}/'
 const URL_FETCH_REPORTS_BY_TEAM =  'apiReport/report/team/{#}/'
+const URL_FETCH_LIST_TEAM       =  'apiReport/team/'
 const URL_FETCH_REPORT_BY_ID    =  'apiReport/report/id/{#}/'
 const URL_FETCH_PHOTOS_REPORT   =  'apiReport/report/photos/{#}/'
 const URL_FETCH_HISTORY_REPORT  =  'apiReport/report/history/{#}/'
@@ -191,19 +192,61 @@ class ManagerReport{
         }
 
         let reportToDelete = this.reports.find(rep=> rep.id==id)
-        Hub.connect(substitute(URL_DELETE_REPORT,[reportToDelete.id]), 'GET',{
-            onsuccess: (result) => { 
-                result = JSON.parse(result.response)
+
+        let callback = (result)=>{
+            result = JSON.parse(result.response)
                 vex.dialog.alert({
                         message: result.message,
                         className: 'vex-theme-default'
                 })
-                this.fetchAllReports()
-                
-             }
-        })
+            
+            this.fetchAllReports()
+        }
+
+        
+        reportToDelete.tmpHub.onsuccess = callback.bind(this)
+        reportToDelete.deleteReport();
     }
 
+    editTeam(id = null){ //TODO: da spostare in Ente
+        
+        if(id == null){
+            id = this.reportLastSelected.id
+        }
+
+        let reportToEdit = this.reports.find(rep=> rep.id==id)
+
+        let callback = (result)=>{
+            result = JSON.parse(result.response)
+                vex.dialog.alert({
+                        message: result.message,
+                        className: 'vex-theme-default'
+                })
+            
+            this.fetchAllReports()
+        }
+
+        let el = newEl('select')
+                    .appendChildren(
+                        repeatEl('option', this.teams.length ,
+                            {
+                            textContent:this.teams
+                            }
+                            ))
+        vex.dialog.alert({
+            unsafeMessage: el,
+            className: 'vex-theme-default'
+        })
+        
+        // reportToEdit.tmpHub.onsuccess = callback.bind(this)
+        // reportToEdit.ediTeam(newTeam);
+    }
+
+    fetchListOfTeam(){ //TODO: da spostare in ente
+        this.teams = []
+        Hub.connect(URL_FETCH_LIST_TEAM, "GET",
+        {onsuccess:(result)=>{ this.teams = JSON.parse(result.response).data}})
+    }
     addRow(report){
         
         let parent = this.getParent(report)

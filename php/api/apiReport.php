@@ -44,6 +44,10 @@
     
                 }
                 break;
+            }
+            case 'team':{
+                getListOfTeams();
+                break;
             }           
     
         }

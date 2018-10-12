@@ -29,6 +29,22 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
+function  getListOfTeams(){
+    global $conn;
+
+    $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
+    $teams = array();
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($row = $result->fetch_assoc()){
+        array_push($teams, $row['name']);
+    }
+
+
+    reply('',false, $teams);
+
+}
+
 function getReportsByCity($city){
     global $conn;
    
