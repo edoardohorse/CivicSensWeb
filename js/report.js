@@ -441,8 +441,8 @@ class ManagerReport{
             
             for(let i=0; i< report.history.length;i++){
                 
-                newEl('span,, report__history__date', reportHistory).call('textContent', report.history[i].date)
                 newEl('span,, report__history__team', reportHistory).call('textContent', report.history[i].team)
+                newEl('span,, report__history__date', reportHistory).call('textContent', report.history[i].date)
                 newEl('p,, report__history__note', reportHistory).call('textContent', report.history[i].note)
             }
 
