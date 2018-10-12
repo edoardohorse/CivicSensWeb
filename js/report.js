@@ -136,11 +136,15 @@ class ManagerReport{
                 this.addRow(this.reports[this.reports.length-1])
             })
 
-            //Aggiorno anche quello segnalato
-            this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
+            
+            
 
-            if(this.reportLastSelected)
+            if(this.reportLastSelected){
+                // Aggiorno anche quello segnalato
+                this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
                 this.showReport(this.reportLastSelected)
+            }
+                
             
         }
         
