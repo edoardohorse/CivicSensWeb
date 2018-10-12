@@ -17,9 +17,9 @@ abstract class Admin{
     }
 
 
-    protected function deleteReport($id){
-        $tmp = $reports[$id];
-        unset($repors[$id]);
+    public function deleteReport($id){
+        $tmp = $this->reports[$id];
+        unset($this->reports[$id]);
         return $tmp->deleteReport();
     }
 

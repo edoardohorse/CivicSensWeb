@@ -38,7 +38,7 @@ class ActionOption{
 
         this.el.textContent = this.title
         this.el.title = this.description
-        this.el.addEventListener('click',callback)
+        this.el.addEventListener('click',_=>{callback()})
 
         if(this.isCritic)
             this.el.classList.add('option--critic')

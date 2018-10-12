@@ -5,7 +5,7 @@ include_once("../db/connect.php");
 include_once("../classes/report.php");
 include_once("../classes/team.php");
 
-const teamName = 'Enel1';
+const teamName = 'Enel2';
 
 abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
@@ -132,8 +132,10 @@ function editState($id, $newState){
 }
 
 function deleteReport($id){
-    $report = getReportById($id);
-    if($report->deleteReport()){
+    $team = new Team(teamName);
+    $team->fetchReports();
+    
+    if($team->deleteReport($id)){
         reply(MessageSuccess::DeleteReport,false);
     }
     else{

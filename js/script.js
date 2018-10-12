@@ -48,12 +48,15 @@ function enable(el){
     el.style.display ="block"
 }
 
-function init(){
-    [].slice.call(document.querySelectorAll(".report__photo")).forEach(wrapper=>{
+
+(function(){
+    window.managerDet = new ManagerDetails(document.body)
+    window.team = new Team('Enel1')
+
+})()
+function calcPhoto(){
+    [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
         let n = wrapper.childElementCount
-        wrapper.style.width = `calc( ${ n * WIDTH_PHOTO}px + ${n}em`;
+        wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
     })
 }
-
-
-window.addEventListener("DOMContentLoaded",init)

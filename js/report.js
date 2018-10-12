@@ -185,11 +185,21 @@ class ManagerReport{
     }
 
     
-    deleteReport(id){
-        reportToDelete = this.reports[id]
-        Hub.connect(`${URL_DELETE_REPORT}/${reportToDelete.id}`, 'POST',{
+    deleteReport(id = null){
+        if(id == null){
+            id = this.reportLastSelected.id
+        }
+
+        let reportToDelete = this.reports.find(rep=> rep.id==id)
+        Hub.connect(substitute(URL_DELETE_REPORT,[reportToDelete.id]), 'GET',{
             onsuccess: (result) => { 
-                reportToDelete.deleteReport
+                result = JSON.parse(result.response)
+                vex.dialog.alert({
+                        message: result.message,
+                        className: 'vex-theme-default'
+                })
+                this.fetchAllReports()
+                
              }
         })
     }

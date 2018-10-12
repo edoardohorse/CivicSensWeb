@@ -109,105 +109,13 @@
 
     
     <script src="js/utils.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/details.js"></script>
     <script src="js/team.js"></script>
     <script src="js/report.js"></script>
     <script src="js/hub.js"></script>
     <script src="js/vex.combined.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/actions.js"></script>
 
-    <script>
-        
-
-    let managerDet = new ManagerDetails(document.body)
-    let team = new Team('Enel1')
-
-    function calcPhoto(){
-        [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
-            let n = wrapper.childElementCount
-            wrapper.style.width = `calc( ${ n * 300}px + ${n+.7}em`;
-        })
-    }
-    
-    
-    vex.dialog.alert({
-        message: 'Testing the wireframe theme.',
-        className: 'vex-theme-default' // Overwrites defaultOptions
-    })
-  /*   let det = new Details()
-    det.setTitle("Via Socrate, 15")
-    det.addRow(
-        {
-            label   :'Creato il:',
-            content :'17:01 21/05/2018',
-            divided : true,
-            col     : 6
-        },
-        {
-            label   :'Stato',
-            content : newEl('div,,report__badge').call('textContent','In attesa'),
-            divided : true,
-            col     : 6,
-            divided : false
-        }
-
-    )
-    det.addRow({
-            label   :'Tipo',
-            content :'Smottamento manto stradale',
-            divided : true,
-            col     : 12
-        })
-
-    det.addRow({
-            label   :'Team',
-            content :'Enel1',
-            divided : true,
-            col     : 12
-        })
-    
-    det.addRow({
-            label   :'Descrizione',
-            content : newEl({
-                                el:'textarea',
-                                data:{
-                                    disabled:null
-                                }
-                            }).call('textContent', 'Il lampione va aggiustato!'),
-            divided : true,
-            col     : 12
-        },)
-    det.addRow({
-            label   :'Foto',
-            content : newEl('div,,photo')
-                        .appendChildren(repeatEl('img',3,
-                                    {
-                                        src:[
-                                            "uploads/IMG_20180607_185856.jpg",
-                                            "uploads/IMG_20180611_135255.jpg",
-                                            "uploads/prova1.jpg"
-                                        ]
-                                    }
-                                    )),
-            divided : true,
-            col     : 12,
-            slider  : true
-        })
-    det.addRow({
-            label   :'Storico',
-            content : newEl('div,report__history'),
-            divided : true,
-            col     : 6
-        })
-
-    det.build()
-    det.el.setAttribute('data-grade','LOW')
-    document.body.appendChild(det.el)
-    calcPhoto(); */
-    
-
-    
-
-    </script>
     
 </html>
