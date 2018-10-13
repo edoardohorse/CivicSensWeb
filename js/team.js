@@ -4,11 +4,7 @@ class Team{
         this.manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
         this.manager.fetchAllReports()
 
-    }
-
-    setReportAsInCharge(){
-        let report  = this.manager.reportLastSelected
-        report.tmpHub.onsuccess = (result)=>{
+        this.refresh = (result)=>{
             result = JSON.parse(result.response)
             vex.dialog.alert({
                 message: result.message                
@@ -16,19 +12,20 @@ class Team{
 
             this.manager.fetchAllReports()
         }
+    }
+
+
+    setReportAsInCharge(){
+        let report  = this.manager.reportLastSelected
+        report.tmpHub.onsuccess = this.refresh.bind(this)
+        
         report.editState( ReportState.InCharge )
     }
 
     setReportAsDone(){
         let report  = this.manager.reportLastSelected
-        report.tmpHub.onsuccess = (result)=>{
-            result = JSON.parse(result.response)
-            vex.dialog.alert({
-                message: result.message                
-            })
+        report.tmpHub.onsuccess = this.refresh.bind(this)
 
-            this.manager.fetchAllReports()
-        }
         report.editState( ReportState.Done )
 
     }
@@ -39,14 +36,7 @@ class Team{
 
     updateHistoryOfReport(){
         let report  = this.manager.reportLastSelected
-        report.tmpHub.onsuccess = (result)=>{
-            result = JSON.parse(result.response)
-            vex.dialog.alert({
-                message: result.message                
-            })
-
-            this.manager.fetchAllReports()
-        }
+        report.tmpHub.onsuccess = this.refresh.bind(this)
         
         vex.dialog.open({
             message:'Inserisci una nuova nota',
@@ -61,8 +51,30 @@ class Team{
         
     }
 
+
     deleteReports(){
         
+        if(!this.manager.reportsSelected)
+            return
+
+        var ids =  this.manager.reportsSelected.map(a=>a.id)
+        
+        let hub = new Hub(URL_DELETE_REPORTS,"POST",{id:JSON.stringify(ids)},{
+            onsuccess: this.refresh.bind(this)
+        })
+        
+        
+        hub.connect()
+        
+        
+
+    }
+
+    deleteReport(){
+        let reportToDelete =this.manager.reportLastSelected
+
+        reportToDelete.tmpHub.onsuccess = this.refresh.bind(this)
+        reportToDelete.deleteReport();
     }
 }
 

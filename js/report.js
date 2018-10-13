@@ -42,7 +42,7 @@ class ManagerReport{
     constructor(url, name){
         this.reports = []
         this.hub = new Hub(substitute( url, [name]), "GET") 
-        this.reportsSelected = []
+        this.reportsSelected = null
         this.checkboxes = []
         this.reportLastSelected = null
         this.isMultipleSelection = false
@@ -86,7 +86,7 @@ class ManagerReport{
                                     id:'report__description',
                                     thieclass:'col-12',
                                     data:{
-                                        disabled:null
+                                        disabled:true
                                     }
                                 }),
                 divided : true,
@@ -193,28 +193,6 @@ class ManagerReport{
 
     checkSelected(checkbox){
         return checkbox.checked == true
-    }
-
-    
-    deleteReport(id = null){
-        if(id == null){
-            id = this.reportLastSelected.id
-        }
-
-        let reportToDelete = this.reports.find(rep=> rep.id==id)
-
-        let callback = (result)=>{
-            result = JSON.parse(result.response)
-                vex.dialog.alert({
-                        message: result.message
-                })
-            
-            this.fetchAllReports()
-        }
-
-        
-        reportToDelete.tmpHub.onsuccess = callback.bind(this)
-        reportToDelete.deleteReport();
     }
 
     editTeam(id = null){ //TODO: da spostare in Ente
@@ -376,6 +354,9 @@ class ManagerReport{
     }
 
     selectReport(report){
+        if(!this.reportsSelected)
+            this.reportsSelected = []
+
         this.reportsSelected.push(report)
         report.el.classList.add('tr--selected')    
         this.showReport(report)
@@ -385,6 +366,8 @@ class ManagerReport{
         let index =  this.reportsSelected.indexOf(report)
         this.reportsSelected[index].el.classList.remove('tr--selected') 
         this.reportsSelected.splice(index, 1)
+        if(this.reportsSelected.length = 0)
+            this.reportsSelected = null
     }
 
     showReport(report){

@@ -94,7 +94,7 @@ class Hub  {
     set onprogress(fn) { this.req.onprogress = this._onprogress = fn }
 
 
-    constructor(url, method, param, _async, callbacks) {
+    constructor(url, method, param, callbacks = {}, _async) {
 
         //super()
         this.req = new XMLHttpRequest()
@@ -113,19 +113,7 @@ class Hub  {
             this._events[ i ] = temp
         }
 
-        if (typeof method == "object") {
-            checkParam.call(this, method)
-            method = "GET"
-        }
-        else if (typeof param == "object") {
-            checkParam.call(this, param)
-            param = ""
-        }
-        else if (typeof _async == "object") {
-            checkParam.call(this, _async)
-            _async = true
-        }
-
+        checkCallbacks.call(this,callbacks)
 
         this.url = url || null
         this.method = method || "GET"
@@ -133,7 +121,9 @@ class Hub  {
         this.async = _async || true
 
 
-        function checkParam(obj) {
+
+
+        function checkCallbacks(obj) {
             let arr = Object.keys(obj)
             //if (typeof Object.keys(arr)[0] == "function") {
             arr.forEach((callback) => {

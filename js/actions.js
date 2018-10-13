@@ -1,5 +1,5 @@
 // ====== Actions for ente
-const ACTION_OPTION_DELETE_REPORT               = new ActionOption('Elimina segnalazione', team.manager.deleteReport.bind(team.manager), "Cancella la segnalazione permanentemente",true)
+const ACTION_OPTION_DELETE_REPORT               = new ActionOption('Elimina segnalazione',      team.deleteReport.bind(team), "Cancella la segnalazione permanentemente",true)
 const ACTION_OPTION_CHANGE_TEAM                 = new ActionOption('Cambia team',               ()=>{console.log('Cambio team')}, "Assegna un'altro team a questa segnalazione")
 
 
@@ -9,6 +9,7 @@ const ACTION_OPTION_SET_REPORT_AS_INCHARGE      = new ActionOption('Prendi in ca
 const ACTION_OPTION_SET_REPORT_AS_DONE          = new ActionOption('Chiudi segnalazione',     team.setReportAsDone.bind(team),          "Imposta la segnalazione come finita")
 const ACTION_OPTION_UPDATE_HISTORY_REPORT       = new ActionOption('Aggiorna progresso nota', team.updateHistoryOfReport.bind(team),    "Inserisci una nota allo storico della segnalazione")
 const ACTION_OPTION_RE_SET_REPORT_AS_INCHARGE   = new ActionOption('Riporta in lavorazione',  team.reSetReportAsInCharge.bind(team),    "Reimposta la segnalzione come in lavorazione")
+const ACTION_OPTION_DELETE_REPORTS              = new ActionOption('Elimina le segnalazione selezionate',      team.deleteReports.bind(team), "Cancella le segnalazione permanentemente",true)
 
 const ACTIONS_TEAM_REPORT_AS_WAITING = [
         ACTION_OPTION_SET_REPORT_AS_INCHARGE,
