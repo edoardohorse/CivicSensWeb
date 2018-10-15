@@ -20,8 +20,7 @@ Object.freeze(ReportState)
 
 const CLASS_ROW_HIDDEN = 'row--hide'
 
-const tbodyReportNotFinished    = document.getElementById('report--notfinished').querySelectorAll('table')[1]
-const tbodyReportFinished       = document.getElementById('report--finished').querySelectorAll('table')[1]
+
 const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
@@ -46,6 +45,7 @@ class ManagerReport{
         this.checkboxes = []
         this.reportLastSelected = null
         this.isMultipleSelection = false
+        this.table = new TableReport()
         
         this.detail = new Details()
         // this.detail.setTitle("Via Socrate, 15",[1,2])
@@ -119,7 +119,7 @@ class ManagerReport{
     }
 
     fetchAllReports(){
-        this.deleteAllRows()
+        this.table.deleteAllRows()
         this.reports = []
         this.hub.onsuccess = (result) => {
             let reports
@@ -133,7 +133,7 @@ class ManagerReport{
             }
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
-                this.addRow(this.reports[this.reports.length-1])
+                this.table.addRow.call(this,this.reports[this.reports.length-1])
             })
 
             
@@ -142,7 +142,7 @@ class ManagerReport{
             if(this.reportLastSelected){
                 // Aggiorno anche quello segnalato
                 this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
-                this.showReport(this.reportLastSelected)
+                this.showReport.bind(this,this.reportLastSelected)
             }
                 
             
@@ -161,16 +161,16 @@ class ManagerReport{
 
         switch(filter){
             case 'Indirizzo':{                
-                this.hideRowButThese(this.reports.filter(this.checkAddress))
+                this.hideRowButThese.call(this,this.reports.filter(this.checkAddress))
                 break;}
             case 'Città':{
-                this.hideRowButThese(this.reports.filter(this.checkCity))
+                this.hideRowButThese.call(this,this.reports.filter(this.checkCity))
                 break;}
             case 'Tipo':{
-                this.hideRowButThese(this.reports.filter(this.checkType))
+                this.hideRowButThese.call(this,this.reports.filter(this.checkType))
                 break;}
             case 'Grado':{
-                this.hideRowButThese(this.reports.filter(this.checkGrade))
+                this.hideRowButThese.call(this,this.reports.filter(this.checkGrade))
                 break;}
         }
     }
@@ -233,109 +233,6 @@ class ManagerReport{
         {onsuccess:(result)=>{ this.teams = JSON.parse(result.response).data}})
     }
 
-    addRow(report){
-        
-        let parent = this.getParent(report)
-        let row = parent.insertRow(parent.children[0].children.length)
-
-         
-        row.classList.add('row100')
-        row.classList.add('body')
-
-        let gradeText = "";
-        switch(report.grade){
-            case 'LOW': {gradeText='bassa';break;}
-            case 'INTERMEDIATE': {gradeText='media';break;}
-            case 'HIGH':{gradeText='alta';break;}
-        }
-        
-        row.innerHTML += `<td class="cell100 column1"><input type="checkbox"></td>`
-        row.innerHTML += `<td class="cell100 column2">${report.address}</td>`
-        row.innerHTML += `<td class="cell100 column3">${report.date}</td>`
-        row.innerHTML += `<td class="cell100 column4">${report.state}</td>`
-        row.innerHTML += `<td class="cell100 column5">${report.type}</td>`
-        row.innerHTML += `<td class="cell100 column6"><i class="report__grade__ball" title="Gravità ${gradeText}" data-grade=${report.grade}></i></td>`
-
-        row.report = report
-        report.el = row
-        report.el.hide = false
-
-        this.checkboxes.push(row.children[0].querySelector('input'))
-        row.addEventListener('click', this.selectLastReport.bind(this,report))
-        row.children[0].querySelector('input').addEventListener('click',(event)=>{
-            
-            if(this.reportLastSelected)
-                this.deselectLastReport()
-            
-
-            if(event.target.checked){
-                this.isMultipleSelection = true
-                this.selectReport(event.target.parentElement.parentElement.report)
-            }
-            else{
-                if(this.nReportSelected == 0)
-                    this.isMultipleSelection = false
-                    this.deselectReport(event.target.parentElement.parentElement.report)
-                    
-            }
-
-            event.stopPropagation()
-            
-        })
-        
-    }
-
-    deleteRow(report){
-        this.getParent(report).deleteRow(this.reports.indexOf(report))
-    }
-
-    hideRowButThese(reportsToShow){
-        this.reports.forEach(rep=>{
-            if(reportsToShow.indexOf(rep) == -1 ){
-                this.hideRow(rep)
-            }
-        })
-    }
-
-    toggleRow(report){
-        if(report.row.hide){
-            this.showRow(report)
-        }
-        else{
-            this.hideRow(report)
-        }
-    }
-
-    hideRow(report){
-        if(report.el.hide == true)
-            return
-
-        report.el.hide = true
-        report.el.classList.add(CLASS_ROW_HIDDEN)
-        report.el.removeEventListener('click', this.showReport.bind(this,report))
-    }
-
-    showRow(report){
-        if(report.el.hide == false)
-            return
-
-        report.el.hide = false
-        report.el.classList.remove(CLASS_ROW_HIDDEN)
-        report.el.removeEventListener('click', this.showReport.bind(this,report))
-    }
-
-    showAllRow(){
-        this.reports.forEach(rep=>this.showRow(rep))
-    }
-
-    deleteAllRows(){
-        tbodyReportNotFinished.tBodies[0].innerHTML = ""
-        tbodyReportFinished.tBodies[0].innerHTML = ""
-    }
-
-    getParent(report){
-        return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
-    }
 
     deselectLastReport(){
         this.reportLastSelected.el.classList.remove('tr--selected')
@@ -366,7 +263,7 @@ class ManagerReport{
         let index =  this.reportsSelected.indexOf(report)
         this.reportsSelected[index].el.classList.remove('tr--selected') 
         this.reportsSelected.splice(index, 1)
-        if(this.reportsSelected.length = 0)
+        if(this.reportsSelected.length == 0)
             this.reportsSelected = null
     }
 
@@ -440,6 +337,10 @@ class ManagerReport{
         
 
         // console.log(report)
+    }
+
+    getParent(report){
+        return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
     }
 }
 
