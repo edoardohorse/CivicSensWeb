@@ -3,9 +3,11 @@
 include_once("../db/connect.php");
 include_once("../db/query.php");
 include_once("admin.php");
+include_once("report.php");
 
 
 class Team extends Admin{
+    
 
     private $id;
     private $typeReport;

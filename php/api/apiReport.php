@@ -4,7 +4,8 @@
     include_once("../db/connect.php");
     include_once("../classes/report.php");
     include_once("../api/responseReport.php");
-
+    include_once('../classes/ente.php');
+    
     $response = array();
 
     // var_dump($_POST);
@@ -49,6 +50,12 @@
                 getListOfTeams();
                 break;
             }           
+            case 'ente':{
+                $e = new Ente('ente');
+                
+                reply('',false,$e->serialize()) ;
+                break;
+            }
     
         }
     }

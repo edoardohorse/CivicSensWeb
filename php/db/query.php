@@ -78,10 +78,20 @@ const QUERY_NEW_LOCATION    = "INSERT INTO location(lan, lng) VALUES( ?, ? )";
 const QUERY_NEW_REPORT      = "INSERT INTO report(city, description, location, address,grade,date,type_report, team)
                                 VALUES( ? , ? , ? , ?, ?, NOW(), ?, ?)";    
                                 
-const QUERY_FETCH_LIST_TEAM = " SELECT tm.id, tm.name, count(r.id) as n_report
-                                    FROM report as r, team as tm
-                                    WHERE r.team = tm.id
-                                    group by r.team";
+const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
+                                                    FROM report as r, (
+                                                        SELECT team.id, team.name, tp.name as type_report, tp.id as type_report_id
+					                                        FROM team, type_report as tp
+					                                        WHERE team.type_report = ?
+					                                        AND team.type_report = tp.id
+				                                        )as tm
+                                                WHERE r.team = tm.id
+                                                AND r.type_report = tm.type_report_id
+                                                group by r.team";
+
+const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id
+                                    FROM team as tm, type_report as tp
+                                    WHERE  tm.type_report = tp.id";
 
 // Usata per la creazione di un report
 // permette di ottenere l'id del team con il minor numero
