@@ -1,6 +1,7 @@
-class Team{
+class Team extends Admin{
     constructor(name){
-        this.name = name
+        super(name)
+        this.nMember = null
         this.manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
         this.manager.fetchAllReports()
 
@@ -14,6 +15,7 @@ class Team{
         }
     }
 
+    fetchInfo(){}
 
     setReportAsInCharge(){
         let report  = this.manager.reportLastSelected
@@ -51,31 +53,6 @@ class Team{
         
     }
 
-
-    deleteReports(){
-        
-        if(!this.manager.reportsSelected)
-            return
-
-        var ids =  this.manager.reportsSelected.map(a=>a.id)
-        
-        let hub = new Hub(URL_DELETE_REPORTS,"POST",{id:JSON.stringify(ids)},{
-            onsuccess: this.refresh.bind(this)
-        })
-        
-        
-        hub.connect()
-        
-        
-
-    }
-
-    deleteReport(){
-        let reportToDelete =this.manager.reportLastSelected
-
-        reportToDelete.tmpHub.onsuccess = this.refresh.bind(this)
-        reportToDelete.deleteReport();
-    }
 }
 
 
