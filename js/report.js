@@ -229,7 +229,7 @@ class ManagerReport{
 
     fetchListOfTeam(){ //TODO: da spostare in ente
         this.teams = []
-        Hub.connect(URL_FETCH_LIST_TEAM, "GET",
+        Hub.connect(URL_FETCH_LIST_TEAM, 'GET', null,
         {onsuccess:(result)=>{ this.teams = JSON.parse(result.response).data}})
     }
 
@@ -366,7 +366,7 @@ class Report{
     
 
     fetchInfo(){
-        Hub.connect(substitute(URL_FETCH_REPORT_BY_ID,[this.id]), 'GET',{
+        Hub.connect(substitute(URL_FETCH_REPORT_BY_ID,[this.id]), 'GET', null,{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)
                 if(res.error){
@@ -383,7 +383,7 @@ class Report{
     }
     
     fetchPhotos(){
-        Hub.connect(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET',{
+        Hub.connect(substitute(URL_FETCH_PHOTOS_REPORT,[this.id]), 'GET', null,{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
@@ -397,7 +397,7 @@ class Report{
     }
 
     fetchHistory(){
-        Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET',{
+        Hub.connect(substitute(URL_FETCH_HISTORY_REPORT,[this.id]), 'GET', null,{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)    
                 if(res.error){
