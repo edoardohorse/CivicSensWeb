@@ -239,8 +239,8 @@ class Hub  {
 
     static connect(...param) {
         //debugger
-        var [url, method, param, _async] = param
-        let temp = new this(url, method, param, _async).connect()
+        var [url, method, param, callbacks, _async] = param
+        let temp = new this(url, method, param, callbacks, _async).connect()
 
         return temp
 
