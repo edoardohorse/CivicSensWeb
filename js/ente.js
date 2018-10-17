@@ -16,7 +16,7 @@ class Ente extends Admin{
 
     addTeam(){}
 
-    deleteTeam(){}
+    deleteTeam(){}  
 
 
 }

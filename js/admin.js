@@ -11,7 +11,7 @@ class Admin{
 
         var ids =  this.manager.reportsSelected.map(a=>a.id)
         
-        let hub = new Hub(URL_DELETE_REPORTS,"POST",{id:JSON.stringify(ids)},{
+        let hub = new Hub(URL_DELETE_REPORTS,'POST', null,{id:JSON.stringify(ids)},{
             onsuccess: this.refresh.bind(this)
         })
         
