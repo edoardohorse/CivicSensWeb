@@ -142,7 +142,7 @@ class ManagerReport{
             if(this.reportLastSelected){
                 // Aggiorno anche quello segnalato
                 this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
-                this.showReport.bind(this,this.reportLastSelected)
+                this.showReport.call(this,this.reportLastSelected)
             }
                 
             
