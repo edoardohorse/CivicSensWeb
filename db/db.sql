@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS city(
 CREATE TABLE IF NOT EXISTS user(
     id int NOT NULL UNIQUE AUTO_INCREMENT,
     email varchar(100) NOT NULL UNIQUE,
+    type enum('Ente','Team','User') DEFAULT 'User',
+    password char(32) NOT NULL,
+
 
     PRIMARY KEY(email)
 );
