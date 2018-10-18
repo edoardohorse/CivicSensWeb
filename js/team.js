@@ -1,9 +1,10 @@
 class Team extends Admin{
-    constructor(name){
+    constructor(name, nMember = null, reports = null, typeReport = null){
         super(name)
-        this.nMember = null
+        this.nMember = nMember
         this.manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
-        this.manager.fetchAllReports()
+        this.typeReport = typeReport
+        this.manager.fetchAllReports(reports)
 
         this.refresh = (result)=>{
             result = JSON.parse(result.response)

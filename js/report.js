@@ -118,9 +118,17 @@ class ManagerReport{
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
     }
 
-    fetchAllReports(){
+    fetchAllReports(reports = null){
         this.table.deleteAllRows()
         this.reports = []
+
+        var importRep = (reports)=>{
+            reports.forEach(report=>{
+                this.reports.push(new Report(report))
+                this.table.addRow.call(this,this.reports[this.reports.length-1])
+            })
+        }
+
         this.hub.onsuccess = (result) => {
             let reports
 
@@ -131,14 +139,9 @@ class ManagerReport{
             else{
                 reports = res.data
             }
-            reports.forEach(report=>{
-                this.reports.push(new Report(report))
-                this.table.addRow.call(this,this.reports[this.reports.length-1])
-            })
-
+                    
+            importRep(reports)
             
-            
-
             if(this.reportLastSelected){
                 // Aggiorno anche quello segnalato
                 this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
@@ -148,8 +151,13 @@ class ManagerReport{
             
         }
         
-        this.hub.connect()
-        
+        if(reports){
+            importRep(reports)
+        }
+        else{
+            this.hub.connect()
+        }
+       
         
     }
 
