@@ -65,6 +65,13 @@ class Team extends Admin{
         if($this->reports[$id]->getState() == ReportState::InCharge)
             return $this->reports[$id]->updateHistory($message);
     }
+
+    public function serializeTeam(){
+        return array('nMember'=> $this->nMember,
+                    'name'=>$this->name,
+                    'typeReport'=>$this->typeReport,
+                    'reports'=>$this->serializeReports());
+    }
 }
 
 

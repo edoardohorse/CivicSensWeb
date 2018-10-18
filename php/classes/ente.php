@@ -52,13 +52,16 @@ class Ente extends Admin{
         for($i = 0; $i< count($this->allReports); $i++){
             
             $teams = array();
-            foreach($this->allReports[$i]->teams as $key=>$value){
-                $teamSerialized =  $value->serializeReports();
-                array_push($teams, $teamSerialized);
+            foreach($this->allReports[$i]->teams as $key=>$tmpTeam){
+                
+                array_push($teams, $tmpTeam->serializeTeam());
+                
             }
+            // var_dump($teams);
             array_push($result, $this->allReports[$i]);
             $result[$i]->teams = $teams;
-            // var_dump(json_encode($result));
+            
+            // var_dump($result[$i]->teams[0]);
             
         }
         return $result;
