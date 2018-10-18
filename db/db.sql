@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS my_civicsens;
+
+USE my_civicsens;
+
 CREATE TABLE IF NOT EXISTS location(
     id int NOT NULL AUTO_INCREMENT,
     lan double NOT NULL,
@@ -247,7 +251,7 @@ INSERT INTO team(name, type_report,n_member) VALUES
 ('Idraulico2',2,6),
 ('Idraulico3',2,3),
 ('Idraulico4',2,10),
-('Idraulico5',2,7);
+('Idraulico5',2,7),
 ('Stradale1',3,5),
 ('Stradale2',3,6),
 ('Stradale3',3,3),
@@ -334,7 +338,7 @@ VALUES
 (1,'Descrizione prova idro 29','Via prova idro 29',70, null,'HIGH',2,5,NOW()),
 (1,'Descrizione prova idro 30','Via prova idro 30',71, null,'HIGH',2,5,NOW()),
 (1,'Descrizione prova idro 31','Via prova idro 31',72, null,'HIGH',2,5,NOW()),
-(1,'Descrizione prova idro 32','Via prova idro 32',73, null,'HIGH',2,5,NOW());
+(1,'Descrizione prova idro 32','Via prova idro 32',73, null,'HIGH',2,5,NOW()),
 
 -- ========= Team Smottamento
 (1,'Descrizione prova smott 1','Via prova smott idro 1',74, null,'LOW',3,1,NOW()),
