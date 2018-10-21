@@ -23,13 +23,8 @@ abstract class Admin{
         return $tmp->deleteReport();
     }
 
-    public function serializeReports(){
-        $result = array();
-        foreach($this->reports as $key=>$value){
-            array_push($result, $this->reports [$key]->serialize());
-        }
-        return $result;
-    }
+    abstract public function serialize();
+    abstract public function serializeReports();
 
 }
 

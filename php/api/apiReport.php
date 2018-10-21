@@ -52,9 +52,19 @@
             }           
             case 'ente':{
                 $e = new Ente('ente');
-                
-                reply('',false,$e->serialize()) ;
-                break;
+                switch($request[1]){
+                    case 'reports':{                       // apiReport/ente/reports/
+                    reply('',false,$e->serializeReports());
+                        break;
+                    };
+                    case 'teams':{                       // apiReport/ente/teams/
+                        reply('',false,$e->serializeTeams());
+                        break;
+                    };
+                    default:{                            // apiReport/ente/
+                        reply('',false,$e->serialize());
+                    }
+                }
             }
     
         }

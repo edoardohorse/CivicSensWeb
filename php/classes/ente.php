@@ -4,17 +4,12 @@ include_once("../db/connect.php");
 include_once("../db/query.php");
 include_once("team.php");
 
-class TypeReport{
-    public function __construct($name, $id){
-        $this->name = $name;
-        $this->id = $id;
-        $this->teams = array();
-    }
-}
+
 
 class Ente extends Admin{
 
-    public $allReports = array();
+    public $reports = array();
+    public $teams = array();
 
     public function __construct($name){
         parent::__construct($name);
@@ -31,39 +26,51 @@ class Ente extends Admin{
         $i=0;
         $nameTypeReport = '';
         while($row = $res->fetch_assoc()){
-            if($nameTypeReport == '' || $nameTypeReport != $row['type_report']){
-                $nameTypeReport = $row['type_report'];
-                $this->allReports[$i] = new TypeReport( $nameTypeReport, $row['type_report_id']);
-                $i++;
-                // var_dump($nameTypeReport);
-            }
-            
             $team = new Team( $row['name'] );
             $team->fetchReports();
-            array_push( $this->allReports[$i-1]->teams, $team);
+            array_push( $this->teams, $team);
         }
 
         // var_dump($this->allReports[0]);
     }
 
+
+
     public function serialize(){
         $result = array();
         
-        for($i = 0; $i< count($this->allReports); $i++){
+        foreach($this->teams as $key=>$tmpTeam){   
+            $team = $tmpTeam->serialize();
+            $team['reports'] = $tmpTeam->serializeReports();
+            array_push($result, $team);                
+        };
             
-            $teams = array();
-            foreach($this->allReports[$i]->teams as $key=>$tmpTeam){
-                
-                array_push($teams, $tmpTeam->serializeTeam());
-                
-            }
-            // var_dump($teams);
-            array_push($result, $this->allReports[$i]);
-            $result[$i]->teams = $teams;
+        
+        return $result;
+    }
+    public function serializeTeams(){
+        $result = array();
+        
+        foreach($this->teams as $key=>$tmpTeam){   
+            array_push($result, $tmpTeam->serialize());                
+        };
             
-            // var_dump($result[$i]->teams[0]);
-            
+        
+        return $result;
+    }
+
+    public function serializeReports(){
+        $result = array();
+        $c=0;
+        // var_dump($this->teams);die();
+        foreach($this->teams as $key=>$tmpTeam){   
+            // var_dump($tmpTeam);
+            foreach($tmpTeam->reports as $key=>$rep){   
+                $result[$c++] = $rep->serialize();
+            }              
         }
+            
+        // var_dump($result);die();
         return $result;
     }
 }

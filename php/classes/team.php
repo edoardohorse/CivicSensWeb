@@ -66,11 +66,18 @@ class Team extends Admin{
             return $this->reports[$id]->updateHistory($message);
     }
 
-    public function serializeTeam(){
+    public function serialize(){
         return array('nMember'=> $this->nMember,
                     'name'=>$this->name,
-                    'typeReport'=>$this->typeReport,
-                    'reports'=>$this->serializeReports());
+                    'typeReport'=>$this->typeReport);
+    }
+
+    public function serializeReports(){
+        $result = array();
+        foreach($this->reports as $key=>$value){
+            array_push($result, $this->reports [$key]->serialize());
+        }
+        return $result;
     }
 }
 
