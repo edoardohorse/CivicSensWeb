@@ -25,16 +25,14 @@ function closeReportPhoto(id){
 }
 
 function showReportNotFinished(){
-    listReportFinished.classList.add(CLASS_LIST_REPORT_HIDDEN)
-    listReportNotFinished.classList.remove(CLASS_LIST_REPORT_HIDDEN)
-
+    manager.tableSelected = manager.tableReportNotFinished
+    
     chooserReportNotFinished.classList.add(CLASS_CHOOSER_SELECTED)
     chooserReportFinished.classList.remove(CLASS_CHOOSER_SELECTED)
 }
 
 function showReportFinished(){
-    listReportNotFinished.classList.add(CLASS_LIST_REPORT_HIDDEN)
-    listReportFinished.classList.remove(CLASS_LIST_REPORT_HIDDEN)
+    manager.tableSelected = manager.tableReportFinished
 
     chooserReportFinished.classList.add(CLASS_CHOOSER_SELECTED)
     chooserReportNotFinished.classList.remove(CLASS_CHOOSER_SELECTED)

@@ -10,7 +10,7 @@ class Ente extends Admin{
         this.teams = []
         this.fetchTeams()
        
-        
+        // manager.drawTable()
     }
 
     fetchTeams(){
@@ -23,8 +23,8 @@ class Ente extends Admin{
                     this.teams.push( new Team(team.name, team.nMember, team.typeReport) )
                             
                 }
-
-                this.drawTable()
+                
+               
             }
         })
     }

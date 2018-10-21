@@ -25,7 +25,7 @@ const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 const detailsAside              = document.getElementById('details')
-const table = new TableReport()
+
 
 function substitute(str,param = []){
     param.forEach(p=>{
@@ -37,6 +37,19 @@ function substitute(str,param = []){
 
 class ManagerReport{
 
+    set tableSelected(table){
+        if(table === this.tableReportFinished){
+            this._tableSelected = this.tableReportFinished
+            this._tableSelected.show()
+            this.tableReportNotFinished.hide()
+        }
+        else{
+            this._tableSelected = this.tableReportNotFinished
+            this._tableSelected.show()
+            this.tableReportFinished.hide()
+        }
+    }
+
     get nReportSelected(){ return this.checkboxes.filter(this.checkSelected) }
 
     constructor(url = null){
@@ -46,8 +59,12 @@ class ManagerReport{
         this.checkboxes = []
         this.reportLastSelected = null
         this.isMultipleSelection = false
+        this.tableReportNotFinished = new TableReport('report--notfinished')
+        this.tableReportFinished = new TableReport('report--finished')
         
         
+        this.tableSelected = this.tableReportNotFinished
+
         this.detail = new Details()
         // this.detail.setTitle("Via Socrate, 15",[1,2])
         this.detail.addRow(             // report__date
@@ -115,18 +132,20 @@ class ManagerReport{
 
         managerDet.addDetails(this.detail)
 
-        refreshButton.addEventListener('click',this.fetchAllReports.bind(this))
+        refreshButton.addEventListener('click',this.fetchAllReports.bind(this,event))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
     }
 
     fetchAllReports(reports = null){
-        table.deleteAllRows()
+        this.tableReportFinished.deleteAllRows()
+        this.tableReportNotFinished.deleteAllRows()
         this.reports = []
 
         var importRep = (reports)=>{
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
             })
+            this.drawTable()
         }
 
         this.hub.onsuccess = (result) => {
@@ -163,22 +182,22 @@ class ManagerReport{
 
     searchBy(){
         const filter = selectSearch.options[selectSearch.selectedIndex].value
-        table.showAllRow(this.reports)
+        this._tableSelected.showAllRow(this.reports)
         if(searchBar.value == "")
             return 
 
         switch(filter){
             case 'Indirizzo':{                
-                this.hideRowButThese.call(this,this.reports.filter(this.checkAddress))
+                this._tableSelected.hideRowButThese(this.reports,this.reports.filter(this.checkAddress))
                 break;}
             case 'Città':{
-                this.hideRowButThese.call(this,this.reports.filter(this.checkCity))
+                this._tableSelected.hideRowButThese(this.reports,this.reports.filter(this.checkCity))
                 break;}
             case 'Tipo':{
-                this.hideRowButThese.call(this,this.reports.filter(this.checkType))
+                this._tableSelected.hideRowButThese(this.reports,this.reports.filter(this.checkType))
                 break;}
             case 'Grado':{
-                this.hideRowButThese.call(this,this.reports.filter(this.checkGrade))
+                this._tableSelected.hideRowButThese(this.reports,this.reports.filter(this.checkGrade))
                 break;}
         }
     }
@@ -348,12 +367,38 @@ class ManagerReport{
     }
 
     getParent(report){
-        return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
+        return (report.state == 'In attesa' || report.state == 'In lavorazione')? this.tableReportNotFinished: this.tableReportFinished
     }
 
     drawTable(){
         this.reports.forEach(report=>{
-            table.addRow.call(this,report)
+            
+            let row = this.getParent(report).addRow(report)
+
+            this.checkboxes.push(row.children[0].querySelector('input'))
+            row.addEventListener('click', this.selectLastReport.bind(this,report))
+            row.children[0].querySelector('input').addEventListener('click',(event)=>{
+                
+                if(this.reportLastSelected)
+                    this.deselectLastReport()
+                
+
+                if(event.target.checked){
+                    this.isMultipleSelection = true
+                    this.selectReport(event.target.parentElement.parentElement.report)
+                }
+                else{
+                    if(this.nReportSelected == 0)
+                        this.isMultipleSelection = false
+                        let index = this.reportsSelected.indexOf(event.target.parentElement.parentElement.report)
+                        this.deselectReport(this.reportsSelected[index])
+                        
+                }
+
+                event.stopPropagation()
+                
+            })
+
         })
     }
 }

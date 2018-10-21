@@ -5,7 +5,7 @@ include_once("../db/connect.php");
 include_once("../classes/report.php");
 include_once("../classes/team.php");
 
-const teamName = 'Enel2';
+const teamName = 'Enel1';
 
 abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
