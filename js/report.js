@@ -283,7 +283,7 @@ class ManagerReport{
 
         this.reportsSelected.push(report)
         report.el.classList.add('tr--selected')    
-        this.showReport(report)
+        // this.showReport(report)
     }
 
     deselectReport(report){

@@ -4,7 +4,7 @@
 
 class Table{
     constructor(id, theclass){
-        this.el = newEl({el:'div',theclass:theclass,id:id}, document.body)
+        this.el = newEl({el:'div',theclass:theclass,id:id}, document.body.querySelector('main'))
         
 
         this.header = newEl('tr,, row100 head')
