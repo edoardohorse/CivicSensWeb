@@ -1,5 +1,7 @@
 // ============== GET
-const URL_FETCH_REPORTS_BY_ENTE =  'apiReport/ente/'
+const URL_FETCH_ENTE            =  'apiReport/ente/'
+const URL_FETCH_REPORTS_BY_ENTE =  'apiReport/ente/reports/'
+const URL_FETCH_TEAMS_BY_ENTE   =  'apiReport/ente/teams/'
 
 class Ente extends Admin{
     constructor(name){
@@ -7,20 +9,22 @@ class Ente extends Admin{
 
         this.teams = []
         this.fetchTeams()
+       
+        
     }
 
     fetchTeams(){
-        Hub.connect(URL_FETCH_REPORTS_BY_ENTE, 'GET', null, {
+        Hub.connect(URL_FETCH_TEAMS_BY_ENTE, 'GET', null, {
             onsuccess: (result)=>{
                 result = JSON.parse(result.response)
                 // this.typeReports = result.map(t=>t.name)
-                for(let type of result.data){
-
-                    for(let team of type.teams){
-                        this.teams.push( new Team(team.name, team.nMember, team.reports) )
-                    }
-
+                for(let team of result.data){
+                    // debugger
+                    this.teams.push( new Team(team.name, team.nMember, team.typeReport) )
+                            
                 }
+
+                this.drawTable()
             }
         })
     }
@@ -31,5 +35,5 @@ class Ente extends Admin{
 
     deleteTeam(){}  
 
-
+   
 }

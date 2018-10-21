@@ -49,13 +49,13 @@ function enable(el){
 }
 
 
-(function(){
-    window.managerDet = new ManagerDetails(document.body)
-    window.team = new Team('Enel1')
+// (function(){
+//     window.managerDet = new ManagerDetails(document.body)
+//     window.team = new Team('Enel1')
 
    
 
-})()
+// })()
 function calcPhoto(){
     [].slice.call(document.querySelectorAll(".photo")).forEach(wrapper=>{
         let n = wrapper.childElementCount

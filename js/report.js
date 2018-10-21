@@ -25,6 +25,7 @@ const searchBar                 = document.getElementById('search__bar')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 const detailsAside              = document.getElementById('details')
+const table = new TableReport()
 
 function substitute(str,param = []){
     param.forEach(p=>{
@@ -38,14 +39,14 @@ class ManagerReport{
 
     get nReportSelected(){ return this.checkboxes.filter(this.checkSelected) }
 
-    constructor(url, name){
+    constructor(url = null){
         this.reports = []
-        this.hub = new Hub(substitute( url, [name]), "GET") 
+        this.hub = new Hub(url, "GET") 
         this.reportsSelected = null
         this.checkboxes = []
         this.reportLastSelected = null
         this.isMultipleSelection = false
-        this.table = new TableReport()
+        
         
         this.detail = new Details()
         // this.detail.setTitle("Via Socrate, 15",[1,2])
@@ -119,13 +120,12 @@ class ManagerReport{
     }
 
     fetchAllReports(reports = null){
-        this.table.deleteAllRows()
+        table.deleteAllRows()
         this.reports = []
 
         var importRep = (reports)=>{
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
-                this.table.addRow.call(this,this.reports[this.reports.length-1])
             })
         }
 
@@ -163,7 +163,7 @@ class ManagerReport{
 
     searchBy(){
         const filter = selectSearch.options[selectSearch.selectedIndex].value
-        this.showAllRow()
+        table.showAllRow(this.reports)
         if(searchBar.value == "")
             return 
 
@@ -349,6 +349,12 @@ class ManagerReport{
 
     getParent(report){
         return (report.state == 'In attesa' || report.state == 'In lavorazione')? tbodyReportNotFinished: tbodyReportFinished
+    }
+
+    drawTable(){
+        this.reports.forEach(report=>{
+            table.addRow.call(this,report)
+        })
     }
 }
 

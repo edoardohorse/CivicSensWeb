@@ -1,10 +1,13 @@
 class Team extends Admin{
-    constructor(name, nMember = null, reports = null, typeReport = null){
+    constructor(name, nMember = null, typeReport = null, reports = null){
         super(name)
         this.nMember = nMember
-        this.manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
         this.typeReport = typeReport
-        this.manager.fetchAllReports(reports)
+        this.reports = reports
+        // manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
+        
+        this.fetchInfo(reports)
+        
 
         this.refresh = (result)=>{
             result = JSON.parse(result.response)
@@ -12,21 +15,23 @@ class Team extends Admin{
                 message: result.message                
             })
 
-            this.manager.fetchAllReports()
+            // manager.fetchAllReports()
         }
     }
 
-    fetchInfo(){}
+    fetchInfo(reports){
+        manager.fetchAllReports(reports)
+    }
 
     setReportAsInCharge(){
-        let report  = this.manager.reportLastSelected
+        let report  = manager.reportLastSelected
         report.tmpHub.onsuccess = this.refresh.bind(this)
         
         report.editState( ReportState.InCharge )
     }
 
     setReportAsDone(){
-        let report  = this.manager.reportLastSelected
+        let report  = manager.reportLastSelected
         report.tmpHub.onsuccess = this.refresh.bind(this)
 
         report.editState( ReportState.Done )
@@ -38,7 +43,7 @@ class Team extends Admin{
     }
 
     updateHistoryOfReport(){
-        let report  = this.manager.reportLastSelected
+        let report  = manager.reportLastSelected
         report.tmpHub.onsuccess = this.refresh.bind(this)
         
         vex.dialog.open({
@@ -46,7 +51,7 @@ class Team extends Admin{
             input: newEl({el:'textarea',data:{name:'message'}}),
             callback: function(data){
                 if(data && data.message){
-                    this.manager.reportLastSelected.addToHistory(data.message)            
+                    manager.reportLastSelected.addToHistory(data.message)            
                 }
                 
             }.bind(this)

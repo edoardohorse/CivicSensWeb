@@ -95,8 +95,8 @@ class TableReport{
         report.el.removeEventListener('click', this.showReport.bind(this,report))
     }
 
-    showAllRow(){
-        this.reports.forEach(rep=>this.showRow(rep))
+    showAllRow(reports){
+        reports.forEach(rep=>this.showRow(rep))
     }
 
     deleteAllRows(){

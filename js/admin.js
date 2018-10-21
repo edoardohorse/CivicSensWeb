@@ -6,10 +6,10 @@ class Admin{
 
     deleteReports(){
         
-        if(!this.manager.reportsSelected)
+        if(!manager.reportsSelected)
             return
 
-        var ids =  this.manager.reportsSelected.map(a=>a.id)
+        var ids =  manager.reportsSelected.map(a=>a.id)
         
         let hub = new Hub(URL_DELETE_REPORTS,'POST', null,{id:JSON.stringify(ids)},{
             onsuccess: this.refresh.bind(this)
@@ -23,7 +23,7 @@ class Admin{
     }
 
     deleteReport(){
-        let reportToDelete =this.manager.reportLastSelected
+        let reportToDelete =manager.reportLastSelected
 
         reportToDelete.tmpHub.onsuccess = this.refresh.bind(this)
         reportToDelete.deleteReport();
