@@ -3,10 +3,10 @@ class Team extends Admin{
         super(name)
         this.nMember = nMember
         this.typeReport = typeReport
-        this.reports = reports
+        this.reports = reports || []
         // manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
         
-        this.fetchInfo(reports)
+        // this.fetchInfo(reports)
         
 
         this.refresh = (result)=>{
@@ -15,12 +15,15 @@ class Team extends Admin{
                 message: result.message                
             })
 
-            // manager.fetchAllReports()
+            manager.fetchAllReports()
         }
     }
 
     fetchInfo(reports){
-        manager.fetchAllReports(reports)
+        let callback = (reports)=>{
+            this.reports = reports
+        }
+        manager.fetchAllReports(callback, reports)
     }
 
     setReportAsInCharge(){

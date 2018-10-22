@@ -132,11 +132,12 @@ class ManagerReport{
 
         managerDet.addDetails(this.detail)
 
-        refreshButton.addEventListener('click',this.fetchAllReports.bind(this,event))
+        refreshButton.addEventListener('click',this.fetchAllReports.bind(this,null,event))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
     }
 
-    fetchAllReports(reports = null){
+    fetchAllReports(...param){
+        let [callback = null, reports = null] = param
         this.tableReportFinished.deleteAllRows()
         this.tableReportNotFinished.deleteAllRows()
         this.reports = []
@@ -145,6 +146,8 @@ class ManagerReport{
             reports.forEach(report=>{
                 this.reports.push(new Report(report))
             })
+            if(callback)
+                callback(this.reports)
             this.drawTable()
         }
 

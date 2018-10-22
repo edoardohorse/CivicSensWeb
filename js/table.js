@@ -13,7 +13,7 @@ class Table{
 
     addHeader(header){
         for(let i=0;i< header.length;i++){
-            let th = newEl('th,, cell100 column'+i+1,this.header)
+            let th = newEl('th,, cell100 column'+(i+1),this.header)
             th.innerHTML = header[i]
         }
     }

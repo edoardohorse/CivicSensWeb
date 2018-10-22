@@ -9,6 +9,7 @@ class Ente extends Admin{
 
         this.teams = []
         this.fetchTeams()
+        // this.fetchInfo()
        
         // manager.drawTable()
     }
@@ -21,12 +22,25 @@ class Ente extends Admin{
                 for(let team of result.data){
                     // debugger
                     this.teams.push( new Team(team.name, team.nMember, team.typeReport) )
-                            
+                    
                 }
                 
                
             }
         })
+        this.fetchInfo()
+        
+    }
+
+    fetchInfo(){
+        let callback = (reports)=>{
+            this.teams.forEach(team=>{
+                team.reports = reports.filter(rep=>rep.team == team.name)
+                // console.log(this.teams.filter(p=>p.name == reports[0].team))
+            })
+            
+        }
+        manager.fetchAllReports(callback)
     }
 
     editTeam(){} // nome e numero di componenti

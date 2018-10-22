@@ -5,7 +5,7 @@ include_once("../db/connect.php");
 include_once("../classes/report.php");
 include_once("../classes/team.php");
 
-const teamName = 'Enel1';
+// const teamName = 'Enel1'; TODO: remove
 
 abstract class MessageSuccess{
     const EditTeam         = 'Modifica del gruppo avvenuta con successo';
@@ -57,8 +57,8 @@ function getReportsByCity($city){
 
 }
 
-function getReportsByTeam($team){
-    $team = new Team(teamName);
+function getReportsByTeam($teamName){
+    $team = new Team($teamName);
     $team->fetchReports();      // TODO: to remove
     reply(MessageSuccess::NoMessage,false,$team->serializeReports());
 
