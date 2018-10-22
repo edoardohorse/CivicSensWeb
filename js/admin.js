@@ -4,6 +4,8 @@ class Admin{
         this.name = name
     }
 
+    
+
     deleteReports(){
         
         if(!manager.reportsSelected)

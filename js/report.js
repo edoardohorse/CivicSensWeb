@@ -183,6 +183,23 @@ class ManagerReport{
         
     }
 
+    fetchInfoOfReport(report){
+        
+        
+        
+        let callback = (result)=>{
+            if(this.reportLastSelected){
+                // Aggiorno anche quello segnalato
+                this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
+                this.showReport.call(this,this.reportLastSelected)
+            }
+
+        
+        }
+        
+        report.fetchInfo(callback)
+    }
+
     searchBy(){
         const filter = selectSearch.options[selectSearch.selectedIndex].value
         this._tableSelected.showAllRow(this.reports)
@@ -223,44 +240,6 @@ class ManagerReport{
 
     checkSelected(checkbox){
         return checkbox.checked == true
-    }
-
-    editTeam(id = null){ //TODO: da spostare in Ente
-        
-        if(id == null){
-            id = this.reportLastSelected.id
-        }
-
-        let reportToEdit = this.reports.find(rep=> rep.id==id)
-
-        let callback = (result)=>{
-            result = JSON.parse(result.response)
-                vex.dialog.alert({
-                        message: result.message
-                })
-            
-            this.fetchAllReports()
-        }
-
-        let el = newEl('select')
-                    .appendChildren(
-                        repeatEl('option', this.teams.length ,
-                            {
-                            textContent:this.teams
-                            }
-                            ))
-        vex.dialog.alert({
-            unsafeMessage: el
-        })
-        
-        // reportToEdit.tmpHub.onsuccess = callback.bind(this)
-        // reportToEdit.ediTeam(newTeam);
-    }
-
-    fetchListOfTeam(){ //TODO: da spostare in ente
-        this.teams = []
-        Hub.connect(URL_FETCH_LIST_TEAM, 'GET', null,
-        {onsuccess:(result)=>{ this.teams = JSON.parse(result.response).data}})
     }
 
 
@@ -426,7 +405,8 @@ class Report{
     }
     
 
-    fetchInfo(){
+    fetchInfo(callback = null){
+
         Hub.connect(substitute(URL_FETCH_REPORT_BY_ID,[this.id]), 'GET', null,{
             onsuccess: (result) => { 
                 let res = JSON.parse(result.response)
@@ -439,6 +419,9 @@ class Report{
                 for(let value in report){
                     this[value] = report[value]
                 }       
+
+                if(callback)
+                    callback()
              }
         })
     }

@@ -140,9 +140,9 @@ const QUERY_FETCH_CDT       = " SELECT c.code
                                  FROM cdt as c
                                  WHERE c.code = ?";
 
-const QUERY_EDIT_REPORT_TEAM = "UPDATE report
-                                SET team = ? 
-                                WHERE id = ?";
+const QUERY_EDIT_REPORT_TEAM_BY_NAME = "UPDATE report
+                                        SET team = (SELECT id FROM team WHERE team.name = ?)
+                                        WHERE id = ?";
 const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";

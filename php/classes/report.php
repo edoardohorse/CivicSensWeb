@@ -215,7 +215,7 @@ class Report{
             return;
 
         global $conn;
-        $stmt = $conn->prepare(QUERY_EDIT_REPORT_TEAM);
+        $stmt = $conn->prepare(QUERY_EDIT_REPORT_TEAM_BY_NAME);
         $stmt->bind_param("si",$newTeam, $this->id);
         $stmt->execute();
         if($stmt->affected_rows > 0){

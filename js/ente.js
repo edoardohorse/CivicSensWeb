@@ -12,6 +12,15 @@ class Ente extends Admin{
         // this.fetchInfo()
        
         // manager.drawTable()
+
+        this.refresh = (result)=>{
+            result = JSON.parse(result.response)
+            vex.dialog.alert({
+                message: result.message                
+            })
+
+            manager.fetchAllReports()
+        }
     }
 
     fetchTeams(){
@@ -43,11 +52,57 @@ class Ente extends Admin{
         manager.fetchAllReports(callback)
     }
 
-    editTeam(){} // nome e numero di componenti
+    
+    editTeam(id = null){ 
+        
+        if(id == null){
+            id = manager.reportLastSelected.id
+        }
+
+        let reportToEdit = manager.reports.find(rep=> rep.id==id)
+
+        let callback = (result)=>{
+            result = JSON.parse(result.response)
+                vex.dialog.alert({
+                        message: result.message
+                })
+            
+            manager.fetchInfoOfReport(manager.reportLastSelected)
+        }
+
+        let teamFiltered = this.teams.filter(team=>team.typeReport==reportToEdit.type).map(team=>team.name)
+        teamFiltered.splice(teamFiltered.indexOf(reportToEdit.team),1)
+
+        
+        
+        let chooser = newEl('select,,,name=select')
+                    .appendChildren(
+                        repeatEl('option', teamFiltered.length ,
+                            {
+                            textContent:teamFiltered,
+                            value:teamFiltered
+                            }
+                            ))
+            
+
+        vex.dialog.open({
+            message:'Scegli un nuovo gruppo',
+            input: chooser,
+            callback: function(data){
+                if(data && data.select){
+                    manager.reportLastSelected.editTeam(data.select)
+                }
+                
+            }.bind(this)
+        })
+
+        reportToEdit.tmpHub.onsuccess = callback.bind(this)
+    }
 
     addTeam(){}
 
     deleteTeam(){}  
+
 
    
 }

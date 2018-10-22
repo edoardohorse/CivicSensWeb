@@ -147,7 +147,7 @@ function editState($id, $newState){
     }
 }
 
-function deleteReport($id){
+function deleteReport($id){ //TODO: da togliere il team
     $team = new Team(teamName);
     $team->fetchReports();
     
