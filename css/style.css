@@ -258,4 +258,8 @@ input[type="checkbox"] {
         width: 15px;
         height: 15px;
     }
+
+    .table100-head th{
+        padding-right: 0;
+    }
 }
