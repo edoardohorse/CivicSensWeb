@@ -29,7 +29,7 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
-function  getListOfTeams(){
+$getListOfTeams = function(){
     global $conn;
 
     $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
@@ -43,9 +43,9 @@ function  getListOfTeams(){
 
     reply('',false, $teams);
 
-}
+};
 
-function getReportsByCity($city){
+$getReportsByCity = function($city){
     global $conn;
    
     $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
@@ -55,16 +55,16 @@ function getReportsByCity($city){
 
     reply(MessageSuccess::NoMessage,false,$result);
 
-}
+};
 
-function getReportsByTeam($teamName){
+$getReportsByTeam = function($teamName){
     $team = new Team($teamName);
     $team->fetchReports();      // TODO: to remove
     reply(MessageSuccess::NoMessage,false,$team->serializeReports());
 
-}
+};
 
-function getReports($stmt){
+$getReports = function($stmt){
     global $conn;
     $reports = array();
     $stmt->execute();
@@ -79,10 +79,10 @@ function getReports($stmt){
     }
     
     return $result;
-}
+};
 
 
-function getReportById($id){
+$getReportById = function($id){
     global $conn;
     $stmt = $conn->prepare(QUERY_REPORT_BY_ID);
     $stmt->bind_param("s",$id);
@@ -96,26 +96,26 @@ function getReportById($id){
     reply(MessageSuccess::NoMessage,false,$reportStr);
 
     return $report;
-}
+};
 
-function getPhotosOfReport($id){
+$getPhotosOfReport = function($id){
     $report = getReportById($id);
     $report->fetchPhotos();
     // $reportStr = $report->serialize();
 
     reply(MessageSuccess::NoMessage,false,$report->getPhotos());
-}
+};
 
-function getHistoryOfReport($id){
+$getHistoryOfReport = function($id){
     $report = getReportById($id);
     $report->fetchHistory();
     // $reportStr = $report->serialize();
 
     reply(MessageSuccess::NoMessage,false,$report->getHistory());
-}
+};
 
 
-function editTeam($id, $newTeam){
+$editTeam = function($id, $newTeam){
     $report = getReportById($id);
     if($report->editTeam($newTeam)){
         reply(MessageSuccess::EditTeam,false);
@@ -123,9 +123,9 @@ function editTeam($id, $newTeam){
     else{
         reply(MessageError::EditTeam,true);
     }
-}
+};
 
-function editState($id, $newState){
+$editState = function($id, $newState){
     $team = new Team(teamName);
     $team->fetchReports(); 
     
@@ -145,9 +145,9 @@ function editState($id, $newState){
     else{
         reply(MessageError::EditState,true);
     }
-}
+};
 
-function deleteReport($id){ //TODO: da togliere il team
+$deleteReport = function($id){ //TODO: da togliere il team
     $team = new Team(teamName);
     $team->fetchReports();
     
@@ -157,9 +157,9 @@ function deleteReport($id){ //TODO: da togliere il team
     else{
         reply(MessageError::DeleteReport,true);
     }
-}
+};
 
-function updateHistory($id, $message){
+$updateHistory = function($id, $message){
     $team = new Team(teamName);
     $team->fetchReports(); 
     
@@ -169,18 +169,18 @@ function updateHistory($id, $message){
     else{
         reply(MessageError::UpdateHistory,true);
     }
-}
+};
 
-function newReport(array $data){
+$newReport = function(array $data){
    $report = Report::newReport($data);
    reply(MessageSuccess::AddedReport,
             false,
             array('cdt'=>$report->getCdt())
         );
    
-}
+};
 
-function deleteReports(array $data){
+$deleteReports = function(array $data){
     global $response;
     $ids = json_decode($data['id']);
 
@@ -189,7 +189,20 @@ function deleteReports(array $data){
     }
 
     reply(MessageSuccess::DeleteReports,false);
-}
+};
 
+$getEnte = function(){
+    $e = new Ente('ente');      //TODO: da rimuover
+    reply('',false,$e->serialize());
+};
+$getTeams = function(){
+    $e = new Ente('ente');      //TODO: da rimuover
+    reply('',false,$e->serializeTeams());
+};
+
+$getAllReports = function(){
+    $e = new Ente('ente');      //TODO: da rimuover
+    reply('',false,$e->serializeReports());
+};
 
 ?>

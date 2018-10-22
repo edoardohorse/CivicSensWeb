@@ -14,10 +14,14 @@ if(isset($_SESSION))
 
 
 
+class T{
 
+}
+
+echo get_class(new T);
 
 ?>
-<form method="POST" action="../db/session.php">
+<!-- <form method="POST" action="../db/session.php">
     <button name="distruggi" value="Distruggi">Elimina sessione</button>
     <button name="crea" value="Distruggi">Crea sessione</button>
-</form>
+</form> -->
