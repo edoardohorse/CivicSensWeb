@@ -172,8 +172,8 @@ img {
 .details__options {
     display: inline-block;
     float: right;
-    margin-right: 1em;
-    font-size:17px;
+    font-size: 18px;
+    position: relative;
 }
 
 .dropbtn {
@@ -185,6 +185,7 @@ img {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    margin-right: 1em;
     color: black;
 }
 
@@ -203,17 +204,22 @@ img {
 }
 
 .dropdown-content {
-    display: none;
+    /* display: none; */
     position: absolute;
     right: 3em;
     background-color: rgb(255, 255, 255);
-    min-width: 160px;
+    min-width: 250px;
     overflow: auto;
     box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.4);
     color: black;
     z-index: 1;
     outline: none;
     border-radius: 4px;
+    font-size: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(26px,-15px);
+    transition: opacity 150ms, transform 200ms;
 }
 
 .option {
@@ -233,7 +239,7 @@ img {
     background-color: rgb(212, 0, 0);
 }
 
-.show{display:block;}
+.show{/* display:block; */pointer-events: auto;opacity: 1;transform: translate(0,0);}
 
 
 @media screen and (max-width: 768px) {
@@ -258,4 +264,20 @@ img {
         height: auto;
         padding: 0.5em;
     }
+
+    .details__title__text{
+        /* max-width: 70%; */
+        width: 65vw;
+        display: inline-block;
+        height: 100%;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        position: relative;
+    }
+
+    .details__title__text > span{
+        position: absolute;
+    }
+
 }

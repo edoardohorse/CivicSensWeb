@@ -361,8 +361,7 @@ class ManagerReport{
 
         })
 
-        
-
+    
         // console.log(report)
     }
 

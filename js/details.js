@@ -67,6 +67,8 @@ class Details{
         this.titleEl    ? this.el.appendChild(this.titleEl)   :null
         this.bodyEl     ? this.el.appendChild(this.bodyEl)    :null
         this.footerEl   ? this.el.appendChild(this.footerEl)  :null
+
+        
     }
 
     toggleOption(el){
@@ -79,18 +81,22 @@ class Details{
     closeOption(el){
         el.removeEventListener('blur',this.closeOption)
         el.classList.remove("show");
+
+        
     }
 
     
 
     setTitle(title, options = null){
         this.titleEl = newEl('nav,,details__title col-12')
-        newEl('span', this.titleEl).call('textContent',title)
-        newEl('i,,details__close', this.titleEl)
-
+        let titleText = newEl('span,, details__title__text', this.titleEl)
+        newEl('span,,ellipsis',titleText).call('textContent',title)
+        
+        
         
         let optionsEl = newEl('div,,details__options', this.titleEl)
         let button  = newEl('button,, dropbtn', optionsEl )
+        newEl('i,,details__close', optionsEl)
         button.classList.add('dropbtn')     
 
         let content  = newEl('div,,dropdown-content',optionsEl)
@@ -100,7 +106,7 @@ class Details{
         }
 
 
-
+        
         button.addEventListener('click',this.toggleOption.bind(this, content))
     }
 
