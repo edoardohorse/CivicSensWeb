@@ -147,6 +147,6 @@ const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
 
-const QUERY_LOGIN             = "SELECT email, type FROM user WHERE email = ?";
+const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE email = ?";
 
 ?>

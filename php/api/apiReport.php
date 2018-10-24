@@ -11,12 +11,7 @@
     // var_dump($_POST);
     // var_dump($request);
 
-    abstract class Permission{
-        const Admin = 'Admin';
-        const Ente = 'Ente';
-        const Team = 'Team';
-        const User = 'User';
-    }
+    
 
 
     global $requests;
