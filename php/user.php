@@ -1,6 +1,6 @@
 <?php
-include_once('../db/connect.php');
-include_once('../db/query.php');
+include_once('connect.php');
+include_once('query.php');
 
 class MessageLogin{
     const PASSWORD_WRONG = 'La password è sbagliata';
@@ -118,7 +118,7 @@ class User{
 
     private static function expel(MessageLogin $m){
         echo '<br><br>'.$m.'
-        <script>setTimeout(function(){location.href="../try"},3000)</script>
+        <script>setTimeout(function(){location.href="../../login.html"},3000)</script>
         ';
         die();
     }

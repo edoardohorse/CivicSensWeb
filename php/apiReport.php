@@ -1,10 +1,10 @@
 <?php
     // echo "debug";
-    include_once("../db/query.php");
-    include_once("../db/connect.php");
-    include_once("../classes/report.php");
-    include_once("../api/responseReport.php");
-    include_once("../classes/user.php");
+    include_once("query.php");
+    include_once("connect.php");
+    include_once("report.php");
+    include_once("responseReport.php");
+    include_once("user.php");
     
     $response = array();
 

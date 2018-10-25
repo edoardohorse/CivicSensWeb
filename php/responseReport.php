@@ -1,9 +1,9 @@
 <?php
 
-include_once("../db/query.php");
-include_once("../db/connect.php");
-include_once("../classes/report.php");
-include_once("../classes/team.php");
+include_once("query.php");
+include_once("connect.php");
+include_once("report.php");
+include_once("team.php");
 
 // const teamName = 'Enel1'; TODO: remove
 

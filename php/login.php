@@ -1,9 +1,9 @@
 <?php
 
-    require_once('../admin/session.php');
+    require_once('session.php');
 
-    define('PATH_ENTE','./ente.php');
-    define('PATH_TEAM','./team.php');
+    define('PATH_ENTE','../page/ente.php');
+    define('PATH_TEAM','../page/team.php');
     $page = null;
 
     

@@ -1,5 +1,5 @@
 <?php 
-    include_once('../classes/user.php');
+    include_once('user.php');
     session_start();
 
     global $user;
