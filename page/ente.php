@@ -10,6 +10,9 @@
         
     <nav>
             prova
+            <form action="../php/destroy.php">
+            <input type="submit" value="Esci">
+        </form>
     </nav>
     <aside class="nav__side">
         <p>Segnalazioni</p>

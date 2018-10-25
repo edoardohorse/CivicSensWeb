@@ -1,7 +1,8 @@
 <?php
     include_once('../php/user.php');
-
+    
     User::checkLogIn();
+    // var_dump($_SESSION);
 
     include_once('../php/pageStart.php');
 ?>
@@ -10,7 +11,9 @@
 
     <nav>
         prova
-        <form action="session.php">
+        <form action="../php/destroy.php">
+            <input type="submit" value="Esci">
+        </form>     
     </nav>
     <aside class="nav__side">
         <p>Segnalazioni</p>
