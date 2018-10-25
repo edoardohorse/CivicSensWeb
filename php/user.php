@@ -32,7 +32,7 @@ abstract class Permission extends TypeUser{
 class User{
 
     private $email;
-    private $type;
+    private $type = Permission::Common;
     private $pass;
     private $isLogged = false;
     private $isAdmin = false;
@@ -100,6 +100,7 @@ class User{
 
     static function checkLogIn(){
         session_start();
+        // var_dump($_SESSION);
         if(!isset($_SESSION['user']) || !$_SESSION['user']->isLogged()){
             User::expel( new MessageLogin(MessageLogin::USER_NOT_LOGGED) );
         }
@@ -108,18 +109,33 @@ class User{
 
     public function checkPermission($perm){
         $m = new MessageLogin(MessageLogin::NOT_ENOUGH_PERMISSIONS);
+        $hasRights = false;
 
-        $b = $perm == Permission::Admin?
-                    $this->type == (Permission::Ente || Permission::Team):
-                    $this->type == $perm;
+        switch($perm){
+            case Permission::Admin:{
+                $hasRights = $this->type == Permission::Ente || Permission::Team;
+                break;
+            }
+            case Permission::Ente:
+            case Permission::Team:
+            case Permission::User:{
+                $hasRights = $this->type == $perm;
+                break;
+            }
+            case Permission::Common:{
+                $hasRights = true;
+            }
+        }
         
-        $b? false: $this->expel($m);
+        return $hasRights;
     }
 
     private static function expel(MessageLogin $m){
         echo '<br><br>'.$m.'
-        <script>setTimeout(function(){location.href="../../login.html"},3000)</script>
+        <script>setTimeout(function(){location.href="../login.html"},3000)</script>
         ';
+
+        session_destroy();
         die();
     }
 }
