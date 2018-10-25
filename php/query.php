@@ -128,7 +128,7 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM location WHERE id = (SELECT location FROM report WHERE  id =  ?)";
 
-const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name,u.email
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE tm.type_report = tp.id
                                     AND   tm.user        = u.id 
