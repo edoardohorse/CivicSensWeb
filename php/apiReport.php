@@ -5,39 +5,63 @@
     include_once("report.php");
     include_once("responseReport.php");
     include_once("user.php");
+    include_once("session.php");
     
     $response = array();
 
     // var_dump($_POST);
     // var_dump($request);
+    
+    // var_dump($_SESSION);
 
-
+    
 
     global $requests;
     $requests = array();
 
 
     class Request{
-        function __construct($method,$names,$callback,$permission, ...$params){
+        function __construct($method,$names,$callback,$permission, $param = null){
             global $requests;
             
             $this->method = $method;
             $this->names = $names;
             $this->callback = $callback;
-       
-            $this->params  = $params;
+            
+            $this->param = null;
+            
+            if($param){
+                
+                $arr = explode('/',$this->names);
+                // var_dump($arr);
+                $n = array_search( '{#}', $arr );
+                if(isset($param[$n]))
+                    $this->param  = $param[$n];
+                    
+                // var_dump($this->param);
+            }
+
             $this->permission = $permission;            
 
             $requests[$this->names] = $this;
+
         }
 
         public function execute(){
-            // if($this->checkPermission())
-                call_user_func($this->callback,$this->params);
+            if($this->checkPermission()){
+                $callback = $this->callback;  // Creo handle dalla stringa
+                // var_dump($callback);
+                $callback($this->param);                
+            }
+            else{
+                reply('Non hai abbastanza permessi per ottenere questa informazione',true);
+            }
+            
         }
 
-        private function checkPermission(){  // TODO:
-            // $_SESSIONs
+        private function checkPermission(){
+            global $user;
+            return $user->checkPermission($this->permission);
         }
 
         static function search($url){
@@ -46,14 +70,15 @@
             foreach($requests as $key=>$req){
                 $key = explode('/', $key);
                 // var_dump($key);
-                for($i=0;$i<count($url);$i++){
+                // var_dump($url);
+                for($i=0;$i<count($key);$i++){
                     // var_dump($url[$i]);
                     // var_dump($key[$i]);
                     
                     // Se la chiave è più corta dell'url allora non è trovata
-                    if(!isset($key[$i])){
+                    if(!isset($url[$i]) && !isset($url[$i])){
                         $found = null;
-                        continue;
+                        break;
                     }
 
                     // Continua se trovato il segnaposto
@@ -79,45 +104,45 @@
   
     // ==== COMMON Requests: User, Ente, Team 
         // [GET]
-            new Request('GET','report/id/{#}',          $getReportById,         Permission::Common, $request);          // apiReport/report/id/{id}
-            new Request('GET','report/photos/{#}',      $getPhotosOfReport,     Permission::Common, $request);          // apiReport/report/photos/{id}
-            new Request('GET','report/history/{#}',     $getHistoryOfReport,    Permission::Common, $request);          // apiReport/report/history/{id}
-            new Request('GET','ente/reports',           $getAllReports,         Permission::Common);                    // apiReport/ente
+            new Request('GET','report/id/{#}',          $getReportById_handler,         Permission::Common, $request);          // apiReport/report/id/{id}
+            new Request('GET','report/photos/{#}',      $getPhotosOfReport_handler,     Permission::Common, $request);          // apiReport/report/photos/{id}
+            new Request('GET','report/history/{#}',     $getHistoryOfReport_handler,    Permission::Common, $request);          // apiReport/report/history/{id}
+            new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);                    // apiReport/ente/reports
     
     // ==== ADMIN Requests
         // [GET]
-            new Request('GET','report/delete/{#}',      $deleteReport,          Permission::Admin,  $request);          // apiReport/report/delete/{id}
+            new Request('GET','report/delete/{#}',      $deleteReport_handler,          Permission::Common,  $request);          // apiReport/report/delete/{id}
         // [POST]
-            new Request('POST','report/delete',         $deleteReports,         Permission::Admin,  $_POST);            // apiReport/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','report/delete',         $deleteReports_handler,         Permission::Admin,  $_POST);            // apiReport/report/delete => newReport [POST] {ids of reports}
     
 
 
 
     // ==== TEAM Requests
         // [GET]
-            new Request('GET','report/team/{#}',        $getReportsByTeam,      Permission::Team,   $request);          // apiReport/report/team/{nameTeam}
+            new Request('GET','report/team/{#}',        $getReportsByTeam_handler,      Permission::Team,   $request);          // apiReport/report/team/{nameTeam}
         
         // [POST]
-            new Request('POST','report/{#}/state',      $editState,             Permission::Team,   $request, $_POST);  // apiReport/report/{id}/state  => editState [POST] {newState}
-            new Request('POST','report/{#}/history',    $updateHistory,         Permission::Team,   $request, $_POST);  // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
+            new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // apiReport/report/{id}/state  => editState [POST] {newState}
+            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Team,   $request);  // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
     
 
     // ==== ENTE Requests
         //  [GET]
-            new Request('GET','team',                   $getListOfTeams,        Permission::Ente);                      // apiReport/team    
-            new Request('GET','ente',                   $getEnte,               Permission::Ente);                      // apiReport/ente/reports
-            new Request('GET','ente/teams',             $getTeams,              Permission::Ente);                      // apiReport/ente/teams
+            new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // apiReport/team    
+            new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // apiReport/ente
+            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // apiReport/ente/teams
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
         
         //  [POST]
-            new Request('POST','report/{#}/team',       $editTeam,              Permission::Ente,   $request, $_POST);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
+            new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
     
 
     // ==== USER Requests
         //  [GET]
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
         //  [POST]
-            new Request('POST','report/new',            $newReport,             Permission::User,   $_POST);            // apiReport/report/new => newReport [POST] {report data}
+            new Request('POST','report/new',            $newReport_handler,             Permission::User,   $request);            // apiReport/report/new => newReport [POST] {report data}
 
 
 
@@ -127,8 +152,8 @@
     $found->execute();
     // var_dump($requests);
 
-
-    header('Content-Type: application/json');
+    
+    // header('Content-Type: application/json');
     echo json_encode($response);
 
 

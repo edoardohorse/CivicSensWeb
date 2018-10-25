@@ -4,6 +4,7 @@ include_once("query.php");
 include_once("connect.php");
 include_once("report.php");
 include_once("team.php");
+include_once("ente.php");
 
 // const teamName = 'Enel1'; TODO: remove
 
@@ -29,7 +30,7 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
-$getListOfTeams = function(){
+function getListOfTeams(){
     global $conn;
 
     $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
@@ -43,9 +44,9 @@ $getListOfTeams = function(){
 
     reply('',false, $teams);
 
-};
+}
 
-$getReportsByCity = function($city){
+function getReportsByCity($city){
     global $conn;
    
     $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
@@ -55,16 +56,16 @@ $getReportsByCity = function($city){
 
     reply(MessageSuccess::NoMessage,false,$result);
 
-};
+}
 
-$getReportsByTeam = function($teamName){
-    $team = new Team($teamName);
-    $team->fetchReports();      // TODO: to remove
-    reply(MessageSuccess::NoMessage,false,$team->serializeReports());
+function getReportsByTeam($teamName){
+    global $manager;
+    $manager->fetchReports();
+    reply(MessageSuccess::NoMessage,false,$manager->serializeReports());
 
-};
+}
 
-$getReports = function($stmt){
+function getReports($stmt){
     global $conn;
     $reports = array();
     $stmt->execute();
@@ -79,10 +80,10 @@ $getReports = function($stmt){
     }
     
     return $result;
-};
+}
 
 
-$getReportById = function($id){
+function getReportById($id){
     global $conn;
     $stmt = $conn->prepare(QUERY_REPORT_BY_ID);
     $stmt->bind_param("s",$id);
@@ -96,26 +97,29 @@ $getReportById = function($id){
     reply(MessageSuccess::NoMessage,false,$reportStr);
 
     return $report;
-};
+}
 
-$getPhotosOfReport = function($id){
+function getPhotosOfReport($id){
+    
     $report = getReportById($id);
     $report->fetchPhotos();
     // $reportStr = $report->serialize();
 
     reply(MessageSuccess::NoMessage,false,$report->getPhotos());
-};
+}
 
-$getHistoryOfReport = function($id){
+function getHistoryOfReport($id){
     $report = getReportById($id);
     $report->fetchHistory();
     // $reportStr = $report->serialize();
 
     reply(MessageSuccess::NoMessage,false,$report->getHistory());
-};
+}
 
 
-$editTeam = function($id, $newTeam){
+function editTeam($id){
+    $newTeam = $_POST['newTeam'];
+
     $report = getReportById($id);
     if($report->editTeam($newTeam)){
         reply(MessageSuccess::EditTeam,false);
@@ -123,20 +127,21 @@ $editTeam = function($id, $newTeam){
     else{
         reply(MessageError::EditTeam,true);
     }
-};
+}
 
-$editState = function($id, $newState){
-    $team = new Team(teamName);
-    $team->fetchReports(); 
+function editState($id){
+    $newState = $_POST['state'];
+    global $manager;
+    $manager->fetchReports();
     
     $res = null;
 
     switch($newState){
         case ReportState::InCharge:{
-            $res = $team->setReportAsInCharge($id); break;}
+            $res = $manager->setReportAsInCharge($id); break;}
 
         case ReportState::Done:{ 
-            $res = $team->setReportAsDone($id); break;}
+            $res = $manager->setReportAsDone($id); break;}
     }
 
     if($res){
@@ -145,42 +150,42 @@ $editState = function($id, $newState){
     else{
         reply(MessageError::EditState,true);
     }
-};
+}
 
-$deleteReport = function($id){ //TODO: da togliere il team
-    $team = new Team(teamName);
-    $team->fetchReports();
-    
-    if($team->deleteReport($id)){
+function deleteReport($id){ 
+    global $manager;
+    if($manager->deleteReport($id)){
         reply(MessageSuccess::DeleteReport,false);
     }
     else{
         reply(MessageError::DeleteReport,true);
     }
-};
+}
 
-$updateHistory = function($id, $message){
-    $team = new Team(teamName);
-    $team->fetchReports(); 
+function updateHistory($id){
+    $message = $_POST['history'];
+
+    global $manager;
+    $manager->fetchReports();
     
-    if($team->updateHistoryOfReport($id,$message)){
+    if($manager->updateHistoryOfReport($id,$message)){
         reply(MessageSuccess::UpdateHistory,false);
     }
     else{
         reply(MessageError::UpdateHistory,true);
     }
-};
+}
 
-$newReport = function(array $data){
+function newReport(array $data){
    $report = Report::newReport($data);
    reply(MessageSuccess::AddedReport,
             false,
             array('cdt'=>$report->getCdt())
         );
    
-};
+}
 
-$deleteReports = function(array $data){
+function deleteReports(array $data){
     global $response;
     $ids = json_decode($data['id']);
 
@@ -189,20 +194,41 @@ $deleteReports = function(array $data){
     }
 
     reply(MessageSuccess::DeleteReports,false);
-};
+}
 
-$getEnte = function(){
-    $e = new Ente('ente');      //TODO: da rimuover
-    reply('',false,$e->serialize());
-};
-$getTeams = function(){
-    $e = new Ente('ente');      //TODO: da rimuover
-    reply('',false,$e->serializeTeams());
-};
+function getEnte(){ // FIXME:
+    global $manager;
+    // $manager->fetchTeams();
+    // var_dump($manager);
+    reply('',false,$manager->serialize());
+}
+function getTeams(){ // FIXME:
+    global $manager;
+    // $manager->fetchTeams();
+    reply('',false,$manager->serializeTeams());
+}
 
-$getAllReports = function(){
-    $e = new Ente('ente');      //TODO: da rimuover
-    reply('',false,$e->serializeReports());
-};
+function getAllReports(){ // FIXME:
+    global $manager;
+    var_dump($_SESSION);
+    reply('',false,$manager->serializeReports());
+}
+
+$getListOfTeams_handler     = 'getListOfTeams';
+$getReportsByCity_handler   = 'getReportsByCity';
+$getReportsByTeam_handler   = 'getReportsByTeam';
+$getReports_handler         = 'getReports';
+$getReportById_handler      = 'getReportById';
+$getPhotosOfReport_handler  = 'getPhotosOfReport';
+$getHistoryOfReport_handler = 'getHistoryOfReport';
+$editTeam_handler           = 'editTeam';
+$editState_handler          = 'editState';
+$deleteReport_handler       = 'deleteReport';
+$updateHistory_handler      = 'updateHistory';
+$newReport_handler          = 'newReport';
+$deleteReports_handler      = 'deleteReports';
+$getEnte_handler            = 'getEnte';
+$getTeams_handler           = 'getTeams';
+$getAllReports_handler      = 'getAllReports';
 
 ?>
