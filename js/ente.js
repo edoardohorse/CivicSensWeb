@@ -1,7 +1,7 @@
 // ============== GET
-const URL_FETCH_ENTE            =  'apiReport/ente/'
-const URL_FETCH_REPORTS_BY_ENTE =  'apiReport/ente/reports/'
-const URL_FETCH_TEAMS_BY_ENTE   =  'apiReport/ente/teams/'
+const URL_FETCH_ENTE            =  '../apiReport/ente/'
+const URL_FETCH_REPORTS_BY_ENTE =  '../apiReport/ente/reports/'
+const URL_FETCH_TEAMS_BY_ENTE   =  '../apiReport/ente/teams/'
 
 class Ente extends Admin{
     constructor(name){
