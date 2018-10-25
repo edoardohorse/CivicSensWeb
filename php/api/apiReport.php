@@ -11,6 +11,7 @@
     // var_dump($_POST);
     // var_dump($request);
 
+
     abstract class Permission{
         const Admin = 'Admin';
         const Ente = 'Ente';
@@ -38,11 +39,12 @@
         }
 
         public function execute(){
-            call_user_func($this->callback,$this->params[0]);
+            if($this->checkPermission())
+                call_user_func($this->callback,$this->params[0]);
         }
 
         private function checkPermission(){  // TODO:
-            // return $this->permission ==
+            return $this->permission ==
         }
 
         static function search($url){
@@ -83,7 +85,7 @@
     }
   
     
-    new Request('GET','report/team/{#}',       $getReportsByTeam,  Permission::Team, $request[2]);       //  /report/team/{nameTeam}
+    new Request('GET','report/team/{#}',       $getReportsByTeam,  Permission::Team,  $request[2]);       //  /report/team/{nameTeam}
     new Request('GET','report/id/{#}',         $getReportById,     Permission::Admin, $request[2]);      //  /report/id/{id}
     new Request('GET','report/photos/{#}',     $getPhotosOfReport, Permission::Admin, $request[2]);      //  /report/photos/{id}
     new Request('GET','report/history/{#}',    $getHistoryOfReport,Permission::Admin, $request[2]);      //  /report/history/{id}
@@ -97,51 +99,22 @@
     new Request('GET','ente/teams',            $getTeams,     Permission::Ente);                       // apiReport/ente/teams
     new Request('GET','ente/reports',          $getAllReports,  Permission::Ente);                     // apiReport/ente
     
+    // new Request('POST','report/{#}/team',       $editTeam,      Permission::Ente, $request[1], $_POST[$request[2]]);                     // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
+    // new Request('POST','report/{#}/state',      $editState,     Permission::Team, $request[1], $_POST[$request[2]]);                     // apiReport/report/{id}/state  => editState [POST] {newState}
+    // new Request('POST','report/{#}/history',    $updateHistory, Permission::Team, $request[1], $_POST[$request[2]]);                     // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
+
+    
+    new Request('POST','report/new',      $newReport,     Permission::Team, $_POST);                  // apiReport/report/new => newReport [POST] {report data}
+    new Request('POST','report/delete',   $deleteReports, Permission::Admin, $_POST);                        // apiReport/report/delete => newReport [POST] {ids of reports}
+
+
+
+    
     $found = Request::search($request);
     // var_dump($found);
     $found->execute();
     // var_dump($requests);
 
-   
- 
-    // else{                                                   // push info
-    //     switch($request[0]){
-    //         case 'report':{                                 //  apiReport/report    [POST]
-    //             if(isset($request[2])){
-    //                 switch($request[2]){
-    //                     case 'team':{                       //  apiReport/report/{id}/team    => editTeam [POST] {newTeam}
-    //                         editTeam($request[1], $_POST[$request[2]]);
-    //                         break;
-    //                     };
-    //                     case 'state':{                      //  apiReport/report/{id}/state  => editState [POST] {newState}
-    //                         editState($request[1], $_POST[$request[2]]);
-    //                         break;
-    //                     };
-    //                     case 'history':{                    //  apiReport/report/{id}/history  => addToHistory [POST] {newNote}
-    //                         updateHistory($request[1], $_POST[$request[2]]);
-    //                         break;
-    //                     };   
-    //                 }
-    //             }
-    //             else{
-    //                 switch($request[1]){
-    //                     case 'new':{                            // apiReport/report/new => newReport [POST] {report data}
-    //                         newReport($_POST);                            
-    //                         break;
-    //                     };
-    //                     case 'delete':{                         // apiReport/report/delete => newReport [POST] {ids of reports}
-    //                         deleteReports($_POST);                            
-    //                         break;
-    //                     };
-    //                 }
-    //             }
-
-    //         }
-    //     }
-    // }
-
-
-    // var_dump($response);
 
     header('Content-Type: application/json');
     echo json_encode($response);
