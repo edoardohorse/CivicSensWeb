@@ -128,10 +128,11 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM location WHERE id = (SELECT location FROM report WHERE  id =  ?)";
 
-const QUERY_FETCH_TEAM_BY_NAME = "SELECT tm.id, tp.name, tm.n_member
-                                    FROM team as tm, type_report as tp
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name,u.email
+                                    FROM team as tm, type_report as tp, user as u
                                     WHERE tm.type_report = tp.id
-                                    AND     tm.name = ?";
+                                    AND   tm.user        = u.id 
+                                    AND   u.email = ?";
                                  
 const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
                                     VALUES( ? , ? )";

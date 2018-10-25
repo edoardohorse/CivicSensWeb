@@ -47,9 +47,11 @@ CREATE TABLE IF NOT EXISTS team(
     name varchar(150) not null,
     type_report int,
     n_member int not null,
+    user int NOT NULL
 
     PRIMARY KEY(id),
-    CONSTRAINT fk_team_type_report FOREIGN KEY(type_report) REFERENCES type_report(id) 
+    CONSTRAINT fk_team_type_report  FOREIGN KEY(type_report) REFERENCES type_report(id),
+    CONSTRAINT fk_team_user         FOREIGN KEY(user) REFERENCES user(id),
 );
 
 CREATE TABLE IF NOT EXISTS report(
@@ -147,7 +149,7 @@ VALUES
 (21,21),
 (22,22),
 (23,23),
-(24,24),
+(24,24),SELECT * FROM `team` WHERE 1
 (25,25),
 (26,26),
 (27,27),
@@ -239,25 +241,39 @@ VALUES
 -- User --
 INSERT INTO user (email,type, password) VALUES
 ('user@a','User','1a1dc91c907325c69271ddf0c944bc72'),
-('team@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team1@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team2@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team3@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team4@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team5@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team6@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team7@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team8@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team9@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team10@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team11@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team12@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team13@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team14@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('team15@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
 ('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72');
 
-INSERT INTO team(name, type_report,n_member) VALUES
-('Enel1',1,5),
-('Enel2',1,6),
-('Enel3',1,3),
-('Enel4',1,10),
-('Enel5',1,7),
-('Idraulico1',2,5),
-('Idraulico2',2,6),
-('Idraulico3',2,3),
-('Idraulico4',2,10),
-('Idraulico5',2,7),
-('Stradale1',3,5),
-('Stradale2',3,6),
-('Stradale3',3,3),
-('Stradale4',3,10),
-('Stradale5',3,7);
+INSERT INTO team(name, type_report,n_member,user) VALUES
+('Enel1',1,5, 2),
+('Enel2',1,6, 3),
+('Enel3',1,3, 4),
+('Enel4',1,10, 5),
+('Enel5',1,7, 6),
+('Idraulico1',2,5, 7),
+('Idraulico2',2,6, 8),
+('Idraulico3',2,3, 9),
+('Idraulico4',2,10, 10),
+('Idraulico5',2,7, 11),
+('Stradale1',3,5, 12),
+('Stradale2',3,6, 13),
+('Stradale3',3,3, 14),
+('Stradale4',3,10, 15),
+('Stradale5',3,7, 16);
 
 
 
