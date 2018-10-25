@@ -1,24 +1,28 @@
 
 <?php
 
-include_once('../db/session.php');
-include_once('../classes/user.php');
+// include_once('../db/session.php');
+// include_once('../classes/user.php');
 
 // var_dump(ini_get('upload_max_filesize'));
 
 // var_dump($_POST);
 // var_dump($_GET);
 // var_dump($_FILES);
-if(isset($_SESSION))
-    var_dump($_SESSION);
+
+$a = 3;
+$b = &$a;
+
+echo 'a = '.$a.'<br>';
+echo 'b = '.$b.'<br>';
+
+$b = 5;
+
+echo 'a = '.$a.'<br>';
+echo 'b = '.$b.'<br>';
 
 
 
-class T{
-
-}
-
-echo get_class(new T);
 
 ?>
 <!-- <form method="POST" action="../db/session.php">

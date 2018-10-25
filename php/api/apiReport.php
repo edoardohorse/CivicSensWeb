@@ -86,20 +86,20 @@
     
     // ==== ADMIN Requests
         // [GET]
-            new Request('GET','report/delete/{#}',      $deleteReport,          Permission::Admin, $request);           // apiReport/report/delete/{id}
+            new Request('GET','report/delete/{#}',      $deleteReport,          Permission::Admin,  $request);          // apiReport/report/delete/{id}
         // [POST]
-            new Request('POST','report/delete',         $deleteReports,         Permission::Admin, $_POST);             // apiReport/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','report/delete',         $deleteReports,         Permission::Admin,  $_POST);            // apiReport/report/delete => newReport [POST] {ids of reports}
     
 
 
 
     // ==== TEAM Requests
         // [GET]
-            new Request('GET','report/team/{#}',        $getReportsByTeam,      Permission::Team,  $request);           // apiReport/report/team/{nameTeam}
+            new Request('GET','report/team/{#}',        $getReportsByTeam,      Permission::Team,   $request);          // apiReport/report/team/{nameTeam}
         
         // [POST]
-            new Request('POST','report/{#}/state',      $editState,             Permission::Team, $request, $_POST);    // apiReport/report/{id}/state  => editState [POST] {newState}
-            new Request('POST','report/{#}/history',    $updateHistory,         Permission::Team, $request, $_POST);    // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
+            new Request('POST','report/{#}/state',      $editState,             Permission::Team,   $request, $_POST);  // apiReport/report/{id}/state  => editState [POST] {newState}
+            new Request('POST','report/{#}/history',    $updateHistory,         Permission::Team,   $request, $_POST);  // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
     
 
     // ==== ENTE Requests
@@ -110,14 +110,14 @@
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
         
         //  [POST]
-            new Request('POST','report/{#}/team',       $editTeam,              Permission::Ente, $request, $_POST);    // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
+            new Request('POST','report/{#}/team',       $editTeam,              Permission::Ente,   $request, $_POST);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
     
 
     // ==== USER Requests
         //  [GET]
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
         //  [POST]
-            new Request('POST','report/new',            $newReport,             Permission::User, $_POST);              // apiReport/report/new => newReport [POST] {report data}
+            new Request('POST','report/new',            $newReport,             Permission::User,   $_POST);            // apiReport/report/new => newReport [POST] {report data}
 
 
 

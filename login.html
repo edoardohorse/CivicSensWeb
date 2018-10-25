@@ -5,22 +5,28 @@
     <body>
         
         <main>
-            <form action="php/try/login.php" method="post">
-                <label for="user">Utente</label>
-                <input type="email" name="email" required>
-                
+            <form action="php/admin/login.php" method="post">
+                <!-- <label for="user">Utente</label>
+                <input type="email" name="email" required> -->
+                <select name="email">
+                    <option value="user@a">user@a</option>
+                    <option value="team@a">team@a</option>
+                    <option value="ente@a">ente@a</option>
+                </select>
+
+
                 <label for="pass">Password</label >
-                <input type="password" name="pass" required>
+                <input type="password" name="pass" required value="pass">
                 
                 <input type="submit">
             </form>
 
 
-            <form action="php/try/destroy.php" method="post">
+            <form action="php/admin/destroy.php" method="post">
                 <input type="submit" value="Esci">
             </form>
 
-            <a href="php/try/areaRiservata.php">Area riservata</a>
+            
         </main>
 
     </body>

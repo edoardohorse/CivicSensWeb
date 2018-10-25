@@ -34,27 +34,20 @@ class User{
     private $email;
     private $type;
     private $pass;
-    
+    private $isLogged = false;
+    private $isAdmin = false;
+
     public function getEmail(){return $this->email;}
     public function getType(){return $this->type;}    
     public function getPass(){return $this->pass;}
-
-
-
-    function __construct($email = null){
-        if($email != null){
-            $this->email =  $email;
-            $this->fetchInfo();
-            
-        }
-        else{
-
-            $this->type = TypeUser::User;
-        }
-
-        
-        $_SESSION['isLogged'] = false;
+    public function isAdmin(){return $this->isAdmin;}
+    
+    public function setAdmin($admin){$this->isAdmin = $admin;}
+    public function setEmail($email){
+        $this->email = $email;
+        $this->fetchInfo();
     }
+
 
     public function fetchInfo(){
         global $conn;
@@ -72,14 +65,29 @@ class User{
             $this->type = $row['type'];
             $this->pass = $row['password'];
         }
+
+        switch($this->type){
+            case TypeUser::User:{
+                $this->isAdmin = false;
+                break;
+            }
+            case TypeUser::Ente:{
+                $this->isAdmin = true;
+                break;
+            }
+            case TypeUser::Team:{
+                $this->isAdmin = true;
+                break;
+            }
+        }
     }
 
     public function isLogged(){
-        return $_SESSION['isLogged'];
+        return $this->isLogged;
     }
     
     public function signIn(){
-        $_SESSION['isLogged'] = true;
+        $this->isLogged = true;
     }
     public function logOut(){
         include_once('../try/destroy.php');

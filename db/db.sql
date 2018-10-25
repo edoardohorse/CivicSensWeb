@@ -237,9 +237,10 @@ VALUES
 ('Taranto',     4, 5,6);
 
 -- User --
-INSERT INTO user (email) VALUES
-('edoardohorse@gmail.com'),
-('iweek16@gmail.com');
+INSERT INTO user (email,type, password) VALUES
+('user@a','User','1a1dc91c907325c69271ddf0c944bc72'),
+('team@a','Team','1a1dc91c907325c69271ddf0c944bc72'),
+('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72');
 
 INSERT INTO team(name, type_report,n_member) VALUES
 ('Enel1',1,5),
