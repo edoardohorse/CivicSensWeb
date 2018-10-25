@@ -26,8 +26,7 @@ abstract class TypeUser{
 
 abstract class Permission extends TypeUser{
     const Admin = 'Admin';
-
-    
+    const Common = 'Common';
 }
 
 class User{
