@@ -60,7 +60,14 @@ class Hub  {
 
         this.queryString.serialize = () => {
             var ampersand = "";
-            let temp = this.method == "GET" ? "?" : ""
+            let temp
+            if(Object.keys(this._queryString).length > 1){
+                temp = this.method == "GET" ? "?" : ""
+            }
+            else{
+                temp = ""
+            }
+
 
             for (let i in this._queryString) {
                 if (i != "serialize") {
