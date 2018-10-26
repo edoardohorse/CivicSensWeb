@@ -33,6 +33,7 @@
             if($param){
                 
                 $arr = explode('/',$this->names);
+                
                 // var_dump($arr);
                 $n = array_search( '{#}', $arr );
                 if(isset($param[$n]))
@@ -67,33 +68,65 @@
         static function search($url){
             global $requests;
             $found = null;
+            // var_dump($url);
             foreach($requests as $key=>$req){
                 $key = explode('/', $key);
+                
                 // var_dump($key);
                 // var_dump($url);
-                for($i=0;$i<count($key);$i++){
-                    // var_dump($url[$i]);
-                    // var_dump($key[$i]);
-                    
-                    // Se la chiave è più corta dell'url allora non è trovata
-                    if(!isset($url[$i]) && !isset($url[$i])){
-                        $found = null;
-                        break;
-                    }
 
-                    // Continua se trovato il segnaposto
-                    if($key[$i] == '{#}'){
-                        continue;
+                if(count($url) > count($key)){
+                    for($i=0;$i<count($url);$i++){
+                        // var_dump($url[$i]);
+                        // var_dump($key[$i]);
+                        
+                        // Se la chiave è più corta dell'url allora non è trovata
+                        if(!isset($key[$i])){
+                            $found = null;
+                            break;
+                        }
+    
+                        // Continua se trovato il segnaposto
+                        if($key[$i] == '{#}'){
+                            continue;
+                        }
+                        
+                        if($url[$i] == $key[$i])    // Setta come trovato la richiesta e continua il ciclo
+                            $found = $req;
+                        else{                       // Setta come non trovato ed esci dal ciclo
+                            $found = null;
+                            break;
+                        }
+                        
                     }
-                    
-                    if($url[$i] == $key[$i])    // Setta come trovato la richiesta e continua il ciclo
-                        $found = $req;
-                    else{                       // Setta come non trovato ed esci dal ciclo
-                        $found = null;
-                        break;
-                    }
-                    
                 }
+                if(count($url) <= count($key)){
+                    for($i=0;$i<count($key);$i++){
+                        // var_dump($url[$i]);
+                        // var_dump($key[$i]);
+                        
+                        // Se la chiave è più corta dell'url allora non è trovata
+                        if(!isset($url[$i])){
+                            $found = null;
+                            break;
+                        }
+    
+                        // Continua se trovato il segnaposto
+                        if($key[$i] == '{#}'){
+                            continue;
+                        }
+                        
+                        if($url[$i] == $key[$i])    // Setta come trovato la richiesta e continua il ciclo
+                            $found = $req;
+                        else{                       // Setta come non trovato ed esci dal ciclo
+                            $found = null;
+                            break;
+                        }
+                        
+                    }
+                }
+
+                // var_dump($found);
                 if($found)
                     return $found;
             }
