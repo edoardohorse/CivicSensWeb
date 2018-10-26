@@ -20,7 +20,7 @@ class Ente extends Admin{
     public function fetchTeams(){
         global $conn;
         $this->teams = [];
-
+        $this->reports = [];
         $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -29,13 +29,36 @@ class Ente extends Admin{
         while($row = $res->fetch_assoc()){
             $team = new Team( $row['email'] );
             $team->fetchReports();
+            
+            // var_dump($team->reports);
+            $keys = array_keys($team->reports);
+            foreach($keys as $key){
+                // var_dump($key);
+                $this->reports[$key]  =$team->reports[$key];
+                //  = $value;
+            }
+
             array_push( $this->teams, $team);
         }
 
-        // var_dump($this->allReports[0]);
+        // var_dump($this->reports);
     }
 
+    public function editTeam($idReport, $nameNewTeam){
+        $teamToAssign = null;
+        foreach($this->teams as $team){
+            if($team->getName() == $nameNewTeam){
+                $teamToAssign = $team;
+                break;
+            }
+        }
+        
+        return $this->reports[$idReport]->editTeam( $teamToAssign->getName() );
 
+        
+    }
+
+    
 
     public function serialize(){
         $result = array();

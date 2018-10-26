@@ -19,7 +19,8 @@ class Team extends Admin{
         parent::__construct($this->name);
 
     }
-
+    public function getId(){return $this->id;}
+    public function getTypeReport(){return $this->typeReport;}
     public function getNMember(){return $this->nMember;}
     public function setNMember($n){ $this->nMember = $n;}
 

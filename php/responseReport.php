@@ -117,11 +117,12 @@ function getHistoryOfReport($id){
 }
 
 
-function editTeam($id){     // FIXME:
-    $newTeam = $_POST['newTeam'];
+function editTeam($id){    
+    global $manager;
+    $newTeam = $_POST['team'];
 
-    $report = getReportById($id);
-    if($report->editTeam($newTeam)){
+    
+    if($manager->editTeam($id, $newTeam)){
         reply(MessageSuccess::EditTeam,false);
     }
     else{
