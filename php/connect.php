@@ -25,5 +25,11 @@ if(substr($_SERVER["SERVER_NAME"],0,3) == "192" ||
 array_shift($request);
 array_shift($request);
 
+    // Trim request
+    foreach($request as $key=>$value){
+        if(strlen($value) == 0){
+            unset($request[$key]);
+        }
+    }
 
 ?>
