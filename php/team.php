@@ -13,10 +13,11 @@ class Team extends Admin{
     private $typeReport;
     private $nMember;
 
-    public function __construct($name){
-        parent::__construct($name);
-
+    public function __construct($email){
+        $this->email = $email;
         $this->fetchInfo();
+        parent::__construct($this->name);
+
     }
 
     public function getNMember(){return $this->nMember;}
@@ -25,21 +26,21 @@ class Team extends Admin{
     private function fetchInfo(){
         global $conn;
 
-        $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_NAME);
-        $stmt->bind_param("s", $this->name);
-        $stmt->bind_result($id, $typeReport,$nMember);
+        $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_EMAIL);
+        $stmt->bind_param("s", $this->email);
+        $stmt->bind_result($id, $typeReport,$nMember ,$name);
         $stmt->execute();
         $stmt->fetch();
 
         $this->id = $id;
+        $this->name = $name;
         $this->typeReport = $typeReport;
         $this->nMember = $nMember;
-
     }
 
     public function fetchReports(){
         global $conn;
-        
+        $this->reports = [];
         
         $stmt = $conn->prepare(QUERY_REPORT_BY_TEAM_BY_ID);
         $stmt->bind_param("i",$this->id);

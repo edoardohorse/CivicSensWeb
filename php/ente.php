@@ -14,11 +14,12 @@ class Ente extends Admin{
     public function __construct($name){
         parent::__construct($name);
 
-        $this->fetchTeams();
+        // $this->fetchTeams();
     }
 
     public function fetchTeams(){
         global $conn;
+        $this->teams = [];
 
         $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
         $stmt->execute();
@@ -26,7 +27,7 @@ class Ente extends Admin{
         $i=0;
         $nameTypeReport = '';
         while($row = $res->fetch_assoc()){
-            $team = new Team( $row['name'] );
+            $team = new Team( $row['email'] );
             $team->fetchReports();
             array_push( $this->teams, $team);
         }

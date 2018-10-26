@@ -117,7 +117,7 @@ function getHistoryOfReport($id){
 }
 
 
-function editTeam($id){
+function editTeam($id){     // FIXME:
     $newTeam = $_POST['newTeam'];
 
     $report = getReportById($id);
@@ -196,21 +196,21 @@ function deleteReports(array $data){
     reply(MessageSuccess::DeleteReports,false);
 }
 
-function getEnte(){ // FIXME:
+function getEnte(){ 
     global $manager;
-    // $manager->fetchTeams();
+    $manager->fetchTeams();
     // var_dump($manager);
     reply('',false,$manager->serialize());
 }
-function getTeams(){ // FIXME:
+function getTeams(){ 
     global $manager;
-    // $manager->fetchTeams();
+    $manager->fetchTeams();
     reply('',false,$manager->serializeTeams());
 }
 
-function getAllReports(){ // FIXME:
+function getAllReports(){ 
     global $manager;
-    var_dump($_SESSION);
+    $manager->fetchTeams();
     reply('',false,$manager->serializeReports());
 }
 
