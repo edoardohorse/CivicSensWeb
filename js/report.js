@@ -61,6 +61,7 @@ class ManagerReport{
         this.isMultipleSelection = false
         this.tableReportNotFinished = new TableReport('report--notfinished')
         this.tableReportFinished = new TableReport('report--finished')
+        this.recapText = document.querySelector('.report__recap__text')
         
         
         this.tableSelected = this.tableReportNotFinished
@@ -265,15 +266,20 @@ class ManagerReport{
 
         this.reportsSelected.push(report)
         report.el.classList.add('tr--selected')    
-        // this.showReport(report)
+        this.showRecap()        
+        this.recapText.textContent = `Selezionate: ${this.reportsSelected.length}`
     }
 
     deselectReport(report){
         let index =  this.reportsSelected.indexOf(report)
         this.reportsSelected[index].el.classList.remove('tr--selected') 
         this.reportsSelected.splice(index, 1)
-        if(this.reportsSelected.length == 0)
+        if(this.reportsSelected.length == 0){
             this.reportsSelected = null
+            this.hideRecap()
+        }
+
+        this.recapText.textContent = `Selezionate: ${this.reportsSelected.length}`
     }
 
     showReport(report){
@@ -381,6 +387,16 @@ class ManagerReport{
             })
 
         })
+    }
+
+
+
+    hideRecap(){
+        document.querySelector('footer').style.display="none"
+    }
+
+    showRecap(){
+        document.querySelector('footer').style.display="block"
     }
 }
 

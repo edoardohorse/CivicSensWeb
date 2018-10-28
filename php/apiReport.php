@@ -52,6 +52,7 @@
             if($this->checkPermission()){
                 $callback = $this->callback;  // Creo handle dalla stringa
                 // var_dump($callback);
+                // var_dump($this->param);
                 $callback($this->param);                
             }
             else{
@@ -146,7 +147,7 @@
         // [GET]
             new Request('GET','report/delete/{#}',      $deleteReport_handler,          Permission::Common,  $request);          // apiReport/report/delete/{id}
         // [POST]
-            new Request('POST','report/delete',         $deleteReports_handler,         Permission::Admin,  $_POST);            // apiReport/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','report/delete',         $deleteReports_handler,         Permission::Admin);            // apiReport/report/delete => newReport [POST] {ids of reports}
     
 
 

@@ -33,7 +33,7 @@ class ManagerDetails{
 }
 
 class ActionOption{
-    constructor(title, callback, description = "" ,isCritic = false){   //TODO: Define dialog for callback execution
+    constructor(title, callback, description = "" ,isCritic = false){ 
         this.el = newEl('li,, option')
         this.title = title,
         this.description = description

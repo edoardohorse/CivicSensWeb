@@ -46,7 +46,7 @@
         <div class="report__recap">
             <span class="report__recap__text"></span>
             <div class="report__recap__actions">
-                <button id=""></button>
+                <button >Elimina selezionate</button>
             </div>
         </div>
     </footer>
