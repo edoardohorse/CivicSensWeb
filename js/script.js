@@ -61,7 +61,53 @@ function calcPhoto(){
     })
 }
 
-vex.dialog.buttons.YES.text = 'Finito'
+
+
+function showReportsEnte(el){
+    hideNavSide()
+
+    if(el){
+    document.querySelector('p.selected').classList.remove('selected')
+    el.classList.add('selected')
+    }
+
+    document.querySelector('#list__report__wrapper').classList.remove('list--hide')
+    document.querySelector('#list__team__wrapper').classList.add('list--hide')
+    managerDet.hide();
+}
+
+function showTeamsEnte(el){
+    hideNavSide()
+
+    if(el){
+        document.querySelector('p.selected').classList.remove('selected')
+        el.classList.add('selected')
+    }
+
+    document.querySelector('#list__team__wrapper').classList.remove('list--hide')
+    document.querySelector('#list__report__wrapper').classList.add('list--hide')
+    managerDet.hide();
+}
+
+function showNavSide(){
+    document.querySelector('#nav__side').classList.add('nav__side--show')
+    document.querySelector('#overlay').classList.add('overlay--show')
+    document.body.style.overflow  = 'hidden';
+
+    document.querySelector('#overlay').addEventListener('click', hideNavSide)
+}
+
+function hideNavSide(){
+    document.querySelector('#nav__side').classList.remove('nav__side--show')
+    document.querySelector('#overlay').classList.remove('overlay--show')
+    document.body.style.overflow  = 'auto';
+
+    document.querySelector('#overlay').removeEventListener('click', hideNavSide)
+}
+
+
+
+vex.dialog.buttons.YES.text = 'Ok'
 vex.dialog.buttons.NO.text = 'Annulla'
 
 vex.defaultOptions.className = 'vex-theme-default'

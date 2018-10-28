@@ -62,6 +62,10 @@ class Team extends Admin{
         
     }
 
+    changeTeamName(){
+        
+    }
+
 }
 
 

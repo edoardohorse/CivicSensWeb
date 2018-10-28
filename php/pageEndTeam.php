@@ -12,6 +12,8 @@
         window.manager = new ManagerReport(substitute(URL_FETCH_REPORTS_BY_TEAM,['Enel2']))
         window.team = new Team('Enel2')
         team.fetchInfo()
+
+        showReportsEnte()
         
     </script>
     <script src="../js/actionsTeam.js"></script>

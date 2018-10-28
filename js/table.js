@@ -3,8 +3,8 @@
 
 
 class Table{
-    constructor(id, theclass){
-        this.el = newEl({el:'div',theclass:theclass,id:id}, document.body.querySelector('main'))
+    constructor(id, theclass, parent){
+        this.el = newEl({el:'div',theclass:theclass,id:id}, parent)
         
 
         this.header = newEl('tr,, row100 head')
@@ -85,7 +85,7 @@ class TableReport extends Table{
             'Tipo',
             'Grado'
         ]
-        super(id, 'list__report')
+        super(id, 'list', document.querySelector('#list__report__wrapper'))
         super.addHeader(HEADER)
         super.build()
     }
@@ -162,4 +162,36 @@ class TableReport extends Table{
     deleteAllRows(){
         super.cleanBody()
     }   
+}
+
+class TableTeam extends Table{
+    constructor(id){
+        const HEADER = [
+            '',
+            'Nome',
+            'Tipo',
+            'N° membri'
+        ]
+        super(id, 'list', document.querySelector('#list__team__wrapper'))
+        super.addHeader(HEADER)
+        super.build()
+    }
+
+    addRow(team){
+        
+        let row = super.createRow([
+                `<input type="checkbox"></input>`,
+                team.name,
+                team.typeReport,
+                team.nMember,
+        ])       
+
+        row.team = team
+        team.el = row
+        team.el.hide = false
+
+        return row
+        
+    }
+
 }

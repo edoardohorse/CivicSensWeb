@@ -9,6 +9,7 @@
     /* width: 30%; */
     box-shadow: -3px 0px 6px -3px #00000036;
     background-color: #F5F5F5;
+    z-index: 30;
 }
 
 .details--hide{
@@ -129,6 +130,11 @@ img {
 }
 .details[data-grade='HIGH'] > .details__title{
     background-color: rgb(255, 22, 0);
+    color:  white;
+}
+
+.details[data-team] > .details__title{
+    background-color: rgb(121, 150, 249);
     color:  white;
 }
 

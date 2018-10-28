@@ -9,16 +9,16 @@
 
         
     <nav>
-            prova
+            <span  onclick="showNavSide()">prova</span>
             <form action="../php/destroy.php">
             <input type="submit" value="Esci">
         </form>
     </nav>
-    <aside class="nav__side">
-        <p>Segnalazioni</p>
-        <p>Team</p>
+    <aside id="nav__side">
+        <p class="selected" onclick="showReportsEnte(this)">Segnalazioni</p>
+        <p onclick="showTeamsEnte(this)">Team</p>
     </aside>
-    <main class="list__report__wrapper">
+    <main class="list__wrapper list--hide" id="list__report__wrapper">
         <nav class="nav__report">
                 <select id="select__search">
                 <option value="Indirizzo">Indirizzo</option>
@@ -37,10 +37,11 @@
                                         
                                 
     </main>
-    <main class="list__team">
+    <main class="list__wrapper list--hide" id="list__team__wrapper">
         
     </main>
 
+    <main id="overlay"></main>
 
     <footer>
         <div class="report__recap">

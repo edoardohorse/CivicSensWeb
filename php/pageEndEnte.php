@@ -15,6 +15,7 @@
         window.ente = new Ente()
         
         
+        showReportsEnte()
         </script>
     <script src="../js/actionsEnte.js"></script>
     
