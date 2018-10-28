@@ -250,6 +250,7 @@ class ManagerReport{
     }   
 
     selectLastReport(report){
+
         if(!this.isMultipleSelection){
             if(this.reportLastSelected)
                 this.deselectLastReport()
@@ -278,8 +279,9 @@ class ManagerReport{
             this.reportsSelected = null
             this.hideRecap()
         }
-
-        this.recapText.textContent = `Selezionate: ${this.reportsSelected.length}`
+        
+        if(this.reportsSelected)
+            this.recapText.textContent = `Selezionate: ${this.reportsSelected.length}`
     }
 
     showReport(report){
@@ -361,23 +363,38 @@ class ManagerReport{
         this.reports.forEach(report=>{
             
             let row = this.getParent(report).addRow(report)
-
+            // debugger
             this.checkboxes.push(row.children[0].querySelector('input'))
-            row.addEventListener('click', this.selectLastReport.bind(this,report))
-            row.children[0].querySelector('input').addEventListener('click',(event)=>{
+            let cells = Array.from(row.children)
+            cells.shift();
+
+            cells.forEach(cell=>{
+                cell.addEventListener('click', this.selectLastReport.bind(this,report))
+            })
+            row.children[0].addEventListener('click',(event)=>{
+                // debugger
+                let target = null
                 
+
                 if(this.reportLastSelected)
                     this.deselectLastReport()
                 
+                if(event.target.checked != null){       // Trigger sull'input
+                    target = event.target
+                }
+                else{
+                    target = event.target.querySelector('input')
+                    target.checked = !target.checked
+                }
 
-                if(event.target.checked){
+                if(target.checked){
                     this.isMultipleSelection = true
-                    this.selectReport(event.target.parentElement.parentElement.report)
+                    this.selectReport(target.parentElement.parentElement.report)
                 }
                 else{
                     if(this.nReportSelected == 0)
                         this.isMultipleSelection = false
-                        let index = this.reportsSelected.indexOf(event.target.parentElement.parentElement.report)
+                        let index = this.reportsSelected.indexOf(target.parentElement.parentElement.report)
                         this.deselectReport(this.reportsSelected[index])
                         
                 }
