@@ -35,6 +35,13 @@
 
     </main>
        
-        
+    <footer>
+        <div class="report__recap">
+            <span class="report__recap__text"></span>
+            <div class="report__recap__actions">
+                <button >Elimina selezionate</button>
+            </div>
+        </div>
+    </footer>
         
     <?php include_once('../php/pageEndTeam.php');?>
