@@ -29,15 +29,49 @@ function newEl(node, toWrite) {
         }
         if ( string[3] != undefined) {
             string[3].indexOf(" ") == 0 ? string[3] = string[3].substr(1) : false;
-            var dataset = string[3].split(" ");
+            var dataset = []
+            if(string[3].includes('"')){                //'type=text placeholder="Nome Team" value="prova prov2" hidden=true'
+                var a = string[3].split('=')
+                a.forEach(function(tk){
+                    if(tk.includes('"')){
+                        let index = tk.lastIndexOf('"')
+
+                        let value = tk.substring(1, index)
+                        
+                        this[this.length-1]+=value
+
+                        let t = tk.split(' ')
+
+                        if(a[a.length-1] != tk)
+                            this.push(t[t.length-1]+="=")
+                    }
+                    else if(tk.includes(' ')){
+                        let t = tk.split(' ')
+                        this[this.length-1]+=t[0]
+                        this.push(t[1]+="=")
+                    }
+                    else{
+                        if(this.length == 0)
+                            this.push(tk+="=")
+                        else{
+                            this[this.length-1]+=tk
+                        }
+                    }
+                }.bind(dataset))
+            }
+            else{
+                dataset = string[3].split(" ");
+            }
             for (var i in dataset) {
+                // debugger
                 var s = dataset[i].split("=")
-                var attr = document.createAttribute(s[0]);
-                // Don't use setAttribute( string, string) cause
-                // doesn't respect the uppercase
-                if(s[1])
-                    attr.value = s[1]
-                el.setAttributeNode(attr);
+                el[s[0]] = s[1]
+                // var attr = document.createAttribute(s[0]);
+                // // Don't use setAttribute( string, string) cause
+                // // doesn't respect the uppercase
+                // if(s[1])
+                //     attr.value = s[1]
+                // el.setAttributeNode(attr);
             }
                 
         }
@@ -250,3 +284,4 @@ window.classie = {
         return el;
     }
 }
+
