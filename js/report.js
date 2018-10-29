@@ -514,7 +514,7 @@ class Report{
     }
 
     deleteReport(){
-        this.tmpHub.method = "GET"
+        this.tmpHub.method = "POST"
         this.tmpHub.url = substitute(URL_DELETE_REPORT,[this.id])
         this.tmpHub.cleanParam()
         this.tmpHub.connect()

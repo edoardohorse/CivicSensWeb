@@ -39,11 +39,6 @@ class Admin{
 
     }
 
-    deleteReport(){
-        let reportToDelete =manager.reportLastSelected
 
-        reportToDelete.tmpHub.onsuccess = this.refresh.bind(this)
-        reportToDelete.deleteReport();
-    }
 
 }

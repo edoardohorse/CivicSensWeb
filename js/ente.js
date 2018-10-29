@@ -255,4 +255,14 @@ class Ente extends Admin{
     changeTeamName(){
 
     }
+
+    deleteReport(){
+        
+        let reportToDelete =manager.reportLastSelected
+
+        reportToDelete.tmpHub.onsuccess = this.fetchInfo.bind(this)
+        reportToDelete.deleteReport();
+
+        managerDet.hide();
+    }
 }

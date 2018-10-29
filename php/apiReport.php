@@ -144,9 +144,8 @@
             new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);                    // apiReport/ente/reports
     
     // ==== ADMIN Requests
-        // [GET]
-            new Request('GET','report/delete/{#}',      $deleteReport_handler,          Permission::Common,  $request);          // apiReport/report/delete/{id}
         // [POST]
+            new Request('POST','report/delete/{#}',      $deleteReport_handler,          Permission::Admin,  $request);          // apiReport/report/delete/{id}
             new Request('POST','report/delete',         $deleteReports_handler,         Permission::Admin);            // apiReport/report/delete => newReport [POST] {ids of reports}
     
 
@@ -184,11 +183,12 @@
     
     $found = Request::search($request);
     // var_dump($found);
-    $found->execute();
+    if($found)
+        $found->execute();
     // var_dump($requests);
 
     
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
     echo json_encode($response);
 
 

@@ -72,10 +72,18 @@ function showReportsEnte(el){
     }
 
     document.querySelector('#list__report__wrapper').classList.remove('list--hide')
-    document.querySelector('#list__team__wrapper').classList.add('list--hide')
+    try{
+        document.querySelector('#list__team__wrapper').classList.add('list--hide')
+    }
+    catch{
+
+    }
     managerDet.hide();
 
-    ente.hideTeamRecap()
+    try{
+        ente.hideTeamRecap()
+    }
+    catch{}
 }
 
 function showTeamsEnte(el){
@@ -104,10 +112,15 @@ function showNavSide(){
 
 function hideNavSide(){
     document.querySelector('#nav__side').classList.remove('nav__side--show')
-    document.querySelector('#overlay').classList.remove('overlay--show')
+    try{
+        document.querySelector('#overlay').classList.remove('overlay--show')
+        document.querySelector('#overlay').removeEventListener('click', hideNavSide)
+    }catch{
+
+    }
     document.body.style.overflow  = 'auto';
 
-    document.querySelector('#overlay').removeEventListener('click', hideNavSide)
+    
 }
 
 

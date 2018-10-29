@@ -66,6 +66,14 @@ class Team extends Admin{
         
     }
 
+    deleteReport(){
+        let reportToDelete =manager.reportLastSelected
+        
+        reportToDelete.tmpHub.onsuccess = this.refresh.bind(this)
+        reportToDelete.deleteReport();
+        managerDet.hide()
+    }
+
 }
 
 
