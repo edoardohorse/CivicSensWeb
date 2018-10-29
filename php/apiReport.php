@@ -167,9 +167,10 @@
             new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // apiReport/ente
             new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // apiReport/ente/teams
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
-        
-        //  [POST]
+            
+            //  [POST]
             new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
+            new Request('POST','ente/new/team',        $newTeam_handler,               Permission::Ente);             // apiReport/ente/new/team
     
 
     // ==== USER Requests

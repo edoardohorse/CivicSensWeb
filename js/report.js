@@ -267,7 +267,7 @@ class ManagerReport{
 
         this.reportsSelected.push(report)
         report.el.classList.add('tr--selected')    
-        this.showRecap()        
+        this.showReportRecap()        
         this.recapText.textContent = `Selezionate: ${this.reportsSelected.length}`
     }
 
@@ -277,7 +277,7 @@ class ManagerReport{
         this.reportsSelected.splice(index, 1)
         if(this.reportsSelected.length == 0){
             this.reportsSelected = null
-            this.hideRecap()
+            this.hideReportRecap()
         }
         
         if(this.reportsSelected)
@@ -408,12 +408,14 @@ class ManagerReport{
 
 
 
-    hideRecap(){
+    hideReportRecap(){
         document.querySelector('footer').style.display="none"
+        document.querySelector('.report__recap').style.display="none"
     }
 
-    showRecap(){
+    showReportRecap(){
         document.querySelector('footer').style.display="block"
+        document.querySelector('.report__recap').style.display="block"
     }
 }
 

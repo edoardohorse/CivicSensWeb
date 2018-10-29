@@ -9,20 +9,22 @@ include_once("ente.php");
 // const teamName = 'Enel1'; TODO: remove
 
 abstract class MessageSuccess{
-    const EditTeam         = 'Modifica del gruppo avvenuta con successo';
-    const EditState        = 'Modifica dello stato avvenuta con successo';
-    const DeleteReport     = 'Segnalazione eliminata';
-    const DeleteReports    = 'Segnalazioni eliminate con successo';
-    const UpdateHistory    = 'Nota aggiunta alla segnalazione';    
-    const AddedReport      = 'Report aggiunto con successo';    
-    const NoMessage        = '';
+    const EditTeam          = 'Modifica del gruppo avvenuta con successo';
+    const EditState         = 'Modifica dello stato avvenuta con successo';
+    const DeleteReport      = 'Segnalazione eliminata';
+    const DeleteReports     = 'Segnalazioni eliminate con successo';
+    const UpdateHistory     = 'Nota aggiunta alla segnalazione';    
+    const AddedReport       = 'Report aggiunto con successo';    
+    const TeamAdded         = 'Team aggiunto con successo';
+    const NoMessage         = '';
 }
 
 abstract class MessageError{
-    const EditTeam           = 'Modifica del gruppo fallita';
-    const EditState          = 'Modifica dello stato fallita';
-    const DeleteReport       = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
-    const UpdateHistory      = 'Errore! Nota non aggiunta alla segnalazione';
+    const EditTeam          = 'Modifica del gruppo fallita';
+    const EditState         = 'Modifica dello stato fallita';
+    const DeleteReport      = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
+    const UpdateHistory     = 'Errore! Nota non aggiunta alla segnalazione';
+    const TeamNotAdded      = 'Errore! Team non aggiunto';
 }
 
 function reply($message, $isInError, $data = null){
@@ -216,6 +218,22 @@ function getAllReports(){
     reply('',false,$manager->serializeReports());
 }
 
+function newTeam(){
+    global $manager;
+    // $manager =   new Ente('');
+    // $manager->fetchTeams();
+
+    $data = $_POST;
+    
+     if($manager->newTeam($data)){
+        reply(MessageSuccess::TeamAdded,false);
+    }
+    else{
+        reply(MessageError::TeamNotAdded,true);
+    }
+
+}
+
 $getListOfTeams_handler     = 'getListOfTeams';
 $getReportsByCity_handler   = 'getReportsByCity';
 $getReportsByTeam_handler   = 'getReportsByTeam';
@@ -232,5 +250,6 @@ $deleteReports_handler      = 'deleteReports';
 $getEnte_handler            = 'getEnte';
 $getTeams_handler           = 'getTeams';
 $getAllReports_handler      = 'getAllReports';
+$newTeam_handler            = 'newTeam'
 
 ?>

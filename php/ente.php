@@ -11,6 +11,8 @@ class Ente extends Admin{
     public $reports = array();
     public $teams = array();
 
+    const DOMAIN = '@a';
+
     public function __construct($name){
         parent::__construct($name);
 
@@ -58,7 +60,51 @@ class Ente extends Admin{
         
     }
 
-    
+    // param data.member, data.name, data.type
+    public function newTeam($data){
+        global $conn;
+        $email = $data['name'].Ente::DOMAIN;       // TODO: Gestire email
+        $pass = MD5($data['pass']);
+        $member = (int)$data['member'];
+        $nameTypeReport   = $data['type'];
+        $type = 'Team';
+
+        $listTypeReport = [];
+
+        // Lista tipi report per ottenere gli id
+        $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc()){
+            $listTypeReport[$row['id']] = $row['name'];
+        }
+
+        $idTypeReport = array_search($nameTypeReport, $listTypeReport);
+
+        // var_dump($pass);
+        // die();
+
+        // Registra nuovo utente come team
+        $stmt = $conn->prepare(QUERY_USER_SIGN_UP);
+        $stmt->bind_param('sss', $email, $type, $pass);
+        $stmt->execute();
+        $idUser = $conn->insert_id;
+        
+        $stmt = $conn->prepare(QUERY_ADD_TEAM);
+        $stmt->bind_param('siii', $data['name'], $idTypeReport, $member, $idUser);
+        $stmt->execute();
+        
+
+        if($stmt->affected_rows > 0){
+            $this->fetchTeams();
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        
+    }
 
     public function serialize(){
         $result = array();
@@ -72,6 +118,7 @@ class Ente extends Admin{
         
         return $result;
     }
+
     public function serializeTeams(){
         $result = array();
         

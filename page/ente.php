@@ -50,6 +50,13 @@
                 <button >Elimina selezionate</button>
             </div>
         </div>
+
+        <div class="team__recap">
+            <span class="team__recap__text"></span>
+            <div class="team__recap__actions">
+                <button >Nuovo team</button>
+            </div>
+        </div>
     </footer>
 
 

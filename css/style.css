@@ -252,12 +252,14 @@ footer {
     z-index: 60;
 }
 
-.report__recap__actions {
+.report__recap__actions,
+.team__recap__actions {
     display: inline-block;
     font-size: 18px;
 }
 
-.report__recap__actions > button {
+.report__recap__actions > button,
+.team__recap__actions > button {
     text-transform: uppercase;
     letter-spacing: -1px;
     margin-left: 2em;
@@ -270,7 +272,8 @@ footer {
     border-radius: 4px;
 }
 
-.report__recap {
+.report__recap,
+.team__recap {
     text-align: center;
 }
 

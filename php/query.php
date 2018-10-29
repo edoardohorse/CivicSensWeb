@@ -68,7 +68,7 @@ const QUERY_BOUND_NORTH_CITY= "SELECT lan,lng
                                 WHERE c.bound_north = l.id
                                 and c.name = ?";
 
-const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, name, surname)
+const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password)
                                 VALUES( ? , ? , ? )";
 
 const QUERY_CITY_ID         = "SELECT id FROM city WHERE name = ?";
@@ -151,4 +151,7 @@ const QUERY_EDIT_REPORT_STATE = "UPDATE report
 
 const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE email = ?";
 
+const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
+
+const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report";
 ?>

@@ -3,6 +3,9 @@ const URL_FETCH_ENTE            =  '../apiReport/ente/'
 const URL_FETCH_REPORTS_BY_ENTE =  '../apiReport/ente/reports/'
 const URL_FETCH_TEAMS_BY_ENTE   =  '../apiReport/ente/teams/'
 
+// ============== POST
+const URL_ADD_TEAM   =  '../apiReport/ente/new/team/'
+
 class Ente extends Admin{
     constructor(name){
         super(name)
@@ -42,6 +45,10 @@ class Ente extends Admin{
 
             manager.fetchAllReports()
         }
+
+        let button = document.querySelector('.team__recap button')
+        button.onclick = this.addTeam.bind(this)
+        button.title = "Crea un nuovo team"
     }
 
     fetchTeams(){
@@ -93,6 +100,7 @@ class Ente extends Admin{
         let teamFiltered = this.teams.filter(team=>team.typeReport==reportToEdit.type).map(team=>team.name)
         teamFiltered.splice(teamFiltered.indexOf(reportToEdit.team),1)
 
+       
         
         
         let chooser = newEl('select,,,name=select')
@@ -119,7 +127,59 @@ class Ente extends Admin{
         reportToEdit.tmpHub.onsuccess = callback.bind(this)
     }
 
-    addTeam(){}
+    addTeam(){
+
+        let listNameTeams = this.teams.map(m=>m.name)
+
+        let listTypeReport = this.teams.map(m=>m.typeReport)
+
+        listTypeReport = listTypeReport.filter(function(item, pos) {
+            return listTypeReport.indexOf(item) == pos;
+        })
+
+        let form = newEl('div') 
+        newEl('input,,, name=name type=text placeholder="Nome team"', form)
+        newEl('input,,, name=pass type=password placeholder="Password"', form)
+        newEl('select,,, name=type', form).
+                appendChildren(
+                    repeatEl('option', listTypeReport.length ,
+                    {
+                        textContent:listTypeReport,
+                        value:listTypeReport
+                    })
+                )
+        newEl('input,,, name="member" type=number value=1 min=1 max=15', form)
+
+        vex.dialog.open({
+            message: 'Aggiungi team',
+            input:form,
+            callback:function(data){
+                
+                if(data){
+                    if(data.member && data.name && data.type && data.pass){
+                        if(listNameTeams.indexOf(data.name) > -1){
+                            vex.dialog.alert('Nome team già usato')    
+                        }
+                        else{
+                            let team = new Team(data.name, data.type, data.member)
+                            Hub.connect(URL_ADD_TEAM, 'POST',{name:data.name, type:data.type, member:data.member, pass:data.pass},{
+                                onsuccess:(result)=>{
+                                    
+                                    result = JSON.parse(result.response)
+                                    vex.dialog.alert(result.message)
+
+                                    this.fetchTeams();
+                                }
+                            })
+                        }
+                    }
+                    else{
+                        vex.dialog.alert('Compila tutti i campi')
+                    }
+                }
+            }.bind(this)
+        })
+    }
 
     deleteTeam(){}  
 
@@ -138,15 +198,6 @@ class Ente extends Admin{
         this.showTeam(this.teamsLastSelected)
     }}
 
-    selectTeam(team){
-        if(!this.teamsSelected)
-        this.teamsSelected = []
-
-        this.teamsSelected.push(team)
-        team.el.classList.add('tr--selected')    
-        this.showRecap()        
-        this.recapText.textContent = `Selezionate: ${this.teamsSelected.length}`
-    }
 
     deselectTeam(team){
         let index =  this.teamsSelected.indexOf(team)
@@ -154,7 +205,7 @@ class Ente extends Admin{
         this.teamsSelected.splice(index, 1)
         if(this.teamsSelected.length == 0){
             this.teamsSelected = null
-            this.hideRecap()
+            this.hideTeamRecap()
         }
         
         if(this.teamsSelected)
@@ -165,44 +216,10 @@ class Ente extends Admin{
             
             let row = this.tableTeam.addRow(team)
             // debugger
-            this.checkboxes.push(row.children[0].querySelector('input'))
-            let cells = Array.from(row.children)
-            cells.shift();
-
-            cells.forEach(cell=>{
-                cell.addEventListener('click', this.selectLastTeam.bind(this,team))
-            })
-            row.children[0].addEventListener('click',(event)=>{
-                // debugger
-                let target = null
-                
-
-                if(this.teamLastSelected)
-                    this.deselectLastteam()
-                
-                if(event.target.checked != null){       // Trigger sull'input
-                    target = event.target
-                }
-                else{
-                    target = event.target.querySelector('input')
-                    target.checked = !target.checked
-                }
-
-                if(target.checked){
-                    this.isMultipleSelection = true
-                    this.selectTeam(target.parentElement.parentElement.team)
-                }
-                else{
-                    if(this.nTeamSelected == 0)
-                        this.isMultipleSelection = false
-                        let index = this.teamsSelected.indexOf(target.parentElement.parentElement.team)
-                        this.deselectTeam(this.teamsSelected[index])
-                        
-                }
-
-                event.stopPropagation()
-                
-            })
+            
+           row.addEventListener('click', this.selectLastTeam.bind(this,team))
+            
+            
 
         })
     }
@@ -225,12 +242,14 @@ class Ente extends Admin{
         // console.log(team)
     }
 
-    hideRecap(){
+    hideTeamRecap(){
         document.querySelector('footer').style.display="none"
+        document.querySelector('.team__recap').style.display="none"
     }
 
-    showRecap(){
+    showTeamRecap(){
         document.querySelector('footer').style.display="block"
+        document.querySelector('.team__recap').style.display="block"
     }
    
     changeTeamName(){

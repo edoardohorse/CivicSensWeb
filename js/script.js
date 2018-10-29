@@ -74,6 +74,8 @@ function showReportsEnte(el){
     document.querySelector('#list__report__wrapper').classList.remove('list--hide')
     document.querySelector('#list__team__wrapper').classList.add('list--hide')
     managerDet.hide();
+
+    ente.hideTeamRecap()
 }
 
 function showTeamsEnte(el){
@@ -87,6 +89,9 @@ function showTeamsEnte(el){
     document.querySelector('#list__team__wrapper').classList.remove('list--hide')
     document.querySelector('#list__report__wrapper').classList.add('list--hide')
     managerDet.hide();
+
+    manager.hideReportRecap()
+    ente.showTeamRecap()
 }
 
 function showNavSide(){

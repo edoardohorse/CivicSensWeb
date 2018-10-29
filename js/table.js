@@ -167,7 +167,6 @@ class TableReport extends Table{
 class TableTeam extends Table{
     constructor(id){
         const HEADER = [
-            '',
             'Nome',
             'Tipo',
             'N° membri'
@@ -180,7 +179,6 @@ class TableTeam extends Table{
     addRow(team){
         
         let row = super.createRow([
-                `<input type="checkbox"></input>`,
                 team.name,
                 team.typeReport,
                 team.nMember,

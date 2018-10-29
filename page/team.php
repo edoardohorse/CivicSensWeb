@@ -15,11 +15,11 @@
             <input type="submit" value="Esci">
         </form>     
     </nav>
-    <aside class="nav__side">
+    <aside id="nav__side">
         <p>Segnalazioni</p>
-        <p>Team</p>
+        <p>Questo team</p>
     </aside>
-    <main class="list__report__wrapper">
+    <main class="list__wrapper" id="list__report__wrapper">
         <nav class="nav__report">
             <select id="select__search">
                 <option value="Indirizzo">Indirizzo</option>
