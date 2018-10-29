@@ -4,7 +4,8 @@ const URL_FETCH_REPORTS_BY_ENTE =  '../apiReport/ente/reports/'
 const URL_FETCH_TEAMS_BY_ENTE   =  '../apiReport/ente/teams/'
 
 // ============== POST
-const URL_ADD_TEAM   =  '../apiReport/ente/new/team/'
+const URL_ADD_TEAM           =  '../apiReport/ente/team/new'
+const URL_CHANGE_NAME_TEAM   =  '../apiReport/team/name'
 
 class Ente extends Admin{
     constructor(name){
@@ -181,7 +182,11 @@ class Ente extends Admin{
         })
     }
 
-    deleteTeam(){}  
+    deleteTeam(){
+
+        
+
+    }  
 
     deselectLastTeam(){
         this.teamsLastSelected.el.classList.remove('tr--selected')
@@ -253,7 +258,39 @@ class Ente extends Admin{
     }
    
     changeTeamName(){
+        let teamToChangeName = this.teamsLastSelected
+        let listNameTeams = this.teams.map(m=>m.name)
+        let form = newEl('div')
+        newEl('span', form).call('textContent', 'Attuale:  '+teamToChangeName.name)
+        newEl('input,,, type=text name=name placeholder="Nuovo nome"', form)
 
+        vex.dialog.open({
+            message:'Modifica nome',
+            input:form,
+            callback:function(data){
+                if(data && data.name){
+                    // debugger
+                    if(listNameTeams.indexOf(data.name) > -1){
+                        vex.dialog.alert('Nome team già usato')    
+                    }
+                    else{
+                        Hub.connect(URL_CHANGE_NAME_TEAM, 'POST',{newName:data.name, name:teamToChangeName.name},{
+                            onsuccess:(result)=>{
+                                
+                                result = JSON.parse(result.response)
+                                vex.dialog.alert(result.message)
+            
+                                this.fetchTeams();
+                            }
+                        })
+                    }
+
+
+                }
+            }.bind(this)
+        })
+
+        
     }
 
     deleteReport(){

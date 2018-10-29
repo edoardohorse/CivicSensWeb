@@ -68,6 +68,23 @@ class Team extends Admin{
             return $this->reports[$id]->updateHistory($message);
     }
 
+    public function changeName($newName){
+        global $conn;
+       
+        $stmt = $conn->prepare(QUERY_CHANGE_NAME_TEAM);
+        $stmt->bind_param('ss', $newName, $this->name);
+        $stmt->execute();
+
+        if($stmt->affected_rows > 0){
+            $this->fetchInfo();
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
     public function serialize(){
         return array('nMember'=> $this->nMember,
                     'name'=>$this->name,

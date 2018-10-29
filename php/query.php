@@ -154,4 +154,6 @@ const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE em
 const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
 
 const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report";
+
+const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?"
 ?>

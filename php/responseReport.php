@@ -16,6 +16,7 @@ abstract class MessageSuccess{
     const UpdateHistory     = 'Nota aggiunta alla segnalazione';    
     const AddedReport       = 'Report aggiunto con successo';    
     const TeamAdded         = 'Team aggiunto con successo';
+    const ChangeName        = 'Nome cambiato';
     const NoMessage         = '';
 }
 
@@ -25,6 +26,7 @@ abstract class MessageError{
     const DeleteReport      = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
     const UpdateHistory     = 'Errore! Nota non aggiunta alla segnalazione';
     const TeamNotAdded      = 'Errore! Team non aggiunto';
+    const ChangeName        = 'Errore! Nome del team non cambiato';
 }
 
 function reply($message, $isInError, $data = null){
@@ -234,6 +236,28 @@ function newTeam(){
 
 }
 
+function changeTeamName(){
+    global $manager;
+    // var_dump($_POST);
+    $newName = $_POST['newName'];
+    $teamToChangeName = null;
+    foreach($manager->teams as $team){
+        // var_dump($team->getName());
+        if($team->getName() == $_POST['name']){
+            $teamToChangeName = &$team;
+            break;
+        }
+    }
+
+    if($teamToChangeName->changeName($newName)){
+        reply(MessageSuccess::ChangeName,false);
+    }
+    else{
+        reply(MessageError::ChangeName,true);
+    }
+
+}
+
 $getListOfTeams_handler     = 'getListOfTeams';
 $getReportsByCity_handler   = 'getReportsByCity';
 $getReportsByTeam_handler   = 'getReportsByTeam';
@@ -250,6 +274,7 @@ $deleteReports_handler      = 'deleteReports';
 $getEnte_handler            = 'getEnte';
 $getTeams_handler           = 'getTeams';
 $getAllReports_handler      = 'getAllReports';
-$newTeam_handler            = 'newTeam'
+$newTeam_handler            = 'newTeam';
+$changeTeamName_handler     = 'changeTeamName'
 
 ?>

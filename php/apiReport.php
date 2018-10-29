@@ -146,7 +146,8 @@
     // ==== ADMIN Requests
         // [POST]
             new Request('POST','report/delete/{#}',      $deleteReport_handler,          Permission::Admin,  $request);          // apiReport/report/delete/{id}
-            new Request('POST','report/delete',         $deleteReports_handler,         Permission::Admin);            // apiReport/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','report/delete',         $deleteReports_handler,          Permission::Admin);            // apiReport/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','team/name',             $changeTeamName_handler,         Permission::Admin);            // apiReport/team/name => changeNameTeam [POST] {newName}
     
 
 
@@ -169,7 +170,7 @@
             
             //  [POST]
             new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
-            new Request('POST','ente/new/team',        $newTeam_handler,               Permission::Ente);             // apiReport/ente/new/team
+            new Request('POST','ente/team/new',        $newTeam_handler,               Permission::Ente);             // apiReport/ente/new/team
     
 
     // ==== USER Requests
