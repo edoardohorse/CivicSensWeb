@@ -12,6 +12,7 @@ class Team extends Admin{
     private $id;
     private $typeReport;
     private $nMember;
+    public $reports;
 
     public function __construct($email){
         $this->email = $email;

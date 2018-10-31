@@ -45,13 +45,13 @@ CREATE TABLE IF NOT EXISTS type_report(
 CREATE TABLE IF NOT EXISTS team(
     id int NOT NULL AUTO_INCREMENT,
     name varchar(150) not null,
-    type_report int,
+    type_report int not null,
     n_member int not null,
-    user int NOT NULL
+    user int NOT NULL,
 
     PRIMARY KEY(id),
     CONSTRAINT fk_team_type_report  FOREIGN KEY(type_report) REFERENCES type_report(id),
-    CONSTRAINT fk_team_user         FOREIGN KEY(user) REFERENCES user(id),
+    CONSTRAINT fk_team_user         FOREIGN KEY(user) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS report(
@@ -281,42 +281,42 @@ INSERT INTO team(name, type_report,n_member,user) VALUES
 INSERT INTO report (city, description, address, location, user,grade,type_report,team,date)
 VALUES
 -- ======= Team Enel
-(1,'Descrizione prova enel 1','Via prova enel 1',11, null,'LOW',1,1,NOW()),
-(1,'Descrizione prova enel 2','Via prova enel 2',12, null,'LOW',1,1,NOW()),
-(1,'Descrizione prova enel 3','Via prova enel 3',13, null,'LOW',1,1,NOW()),
-(1,'Descrizione prova enel 4','Via prova enel 4',14, null,'LOW',1,1,NOW()),
-(1,'Descrizione prova enel 5','Via prova enel 5',15, null,'LOW',1,1,NOW()),
+(1,'Descrizione prova enel 1','Via prova enel 1',11, null,'LOW',1,1,NOW()),         -- 1
+(1,'Descrizione prova enel 2','Via prova enel 2',12, null,'LOW',1,1,NOW()),         -- 2
+(1,'Descrizione prova enel 3','Via prova enel 3',13, null,'LOW',1,1,NOW()),         -- 3
+(1,'Descrizione prova enel 4','Via prova enel 4',14, null,'LOW',1,1,NOW()),         -- 4
+(1,'Descrizione prova enel 5','Via prova enel 5',15, null,'LOW',1,1,NOW()),         -- 5
 
-(1,'Descrizione prova enel 6','Via prova enel 6',16, null,'LOW',1,2,NOW()),
-(1,'Descrizione prova enel 7','Via prova enel 7',17, null,'LOW',1,2,NOW()),
+(1,'Descrizione prova enel 6','Via prova enel 6',16, null,'LOW',1,2,NOW()),         -- 6
+(1,'Descrizione prova enel 7','Via prova enel 7',17, null,'LOW',1,2,NOW()),         -- 7
 
-(1,'Descrizione prova enel 8','Via prova enel 8',18, null,'LOW',1,3,NOW()),
-(1,'Descrizione prova enel 9','Via prova enel 9',19, null,'LOW',1,3,NOW()),
-(1,'Descrizione prova enel 10','Via prova enel 10',20, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 11','Via prova enel 11',21, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 12','Via prova enel 12',22, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 13','Via prova enel 13',23, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 14','Via prova enel 14',24, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 15','Via prova enel 15',25, null,'INTERMEDIATE',1,3,NOW()),
-(1,'Descrizione prova enel 16','Via prova enel 16',26, null,'INTERMEDIATE',1,3,NOW()),
+(1,'Descrizione prova enel 8','Via prova enel 8',18, null,'LOW',1,3,NOW()),         -- 8
+(1,'Descrizione prova enel 9','Via prova enel 9',19, null,'LOW',1,3,NOW()),         -- 9
+(1,'Descrizione prova enel 10','Via prova enel 10',20, null,'INTERMEDIATE',1,3,NOW()),          -- 10
+(1,'Descrizione prova enel 11','Via prova enel 11',21, null,'INTERMEDIATE',1,3,NOW()),          -- 11
+(1,'Descrizione prova enel 12','Via prova enel 12',22, null,'INTERMEDIATE',1,3,NOW()),          -- 12
+(1,'Descrizione prova enel 13','Via prova enel 13',23, null,'INTERMEDIATE',1,3,NOW()),          -- 13
+(1,'Descrizione prova enel 14','Via prova enel 14',24, null,'INTERMEDIATE',1,3,NOW()),          -- 14
+(1,'Descrizione prova enel 15','Via prova enel 15',25, null,'INTERMEDIATE',1,3,NOW()),          -- 15
+(1,'Descrizione prova enel 16','Via prova enel 16',26, null,'INTERMEDIATE',1,3,NOW()),          -- 16
 
-(1,'Descrizione prova enel 17','Via prova enel 17',27, null,'INTERMEDIATE',1,4,NOW()),
-(1,'Descrizione prova enel 18','Via prova enel 18',28, null,'INTERMEDIATE',1,4,NOW()),
-(1,'Descrizione prova enel 19','Via prova enel 19',29, null,'INTERMEDIATE',1,4,NOW()),
-(1,'Descrizione prova enel 20','Via prova enel 20',30, null,'HIGH',1,4,NOW()),
-(1,'Descrizione prova enel 21','Via prova enel 21',31, null,'HIGH',1,4,NOW()),
-(1,'Descrizione prova enel 22','Via prova enel 22',32, null,'HIGH',1,4,NOW()),
+(1,'Descrizione prova enel 17','Via prova enel 17',27, null,'INTERMEDIATE',1,4,NOW()),              -- 17
+(1,'Descrizione prova enel 18','Via prova enel 18',28, null,'INTERMEDIATE',1,4,NOW()),              -- 18
+(1,'Descrizione prova enel 19','Via prova enel 19',29, null,'INTERMEDIATE',1,4,NOW()),              -- 19
+(1,'Descrizione prova enel 20','Via prova enel 20',30, null,'HIGH',1,4,NOW()),              -- 20
+(1,'Descrizione prova enel 21','Via prova enel 21',31, null,'HIGH',1,4,NOW()),              -- 21
+(1,'Descrizione prova enel 22','Via prova enel 22',32, null,'HIGH',1,4,NOW()),              -- 22
 
-(1,'Descrizione prova enel 23','Via prova enel 23',33, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 24','Via prova enel 24',34, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 25','Via prova enel 25',35, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 26','Via prova enel 26',36, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 27','Via prova enel 27',37, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 28','Via prova enel 28',38, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 29','Via prova enel 29',39, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 30','Via prova enel 30',40, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 31','Via prova enel 31',41, null,'HIGH',1,5,NOW()),
-(1,'Descrizione prova enel 32','Via prova enel 32',42, null,'HIGH',1,5,NOW()),
+(1,'Descrizione prova enel 23','Via prova enel 23',33, null,'HIGH',1,5,NOW()),          -- 23
+(1,'Descrizione prova enel 24','Via prova enel 24',34, null,'HIGH',1,5,NOW()),          -- 24
+(1,'Descrizione prova enel 25','Via prova enel 25',35, null,'HIGH',1,5,NOW()),          -- 25
+(1,'Descrizione prova enel 26','Via prova enel 26',36, null,'HIGH',1,5,NOW()),          -- 26CREATE TABLE IF NOT EXISTS team( id int NOT NULL AUTO_INCREMENT, nam
+(1,'Descrizione prova enel 27','Via prova enel 27',37, null,'HIGH',1,5,NOW()),          -- 27
+(1,'Descrizione prova enel 28','Via prova enel 28',38, null,'HIGH',1,5,NOW()),          -- 28
+(1,'Descrizione prova enel 29','Via prova enel 29',39, null,'HIGH',1,5,NOW()),          -- 29
+(1,'Descrizione prova enel 30','Via prova enel 30',40, null,'HIGH',1,5,NOW()),          -- 30
+(1,'Descrizione prova enel 31','Via prova enel 31',41, null,'HIGH',1,5,NOW()),          -- 31
+(1,'Descrizione prova enel 32','Via prova enel 32',42, null,'HIGH',1,5,NOW()),          -- 32
 
 
 -- ======= Team idraulica
