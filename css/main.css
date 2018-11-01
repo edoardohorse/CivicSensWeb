@@ -208,11 +208,11 @@ th, td {
 [ Fix header ]*/
 .table100 {
   position: relative;
-  padding-top: 60px;
+  /* padding-top: 60px; */
 }
 
 .table100-head {
-  position: absolute;
+  position: relative;
   width: 100%;
   top: 0;
   left: 0;

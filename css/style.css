@@ -347,3 +347,17 @@ footer {
 
 
 
+
+
+#list__result {
+    height: auto;
+    position: relative;
+}
+
+#list__result .container-table100 {
+    min-height: auto;
+}
+
+#list__result .table100-body.js-pscroll {
+    min-height: auto;
+}

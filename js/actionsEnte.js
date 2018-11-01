@@ -19,8 +19,8 @@ const ACTIONS_TEAM_REPORT_AS_DONE = [
 
 // ====== Actions for team of ente
 
-const ACTION_OPTION_CHANGE_NAME_TEAM                 = new ActionOption('Modifica nome',      ente.changeTeamName.bind(ente), "Modifica il nome del team selezionato")
-const ACTION_OPTION_DELETE_TEAM                 = new ActionOption('Elimina team',       ente.deleteTeam.bind(ente),        "Elimina definitivamente il team ridistribuendo i report associati", true)
+const ACTION_OPTION_CHANGE_NAME_TEAM            = new ActionOption('Modifica nome',         ente.changeTeamName.bind(ente), "Modifica il nome del team selezionato")
+const ACTION_OPTION_DELETE_TEAM                 = new ActionOption('Elimina team',          ente.deleteTeam.bind(ente),        "Elimina definitivamente il team ridistribuendo i report associati", true)
 
 const ACTION_OPTION_TEAM = [
     ACTION_OPTION_CHANGE_NAME_TEAM,

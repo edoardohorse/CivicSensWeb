@@ -5,18 +5,15 @@ const URL_FETCH_TEAMS_BY_ENTE   =  '../apiReport/ente/teams/'
 
 // ============== POST
 const URL_ADD_TEAM           =  '../apiReport/ente/team/new'
+const URL_DELETE_TEAM           =  '../apiReport/ente/team/delete'
 const URL_CHANGE_NAME_TEAM   =  '../apiReport/team/name'
 
 class Ente extends Admin{
     constructor(name){
         super(name)
 
-        this.teams = []
-        this.fetchTeams()
         this.tableTeam = new TableTeam('list__team__wrapper')
-        this.teamsSelected = null
-        this.teamsLastSelected = null
-        this.checkboxes = []
+        
         this.recapText = document.querySelector('.report__recap__text')
         this.detail = new Details()
         this.detail.addRow(
@@ -37,6 +34,8 @@ class Ente extends Admin{
         this.detail.build()
         managerDet.addDetails(this.detail)
 
+        this.init()
+        this.fetchTeams()
 
         this.refresh = (result)=>{
             result = JSON.parse(result.response)
@@ -52,7 +51,19 @@ class Ente extends Admin{
         button.title = "Crea un nuovo team"
     }
 
+    init(){
+        this.teams = []
+        
+        this.teamsSelected = null
+        this.teamsLastSelected = null
+        this.checkboxes = []
+    }
+
     fetchTeams(){
+
+        this.init()
+        this.tableTeam.deleteAllRows()
+
         Hub.connect(URL_FETCH_TEAMS_BY_ENTE, 'GET', null, {
             onsuccess: (result)=>{
                 result = JSON.parse(result.response)
@@ -183,6 +194,67 @@ class Ente extends Admin{
     }
 
     deleteTeam(){
+
+        // debugger
+        let teamToDelete = this.teamsLastSelected
+        let listTeamsByType = this.teams.filter(t=>{ return teamToDelete != t? t.typeReport == teamToDelete.typeReport: false})
+        // let form = newEl('div')
+        // newEl('select,,, name=name', form).listTeamsByType
+        //         appendChildren(
+        //             repeatEl('option', listNameTeams.length ,
+        //             {
+        //                 textContent:listNameTeams,
+        //                 value:listNameTeams
+        //             })
+        //         )
+
+        vex.dialog.confirm({
+            message:'Sicuro di voler eliminare il team definitivamente?',
+            callback:function(data){
+                if(data){
+                    // debugger
+                    
+                    Hub.connect(URL_DELETE_TEAM, 'POST',{team:teamToDelete.name},{
+                        onsuccess:(result)=>{
+                            
+                            result = JSON.parse(result.response)
+                            console.log(result.data)
+
+                            // debugger
+
+                            let div = newEl('div')
+                            let tableResult = new TableTeamResult('list__result', div)
+                            for(let team of listTeamsByType){
+                                
+                                let nOldReport = team.reports.length
+                                let nNewReport = result.data[team.name]
+                                if(nOldReport == nNewReport)
+                                    tableResult.addRow(team.name, nOldReport, nNewReport  )
+                                else
+                                    tableResult.addRow(team.name,
+                                        newEl('span,,, style="color:red;"').call('textContent',nOldReport),
+                                        newEl('span,,, style="color:green;"').call('textContent',nNewReport)  )
+                            }
+                            
+
+                            vex.dialog.alert({
+                                message: 'Modifica effettuate',
+                                input: div
+                            })
+
+                            
+
+
+            
+                            this.fetchTeams();
+                        }
+                    })
+                    
+
+
+                }
+            }.bind(this)
+        })
 
         
 

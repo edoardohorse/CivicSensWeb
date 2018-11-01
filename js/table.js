@@ -24,7 +24,10 @@ class Table{
         row.classList.add('body')
 
         for(let i=0;i< content.length;i++){
-            row.innerHTML += `<td class="cell100 column${i+1}">${content[i]}</td>`
+            if(content[i] instanceof HTMLElement)
+                row.innerHTML += `<td class="cell100 column${i+1}">${content[i].outerHTML}</td>`
+            else
+                row.innerHTML += `<td class="cell100 column${i+1}">${content[i]}</td>`
         }
 
         return row
@@ -192,4 +195,34 @@ class TableTeam extends Table{
         
     }
 
+    deleteAllRows(){
+        super.cleanBody()
+    }  
+
+}
+
+class TableTeamResult extends Table{
+    constructor(id, parent){
+        const HEADER = [
+            'Nome',
+            'N° report<br> prima',
+            'N° report<br> dopo'
+        ]
+        super(id, 'list',parent)
+        super.addHeader(HEADER)
+        super.build()
+    }
+
+    addRow(...res){
+//         debugger
+        let [name, nReportBefore, nReportAfter] = res;
+
+        let row = super.createRow([
+                name,
+                nReportBefore,
+                nReportAfter,
+        ])       
+
+        
+    }
 }

@@ -17,6 +17,7 @@ abstract class MessageSuccess{
     const AddedReport       = 'Report aggiunto con successo';    
     const TeamAdded         = 'Team aggiunto con successo';
     const ChangeName        = 'Nome cambiato';
+    const DeleteTeam        = 'Team eliminato con successo';
     const NoMessage         = '';
 }
 
@@ -258,6 +259,16 @@ function changeTeamName(){
 
 }
 
+function deleteTeam(){
+    global $manager;
+    // $manager = new Ente('');
+    // $manager->fetchTeams();
+    
+    
+    reply(MessageSuccess::DeleteTeam,false, $manager->deleteTeam($_POST['team']));
+
+}
+
 $getListOfTeams_handler     = 'getListOfTeams';
 $getReportsByCity_handler   = 'getReportsByCity';
 $getReportsByTeam_handler   = 'getReportsByTeam';
@@ -275,6 +286,6 @@ $getEnte_handler            = 'getEnte';
 $getTeams_handler           = 'getTeams';
 $getAllReports_handler      = 'getAllReports';
 $newTeam_handler            = 'newTeam';
-$changeTeamName_handler     = 'changeTeamName'
-
+$changeTeamName_handler     = 'changeTeamName';
+$deleteTeam_handler         = 'deleteTeam';
 ?>

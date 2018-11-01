@@ -3,7 +3,7 @@
 include_once("connect.php");
 include_once("query.php");
 include_once("team.php");
-
+include_once("algoritm_team.php");
 
 
 class Ente extends Admin{
@@ -58,6 +58,87 @@ class Ente extends Admin{
         return $this->reports[$idReport]->editTeam( $teamToAssign->getName() );
 
         
+    }
+
+    public function deleteTeam($nameTeamToDelete){
+
+        // var_dump($nameTeamToDelete);
+        $teamToDelete = array_filter($this->teams, function($t) use($nameTeamToDelete){return $t->getName() == $nameTeamToDelete;});
+        // var_dump($teamToDelete);
+
+        $teamToDelete = $teamToDelete[array_keys($teamToDelete)[0]];
+
+        
+        $teams = array_filter($this->teams, function($t) use($teamToDelete)
+            {return $t->getTypeReport() == $teamToDelete->getTypeReport(); });
+
+        $list = [];
+        foreach($teams as $team){
+            if($team->getName() == $nameTeamToDelete){
+                $key = array_search($team, $teams);
+                unset($teams[$key]);
+            }
+            else{
+                $list[$team->getName()] = count($team->reports);
+            }
+        }
+
+        $nReportToAssign = count($teamToDelete->reports);
+        //var_dump($nReportToAssign);
+        // var_dump($list);
+        $list = distributeInteger($list,$nReportToAssign);
+        //var_dump($list);
+
+        foreach($list as $name=>$value){
+            if($nReportToAssign <= 0){
+                break;
+            }
+            // echo "<br><br>Team a cui aggiungere: $name".PHP_EOL;
+            
+            $team = array_filter($teams, function($t) use($name){return $t->getName() == $name;});
+            $team = $team[array_keys($team)[0]];
+
+            
+            $nReAssigned = abs($value - count($team->reports));
+            
+            // var_dump($nReAssigned);
+            $i=0;
+            // var_dump($teamToDelete);
+            foreach($teamToDelete->reports as $report){
+                
+                if($i++ < $nReAssigned){
+                    
+                    // echo "<br>ID Report di cui cambiare il team: {$report->getId()}";
+                    // echo "<br>Team del report di cui cambiare il team: {$report->getTeam()}";
+                    // var_dump($report->getId());
+                    $this->editTeam($report->getId(), $name);
+                    // var_dump($report->getTeam());
+
+                    // echo " ==> {$report->getTeam()}";
+                    
+                    unset($teamToDelete->reports[array_search($report, $teamToDelete->reports)]);
+                }
+                else{
+                    break;
+                }
+                
+            }
+            
+
+            $nReportToAssign -= $nReAssigned;
+            // var_dump($team);
+        }
+
+        
+        $this->fetchTeams();
+
+        global $conn;
+        $stmt = $conn->prepare(QUERY_DELETE_TEAM);
+        $stmt->bind_param("s",$nameTeamToDelete);
+        $stmt->execute();
+
+        return $list;
+
     }
 
     // param data.member, data.name, data.type
