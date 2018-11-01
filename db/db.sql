@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS team(
 
     PRIMARY KEY(id),
     CONSTRAINT fk_team_type_report  FOREIGN KEY(type_report) REFERENCES type_report(id),
-    CONSTRAINT fk_team_user         FOREIGN KEY(user) REFERENCES user(id)
+    CONSTRAINT fk_team_user         FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE            
 );
 
 CREATE TABLE IF NOT EXISTS report(
