@@ -217,8 +217,15 @@ function getTeams(){
 
 function getAllReports(){ 
     global $manager;
-    $manager->fetchTeams();
-    reply('',false,$manager->serializeReports());
+    if(isset($manager)){
+        $manager->fetchTeams();
+        reply('',false,$manager->serializeReports());
+    }
+    else{
+        $ente = new Ente('');
+        $ente->fetchTeams();
+        reply('',false,$ente->serializeReports());
+    }
 }
 
 function newTeam(){
