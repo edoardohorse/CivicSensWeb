@@ -1,0 +1,668 @@
+{
+	"info": {
+		"_postman_id": "061a08cb-e864-4890-b63d-30934c645303",
+		"name": "CivicSense Web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Team",
+					"item": [
+						{
+							"name": "Fetch reports by team",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/team/Enel2",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"team",
+										"Enel2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Ente",
+					"item": [
+						{
+							"name": "Fetch list of teams",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/team",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"team"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fetch teams of ente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/ente/teams",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"ente",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fetch reports and teams of ente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/ente",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"ente"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Common",
+					"item": [
+						{
+							"name": "Fetch report by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/id/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Fetch report by id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "localhost/CivicSenseWeb/apiReport/report/id/1",
+											"host": [
+												"localhost"
+											],
+											"path": [
+												"CivicSenseWeb",
+												"apiReport",
+												"report",
+												"id",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Connection",
+											"value": "Keep-Alive",
+											"name": "Connection",
+											"description": "Options that are desired for the connection"
+										},
+										{
+											"key": "Content-Length",
+											"value": "296",
+											"name": "Content-Length",
+											"description": "The length of the response body in octets (8-bit bytes)"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "The mime type of this content"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 05 Oct 2018 05:53:02 GMT",
+											"name": "Date",
+											"description": "The date and time that the message was sent"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5, max=100",
+											"name": "Keep-Alive",
+											"description": "Custom header"
+										},
+										{
+											"key": "Server",
+											"value": "Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10",
+											"name": "Server",
+											"description": "A name for the server"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/7.2.10",
+											"name": "X-Powered-By",
+											"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+										}
+									],
+									"cookie": [],
+									"body": "{\"error\":false,\"result\":{\"id\":1,\"city\":\"Grottaglie\",\"address\":\"Via prova 1\",\"description\":\"Descrizione prova 1\",\"state\":\"Finito\",\"grade\":\"INTERMEDIATE\",\"location\":{\"lan\":40.536122,\"lng\":17.433656},\"user\":null,\"type\":\"Guasti elettrici\",\"team\":\"Enel1\",\"cdt\":\"quijgj6bIz1\",\"photos\":[],\"history\":[]}}"
+								}
+							]
+						},
+						{
+							"name": "Fetch photos of report",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/photos/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"photos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fetch history of report",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/history/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"history",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fetch reports of ente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/ente/reports",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"ente",
+										"reports"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Delete report by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/delete/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Delete more reports",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "[33,34,36]",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/delete",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Ente",
+					"item": [
+						{
+							"name": "Add new team",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Enel7",
+											"type": "text"
+										},
+										{
+											"key": "pass",
+											"value": "pass",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "Guasti elettrici",
+											"type": "text"
+										},
+										{
+											"key": "member",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/ente/team/new",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"ente",
+										"team",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete team by name",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "team",
+											"value": "Enel4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/ente/team/delete",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"ente",
+										"team",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit team of repor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "team",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/1/team",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"1",
+										"team"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d5b76955-0afd-41a3-8aba-a298f97beb49",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "89e33b7d-0b75-400f-9242-62aa7b646d32",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Team",
+					"item": [
+						{
+							"name": "Edit state of report",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "280218f6-9e42-4647-8392-75e6f0df347f",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "state",
+											"value": "Finito",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/1/state",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"1",
+										"state"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add history to report",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "history",
+											"value": "Nuovo messaggio di prova2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/1/history",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"1",
+										"history"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "New report",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "idCity",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Nuova descrizione",
+											"type": "text"
+										},
+										{
+											"key": "lan",
+											"value": "18.3",
+											"type": "text"
+										},
+										{
+											"key": "lng",
+											"value": "23.9",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Via prova",
+											"type": "text"
+										},
+										{
+											"key": "photos[]",
+											"type": "file",
+											"src": ""
+										},
+										{
+											"key": "typeReport",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "grade",
+											"value": "LOW",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost/CivicSenseWeb/apiReport/report/new",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"CivicSenseWeb",
+										"apiReport",
+										"report",
+										"new"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
