@@ -87,6 +87,16 @@ function getReports($stmt){
     return $result;
 }
 
+function getListTypeOfReport(){
+    global $conn;
+
+    $result = $conn->query(QUERY_LIST_TYPE_REPORT);
+    $types = [];
+    while($row = $result->fetch_assoc()){
+        array_push($types, $row);
+    }
+    reply('',false, $types);
+}
 
 function getReportById($id){
     global $conn;
@@ -305,4 +315,5 @@ $getAllReports_handler      = 'getAllReports';
 $newTeam_handler            = 'newTeam';
 $changeTeamName_handler     = 'changeTeamName';
 $deleteTeam_handler         = 'deleteTeam';
+$getListTypeOfReport_handler= 'getListTypeOfReport';
 ?>

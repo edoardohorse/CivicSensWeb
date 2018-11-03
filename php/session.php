@@ -13,6 +13,13 @@
 
     if(isset($_SESSION['manager']))
         $manager = &$_SESSION['manager'];
-    // var_dump($user);
+
+    
+    $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+    if(stripos($ua,'android') !== false) { // && stripos($ua,'mobile') !== false) {
+        $_SESSION['user']->setType(TypeUser::User);
+    }
+    /*  echo json_encode($_SESSION);
+    die(); */
 
 ?>
