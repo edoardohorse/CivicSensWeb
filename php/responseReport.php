@@ -111,7 +111,7 @@ function getPhotosOfReport($id){
 
     $urls = [];
     foreach($report->getPhotos() as $value){
-        if($_SERVER["SERVER_NAME"] == "192.168.1.181"){
+        if($_SERVER["SERVER_NAME"] != "192.168.1.181"){
             array_push($urls, $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].'/civic'.'/'.$value);
         }
         else{
