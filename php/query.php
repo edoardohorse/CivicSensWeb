@@ -6,6 +6,16 @@
 const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, r.date,
                                     t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
 
+const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
+                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
+                                WHERE   r.location      = l.id
+                                    AND r.city          = c.id
+                                    AND r.type_report   = t.id
+                                    AND r.team          = tm.id
+                                    AND cdt.report		= r.id
+                                GROUP BY r.id
+                                ORDER BY r.state DESC, r.date DESC";
+
 const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                 FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
                                 WHERE   r.location      = l.id

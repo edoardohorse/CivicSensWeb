@@ -46,6 +46,21 @@ class Ente extends Admin{
         // var_dump($this->reports);
     }
 
+    public function fetchReports(){
+        global $conn;
+        // $this->teams = [];
+        $this->reports = [];
+        $stmt = $conn->prepare(QUERY_REPORT_BY_ENTE);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while($row = $res->fetch_assoc()){
+            $report = new Report( $row );
+            // var_dump($report);
+            array_push( $this->reports, $report);            
+        }
+
+    }
+
     public function editTeam($idReport, $nameNewTeam){
         $teamToAssign = null;
         foreach($this->teams as $team){
@@ -215,12 +230,16 @@ class Ente extends Admin{
         $result = array();
         $c=0;
         // var_dump($this->teams);die();
-        foreach($this->teams as $key=>$tmpTeam){   
-            // var_dump($tmpTeam);
-            foreach($tmpTeam->reports as $key=>$rep){   
-                $result[$c++] = $rep->serialize();
-            }              
-        }
+        // foreach($this->teams as $key=>$tmpTeam){   
+        //     // var_dump($tmpTeam);
+        //     foreach($tmpTeam->reports as $key=>$rep){   
+        //         $result[$c++] = $rep->serialize();
+        //     }              
+        // }
+       foreach($this->reports as $key=>$rep){   
+            $result[$c++] = $rep->serialize();
+        }              
+        
             
         // var_dump($result);die();
         return $result;
