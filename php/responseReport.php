@@ -108,9 +108,19 @@ function getPhotosOfReport($id){
     
     $report = getReportById($id);
     $report->fetchPhotos();
+
+    $urls = [];
+    foreach($report->getPhotos() as $value){
+        if($_SERVER["SERVER_NAME"] == "192.168.1.181"){
+            array_push($urls, $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].'/civic'.'/'.$value);
+        }
+        else{
+            array_push($urls, 'http://'.$_SERVER["HTTP_HOST"].'/CivicSenseWeb'.'/'.$value);
+        }
+    }
     // $reportStr = $report->serialize();
 
-    reply(MessageSuccess::NoMessage,false,$report->getPhotos());
+    reply(MessageSuccess::NoMessage,false,$urls);
 }
 
 function getHistoryOfReport($id){
