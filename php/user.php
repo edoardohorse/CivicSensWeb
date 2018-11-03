@@ -39,6 +39,7 @@ class User{
 
     public function getEmail(){return $this->email;}
     public function getType(){return $this->type;}    
+    public function setType($t){$this->type = $t;}    
     public function getPass(){return $this->pass;}
     public function isAdmin(){return $this->isAdmin;}
     

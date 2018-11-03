@@ -6,6 +6,7 @@
     global $user;
     global $manger;
 
+    
     if(!isset($_SESSION['user']))
         $_SESSION['user'] = new User();
     
@@ -19,7 +20,7 @@
     if(stripos($ua,'android') !== false) { // && stripos($ua,'mobile') !== false) {
         $_SESSION['user']->setType(TypeUser::User);
     }
-    /*  echo json_encode($_SESSION);
-    die(); */
+    // var_dump($_SERVER['HTTP_USER_AGENT']);die();
+    
 
 ?>

@@ -64,19 +64,21 @@ class Report{
         // $this->fetchHistory();
     }
 
-    static public function newReport(array $data){
+    static public function newReport(){
         global $conn;
-
+        // var_dump($_POST);
         $location = newLocation($_POST['lan'], $_POST['lng']);
 
         $stmt = $conn->prepare(QUERY_TEAM_MIN_REPORT);
+        $stmt->bind_param("s", $_POST['typeReport']);
         $stmt->execute();
         $idTeam = $stmt->get_result()->fetch_assoc()['id'];
-
+        
+        // var_dump($idTeam);
         // var_dump($idTeam);
         // var_dump($data);
         $stmt = $conn->prepare(QUERY_NEW_REPORT);
-        $stmt->bind_param("isisssi",$_POST['idCity'],
+        $stmt->bind_param("ssisssi",$_POST['city'],
                                     $_POST['description'],
                                     $location,
                                     $_POST['address'],
@@ -141,7 +143,7 @@ class Report{
             for ($i = 0; $i < $count; $i++) {
             
                 try{
-                    move_uploaded_file($_FILES['photos']['tmp_name'][$i], UPLOAD_PATH . $_FILES['photos']['name'][$i]);
+                    move_uploaded_file($_FILES['photos']['tmp_name'][$i],"../". UPLOAD_PATH . $_FILES['photos']['name'][$i]);
                     $stmt = $conn->prepare(QUERY_NEW_PHOTOS);
                     $stmt->bind_param("si", $_FILES['photos']['name'][$i], $idReport);
                     $stmt->execute();

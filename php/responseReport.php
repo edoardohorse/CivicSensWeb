@@ -202,8 +202,8 @@ function updateHistory($id){
     }
 }
 
-function newReport(array $data){
-   $report = Report::newReport($data);
+function newReport(){
+   $report = Report::newReport();
    reply(MessageSuccess::AddedReport,
             false,
             array('cdt'=>$report->getCdt())

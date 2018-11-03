@@ -75,8 +75,8 @@ const QUERY_CITY_ID         = "SELECT id FROM city WHERE name = ?";
 
 const QUERY_NEW_LOCATION    = "INSERT INTO location(lan, lng) VALUES( ?, ? )";
 
-const QUERY_NEW_REPORT      = "INSERT INTO report(city, description, location, address,grade,date,type_report, team)
-                                VALUES( ? , ? , ? , ?, ?, NOW(), ?, ?)";    
+const QUERY_NEW_REPORT      = "INSERT INTO report( city, description, location, address,grade,date,type_report, team)
+                                VALUES( (SELECT id FROM city WHERE name = ?), ? , ? , ?, ?, NOW(), ?, ?)";    
                                 
 const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
                                                     FROM report as r, (
@@ -98,7 +98,7 @@ const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  t
 // permette di ottenere l'id del team con il minor numero
 // di segnalazioni
 const QUERY_TEAM_MIN_REPORT = "SELECT list.*
-                                FROM (".QUERY_FETCH_LIST_TEAM."
+                                FROM (".QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT."
                                 ORDER BY n_report ASC) as list
                                 LIMIT 1";
 
