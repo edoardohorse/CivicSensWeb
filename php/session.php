@@ -17,10 +17,10 @@
 
     
     $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
-    if(stripos($ua,'android') !== false) { // && stripos($ua,'mobile') !== false) {
+    if(stripos($ua,'okhttp') !== false) { // && stripos($ua,'mobile') !== false) {
         $_SESSION['user']->setType(TypeUser::User);
     }
-    // var_dump($_SERVER['HTTP_USER_AGENT']);die();
+    // echo json_encode($_SERVER['HTTP_USER_AGENT']);die();
     
 
 ?>
