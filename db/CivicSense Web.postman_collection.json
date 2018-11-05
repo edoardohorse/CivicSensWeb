@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "061a08cb-e864-4890-b63d-30934c645303",
+		"_postman_id": "e6a94c28-10ed-4165-82f2-51639738eadb",
 		"name": "CivicSense Web",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -705,7 +705,7 @@
 									},
 									{
 										"key": "User-Agent",
-										"value": "android",
+										"value": "okhttp",
 										"type": "text"
 									}
 								],
@@ -750,6 +750,11 @@
 										{
 											"key": "grade",
 											"value": "LOW",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "",
 											"type": "text"
 										}
 									]
