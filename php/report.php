@@ -91,12 +91,16 @@ class Report{
         
         $newReport = new Report([$conn->insert_id]);
         $newReport->pushPhotos($id);
-        $newReport->newCDT($id);
+        $cdt = $newReport->newCDT($id);
         $newReport->fetchInfo();
 
         
-        return $newReport;
         
+        
+        if($_POST['email'] != "")
+            Report::sendEmailToUser($_POST['email'], $_POST['description'], $cdt);
+        
+        return $newReport;
     }
 
     private function generateRandomString($length = 11) {
@@ -132,6 +136,7 @@ class Report{
         $stmt = $conn->prepare(QUERY_NEW_CDT);
         $stmt->bind_param("ss",$newCDT,$idReport);
         $stmt->execute();    
+        return $newCDT;
     }
     
     
@@ -199,16 +204,34 @@ class Report{
 
     }
 
-    // TODO:
-    public function sendEmailToUser(){
-        if($this->user != null){
-            $to = $this->user;
-            $subject = "My subject";
-            $txt = "Hello world!";
-            $headers = "From: civicsens@altervista.org" . "\r\n";
-
-            mail($to,$subject,$txt,$headers);
-        }
+    
+    static public function sendEmailToUser($email, $description, $cdt){
+        // var_dump($email);
+        // var_dump($description);
+        // var_dump($cdt);
+        $to = $email;
+        $subject = "Report ricevuto";
+        $message = "
+            <html>
+                <head>
+                    <title>Report ricevuto</title>
+                </head>
+                <body>
+                    <h4>Abbiamo ricevuto il tuo report con descrizione: <i>$description</i></h4>
+                    <h4>Il codice di tracking è qui riportato: <i>$cdt</i></h4>
+                
+                    <h3>Ti ringraziamo per il tuo sostegno.</h3>    
+                </body>
+            </html>
+            ";
+    
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-type: text/html; charset=utf-8';
+    
+        $headers[] = 'From: Team GERCS <civicsens@altervista.org>';
+    
+        mail($to,$subject,$message, implode("\r\n", $headers));
+        
 
     }
 
@@ -287,24 +310,7 @@ class Report{
     
     public function updateHistory($message){
         global $conn;
-        
-        /* $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_NAME);
-        $stmt->bind_param("s",$this->team);
-        $stmt->execute();
-        $row  = $stmt->get_result()->fetch_assoc();
-        $idTeam = $row['id'];
 
-
-        $stmt = $conn->prepare(QUERY_ADD_HISTORY_REPORT);
-        $stmt->bind_param("sii",$message, $idTeam, $this->id);
-        $stmt->execute();
-        if($stmt->affected_rows > 0){
-            $this->fetchInfo();
-            return true;
-        }
-        else{
-            return false;
-        } */
 
         $stmt = $conn->prepare(QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM);
         $stmt->bind_param("sis",$message, $this->id, $this->team);
