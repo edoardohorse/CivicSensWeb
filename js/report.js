@@ -1,18 +1,18 @@
 // ============== GET
-const URL_FETCH_REPORTS_BY_CITY =  '../apiReport/report/city/{#}/'
-const URL_FETCH_REPORTS_BY_TEAM =  '../apiReport/report/team/{#}/'
-const URL_FETCH_LIST_TEAM       =  '../apiReport/team/'
-const URL_FETCH_REPORT_BY_ID    =  '../apiReport/report/id/{#}/'
-const URL_FETCH_PHOTOS_REPORT   =  '../apiReport/report/photos/{#}/'
-const URL_FETCH_HISTORY_REPORT  =  '../apiReport/report/history/{#}/'
-const URL_DELETE_REPORT         =  '../apiReport/report/delete/{#}/'
-const URL_DELETE_REPORTS         =  '../apiReport/report/delete'
+const URL_FETCH_REPORTS_BY_CITY =  '../api/report/city/{#}/'
+const URL_FETCH_REPORTS_BY_TEAM =  '../api/report/team/{#}/'
+const URL_FETCH_LIST_TEAM       =  '../api/team/'
+const URL_FETCH_REPORT_BY_ID    =  '../api/report/id/{#}/'
+const URL_FETCH_PHOTOS_REPORT   =  '../api/report/photos/{#}/'
+const URL_FETCH_HISTORY_REPORT  =  '../api/report/history/{#}/'
+const URL_DELETE_REPORT         =  '../api/report/delete/{#}/'
+const URL_DELETE_REPORTS         =  '../api/report/delete'
 
 
 // ============== POST
-const URL_EDIT_TEAM_REPORT      =  '../apiReport/report/{#}/team/'
-const URL_UPDATE_HISTORY_REPORT =  '../apiReport/report/{#}/history/'
-const URL_EDIT_STATE_REPORT     =  '../apiReport/report/{#}/state/'
+const URL_EDIT_TEAM_REPORT      =  '../api/report/{#}/team/'
+const URL_UPDATE_HISTORY_REPORT =  '../api/report/{#}/history/'
+const URL_EDIT_STATE_REPORT     =  '../api/report/{#}/state/'
 
 
 const ReportState = {Waiting:'In attesa', InCharge:'In lavorazione', Done:'Finito'}

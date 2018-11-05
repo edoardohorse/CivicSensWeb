@@ -1,12 +1,12 @@
 // ============== GET
-const URL_FETCH_ENTE            =  '../apiReport/ente/'
-const URL_FETCH_REPORTS_BY_ENTE =  '../apiReport/ente/reports/'
-const URL_FETCH_TEAMS_BY_ENTE   =  '../apiReport/ente/teams/'
+const URL_FETCH_ENTE            =  '../api/ente/'
+const URL_FETCH_REPORTS_BY_ENTE =  '../api/ente/reports/'
+const URL_FETCH_TEAMS_BY_ENTE   =  '../api/ente/teams/'
 
 // ============== POST
-const URL_ADD_TEAM           =  '../apiReport/ente/team/new'
-const URL_DELETE_TEAM           =  '../apiReport/ente/team/delete'
-const URL_CHANGE_NAME_TEAM   =  '../apiReport/team/name'
+const URL_ADD_TEAM           =  '../api/ente/team/new'
+const URL_DELETE_TEAM           =  '../api/ente/team/delete'
+const URL_CHANGE_NAME_TEAM   =  '../api/team/name'
 
 class Ente extends Admin{
     constructor(name){

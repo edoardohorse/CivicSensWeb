@@ -138,48 +138,48 @@
   
     // ==== COMMON Requests: User, Ente, Team 
         // [GET]
-            new Request('GET','report/id/{#}',          $getReportById_handler,         Permission::Common, $request);          // apiReport/report/id/{id}
-            new Request('GET','report/photos/{#}',      $getPhotosOfReport_handler,     Permission::Common, $request);          // apiReport/report/photos/{id}
-            new Request('GET','report/history/{#}',     $getHistoryOfReport_handler,    Permission::Common, $request);          // apiReport/report/history/{id}
-            new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);          // apiReport/ente/reports
-            new Request('GET','report/types',           $getListTypeOfReport_handler,   Permission::Common);                    // apiReport/report/types
+            new Request('GET','report/id/{#}',          $getReportById_handler,         Permission::Common, $request);          // api/report/id/{id}
+            new Request('GET','report/photos/{#}',      $getPhotosOfReport_handler,     Permission::Common, $request);          // api/report/photos/{id}
+            new Request('GET','report/history/{#}',     $getHistoryOfReport_handler,    Permission::Common, $request);          // api/report/history/{id}
+            new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
+            new Request('GET','report/types',           $getListTypeOfReport_handler,   Permission::Common);                    // api/report/types
     
     // ==== ADMIN Requests
         // [POST]
-            new Request('POST','report/delete/{#}',      $deleteReport_handler,          Permission::Admin,  $request);          // apiReport/report/delete/{id}
-            new Request('POST','report/delete',         $deleteReports_handler,          Permission::Admin);            // apiReport/report/delete => newReport [POST] {ids of reports}
-            new Request('POST','team/name',             $changeTeamName_handler,         Permission::Admin);            // apiReport/team/name => changeNameTeam [POST] {newName}
+            new Request('POST','report/delete/{#}',      $deleteReport_handler,          Permission::Admin,  $request);          // api/report/delete/{id}
+            new Request('POST','report/delete',         $deleteReports_handler,          Permission::Admin);            // api/report/delete => newReport [POST] {ids of reports}
+            new Request('POST','team/name',             $changeTeamName_handler,         Permission::Admin);            // api/team/name => changeNameTeam [POST] {newName}
     
 
 
 
     // ==== TEAM Requests
         // [GET]
-            new Request('GET','report/team/{#}',        $getReportsByTeam_handler,      Permission::Team,   $request);          // apiReport/report/team/{nameTeam}
+            new Request('GET','report/team/{#}',        $getReportsByTeam_handler,      Permission::Team,   $request);          // api/report/team/{nameTeam}
         
         // [POST]
-            new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // apiReport/report/{id}/state  => editState [POST] {newState}
-            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Team,   $request);  // apiReport/report/{id}/history  => addToHistory [POST] {newNote}
+            new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // api/report/{id}/state  => editState [POST] {newState}
+            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Team,   $request);  // api/report/{id}/history  => addToHistory [POST] {newNote}
     
 
     // ==== ENTE Requests
         //  [GET]
-            new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // apiReport/team    
-            new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // apiReport/ente
-            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // apiReport/ente/teams
+            new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // api/team    
+            new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // api/ente
+            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // api/ente/teams
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
             
             //  [POST]
-            new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // apiReport/report/{id}/team    => editTeam [POST] {newTeam}
-            new Request('POST','ente/team/new',         $newTeam_handler,               Permission::Ente);             // apiReport/ente/team/neam
-            new Request('POST','ente/team/delete',      $deleteTeam_handler,            Permission::Ente);             // apiReport/ente/team/delete
+            new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // api/report/{id}/team    => editTeam [POST] {newTeam}
+            new Request('POST','ente/team/new',         $newTeam_handler,               Permission::Ente);             // api/ente/team/neam
+            new Request('POST','ente/team/delete',      $deleteTeam_handler,            Permission::Ente);             // api/ente/team/delete
     
 
     // ==== USER Requests
         //  [GET]
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
         //  [POST]
-            new Request('POST','report/new',            $newReport_handler,             Permission::User,   $request);            // apiReport/report/new => newReport [POST] {report data}
+            new Request('POST','report/new',            $newReport_handler,             Permission::User,   $request);            // api/report/new => newReport [POST] {report data}
 
 
 
