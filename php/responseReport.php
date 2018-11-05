@@ -122,7 +122,7 @@ function getPhotosOfReport($id){
     $urls = [];
     foreach($report->getPhotos() as $value){
         if($_SERVER["SERVER_NAME"] != "192.168.1.181"){
-            array_push($urls, $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].'/civic'.'/'.$value);
+            array_push($urls, 'https://'.$_SERVER["HTTP_HOST"].'/'.$value);
         }
         else{
             array_push($urls, 'http://'.$_SERVER["HTTP_HOST"].'/CivicSenseWeb'.'/'.$value);
