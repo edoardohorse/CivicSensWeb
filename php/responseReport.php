@@ -6,7 +6,6 @@ include_once("report.php");
 include_once("team.php");
 include_once("ente.php");
 
-// const teamName = 'Enel1'; TODO: remove
 
 abstract class MessageSuccess{
     const EditTeam          = 'Modifica del gruppo avvenuta con successo';
