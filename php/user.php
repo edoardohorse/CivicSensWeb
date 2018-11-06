@@ -133,7 +133,7 @@ class User{
 
     private static function expel(MessageLogin $m){
         echo '<br><br>'.$m.'
-        <script>setTimeout(function(){location.href="../login.html"},3000)</script>
+        <script>setTimeout(function(){location.href="../index.html"},3000)</script>
         ';
 
         session_destroy();
