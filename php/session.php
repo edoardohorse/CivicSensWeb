@@ -1,6 +1,6 @@
 <?php 
+    require_once('user.php');
     session_start();
-    include_once('user.php');
     // var_dump($_SESSION);
 
     global $user;

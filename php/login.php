@@ -8,9 +8,10 @@
     define('PATH_TEAM','../page/team.php');
     $page = null;
 
+
     
     // var_dump($_POST);
-    // var_dump($_SESSION);
+    
 
     if(!$user->isLogged()){
 
@@ -60,6 +61,9 @@
 
         if($page)
             header('location: '.$page);
+    }
+    else{
+        header('location: destroy.php');
     }
 
 ?>
