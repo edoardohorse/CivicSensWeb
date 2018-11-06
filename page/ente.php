@@ -8,15 +8,13 @@
 ?>
 
         
-    <nav>
-            <span  onclick="showNavSide()">prova</span>
-            <form action="../php/destroy.php">
-            <input type="submit" value="Esci">
-        </form>
-    </nav>
+    
     <aside id="nav__side">
         <p class="selected" onclick="showReportsEnte(this)">Segnalazioni</p>
         <p onclick="showTeamsEnte(this)">Team</p>
+        <form action="../php/destroy.php">
+            <input type="submit" value="Esci">
+        </form>
     </aside>
     <main class="list__wrapper list--hide" id="list__report__wrapper">
         <nav class="nav__report">

@@ -19,13 +19,18 @@ class ManagerDetails{
             this.el.appendChild(detail.el)
             this.detailsSelected = detail
             this.detailsSelected.el.classList.remove('details--hide')
+            setTimeout(()=>{
+                this.detailsSelected.el.classList.add('details--show')
+            },200)
             this.detailsSelected.el.querySelector('.details__close').addEventListener('click',this.hide.bind(this, onClose))
         }
     }
 
     hide(callback){
-        if(this.detailsSelected)
+        if(this.detailsSelected){
             this.detailsSelected.el.classList.add('details--hide')
+            this.detailsSelected.el.classList.remove('details--show')
+        }
 
         if(callback)
             callback()

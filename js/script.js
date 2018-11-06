@@ -84,6 +84,8 @@ function showReportsEnte(el){
         ente.hideTeamRecap()
     }
     catch{}
+
+    document.querySelector('#nav__side > form > input[type="submit"]').classList.remove('push--up')
 }
 
 function showTeamsEnte(el){
@@ -100,6 +102,7 @@ function showTeamsEnte(el){
 
     manager.hideReportRecap()
     ente.showTeamRecap()
+    document.querySelector('#nav__side > form > input[type="submit"]').classList.add('push--up')
 }
 
 function showNavSide(){

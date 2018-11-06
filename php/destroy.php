@@ -5,7 +5,7 @@ session_start();
 session_destroy();
 
 ?>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 
     redirect('Reindirizzamento', '../index.html',500, 0)

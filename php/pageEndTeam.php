@@ -8,6 +8,7 @@
     <script src="../js/vex.combined.min.js"></script>
     <script src="../js/script.js"></script>
     <script>
+        document.title = "CivicSense - Team"
         window.managerDet = new ManagerDetails(document.body)
         window.manager = new ManagerReport(substitute(URL_FETCH_REPORTS_BY_TEAM,['Enel2']))
         window.team = new Team('Enel2')

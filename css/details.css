@@ -2,7 +2,7 @@
     display: inline-block;
     right: 0;
     height: calc(100% - 75px);
-    top: 75px;
+    top: 100px;
     overflow: auto;
     position: fixed;
     width: 440px;
@@ -13,7 +13,9 @@
 }
 
 .details--hide{
-    display: none;
+    /* display: none; */
+    pointer-events: none !important;
+    opacity: 0 !important;
 }
 
 .details__title{
@@ -269,7 +271,17 @@ img {
         position: fixed;
         width: 100%;
         height: 100%;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 200ms, transform 150ms;
+        transform: translateY(15px);
         z-index: 50;
+    }
+
+    .details--show{
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
     }
 
     .details__row{

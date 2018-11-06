@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="../css/details.css">
     <link rel="stylesheet" href="../css/vex.css" />
     <link rel="stylesheet" href="../css/vex-theme-default.css" />
-    
+
     </head>
     <body>
+        <header>
+            <span id="menu"  onclick="showNavSide()"></span>
+            <h1>Civic Sense</h1>            
+        </header>

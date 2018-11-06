@@ -8,16 +8,12 @@
 ?>
 
 
-
-    <nav>
-        prova
+    <aside id="nav__side">
+        <p class="selected" >Segnalazioni</p>
+        <p>Questo team</p>
         <form action="../php/destroy.php">
             <input type="submit" value="Esci">
-        </form>     
-    </nav>
-    <aside id="nav__side">
-        <p>Segnalazioni</p>
-        <p>Questo team</p>
+        </form>
     </aside>
     <main class="list__wrapper" id="list__report__wrapper">
         <nav class="nav__report">
@@ -34,7 +30,10 @@
         </nav>
 
     </main>
-       
+    
+    <main id="overlay"></main>
+
+
     <footer>
         <div class="report__recap">
             <span class="report__recap__text"></span>
