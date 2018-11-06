@@ -327,7 +327,7 @@ input[type="submit"]:hover {
 }
 
 form {
-    float: right;
+    /* float: right; */
 }
 
 header {padding: 2em;/* box-sizing: border-box; *//* display: inline-block; */}
