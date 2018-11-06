@@ -3,7 +3,7 @@
 
 
 
-const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, r.date,
+const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, DATE_FORMAT(r.date, '%d/%m/%y - %H:%i') as date,
                                     t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
 
 const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
@@ -118,7 +118,7 @@ const QUERY_FETCH_PHOTOS = "SELECT name
                                  FROM photo as p
                                  WHERE report = ?";
 
-const QUERY_FETCH_HISTORY = "SELECT h.note, h.date, tm.name as team
+const QUERY_FETCH_HISTORY = "SELECT h.note, DATE_FORMAT(h.date, '%d/%m/%y - %H:%i') as date, tm.name as team
                                 FROM history_report as h, team as tm
                                 WHERE h.team = tm.id
                                 AND report = ?
