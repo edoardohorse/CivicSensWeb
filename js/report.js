@@ -138,7 +138,8 @@ class ManagerReport{
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this,null,event))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
         searchGrade.addEventListener('change', this.searchBy.bind(this))
-        searchType.addEventListener('change', this.searchBy.bind(this))
+        if(searchType)
+            searchType.addEventListener('change', this.searchBy.bind(this))
     }
 
     fetchAllReports(...param){

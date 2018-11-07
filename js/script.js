@@ -128,8 +128,11 @@ function hideNavSide(){
 
 function adjustFilter(select){
     // debugger
+    if(document.querySelector('#select__search-type'))
+        document.querySelector('#select__search-type').hidden   = true
+
     document.querySelector('#select__search-grade').hidden  = true
-    document.querySelector('#select__search-type').hidden   = true
+    
     document.querySelector('#search__bar').hidden           = false
 
     switch(select.selectedOptions[0].value){
