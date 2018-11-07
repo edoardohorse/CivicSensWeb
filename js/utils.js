@@ -65,13 +65,18 @@ function newEl(node, toWrite) {
             for (var i in dataset) {
                 // debugger
                 var s = dataset[i].split("=")
-                el[s[0]] = s[1]
-                // var attr = document.createAttribute(s[0]);
-                // // Don't use setAttribute( string, string) cause
-                // // doesn't respect the uppercase
-                // if(s[1])
-                //     attr.value = s[1]
-                // el.setAttributeNode(attr);
+                if(s[0] in el){
+                    el[s[0]] = s[1]
+                }
+                else{
+                    var attr = document.createAttribute(s[0]);
+                    // Don't use setAttribute( string, string) cause
+                    // doesn't respect the uppercase
+                    if(s[1])
+                        attr.value = s[1]
+                    el.setAttributeNode(attr);
+                }
+                
             }
                 
         }
@@ -96,13 +101,18 @@ function newEl(node, toWrite) {
 
             if (node.data != undefined) {
                 for (var i in node.data) {
-                    el[Object.keys(node.data)[0]] = node.data[i]
-                    // var attr = document.createAttribute(i);
-                    // // Don't use setAttribute( string, string) cause
-                    // // doesn't respect the uppercase
-                    // if(node.data[i])
-                    //     attr.value = node.data[i];
-                    // el.setAttributeNode(attr);
+                    let key  = Object.keys(node.data)[0]
+                    if(key in el){
+                        el[key] = node.data[i]
+                    }
+                    else{
+                        var attr = document.createAttribute(key);
+                        // Don't use setAttribute( string, string) cause
+                        // doesn't respect the uppercase
+                        if(node.data[i])
+                            attr.value = node.data[i]
+                        el.setAttributeNode(attr);
+                    }
                 }
             }
 
