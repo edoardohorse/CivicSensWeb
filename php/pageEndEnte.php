@@ -10,7 +10,7 @@
     <script src="../js/script.js"></script>
     
     <script>
-        document.title = "CivicSense - Ente"
+        document.title = "CivicSens - Ente"
         window.managerDet = new ManagerDetails(document.body)
         window.manager = new ManagerReport(URL_FETCH_REPORTS_BY_ENTE)
         window.ente = new Ente()

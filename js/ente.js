@@ -73,6 +73,19 @@ class Ente extends Admin{
                     this.teams.push( new Team(team.name, team.nMember, team.typeReport) )
                     
                 }
+
+                let listTypeReport = this.teams.map(m=>m.typeReport)
+
+                listTypeReport = listTypeReport.filter(function(item, pos) {
+                    return listTypeReport.indexOf(item) == pos;
+                })
+
+                searchType.innerHTML = ""
+                newEl('option,,, value="ALL" textContent="Tutti"',searchType)
+                listTypeReport.forEach((type)=>{
+                    newEl(`option,,, value="${type}" textContent="${type}"`, searchType)
+                    
+                })
                 
                this.drawTableTeam();
             }

@@ -22,6 +22,8 @@ const CLASS_ROW_HIDDEN = 'row--hide'
 
 
 const searchBar                 = document.getElementById('search__bar')
+const searchGrade               = document.getElementById('select__search-grade')
+const searchType                = document.getElementById('select__search-type')
 const selectSearch              = document.getElementById('select__search')
 const refreshButton             = document.getElementById('refresh__button')
 const detailsAside              = document.getElementById('details')
@@ -135,6 +137,8 @@ class ManagerReport{
 
         refreshButton.addEventListener('click',this.fetchAllReports.bind(this,null,event))
         searchBar.addEventListener('keyup', this.searchBy.bind(this))
+        searchGrade.addEventListener('change', this.searchBy.bind(this))
+        searchType.addEventListener('change', this.searchBy.bind(this))
     }
 
     fetchAllReports(...param){
@@ -142,6 +146,7 @@ class ManagerReport{
         this.tableReportFinished.deleteAllRows()
         this.tableReportNotFinished.deleteAllRows()
         this.reports = []
+        searchBar.value =""
 
         var importRep = (reports)=>{
             reports.forEach(report=>{
@@ -204,7 +209,7 @@ class ManagerReport{
     searchBy(){
         const filter = selectSearch.options[selectSearch.selectedIndex].value
         this._tableSelected.showAllRow(this.reports)
-        if(searchBar.value == "")
+        if(searchBar.value == "" && searchBar.hidden == false)
             return 
 
         switch(filter){
@@ -232,11 +237,15 @@ class ManagerReport{
     }
 
     checkType(report){
-        return report.type.includes(searchBar.value)
+        if(searchType.value == "ALL")
+            return true
+        return report.type.includes(searchType.value)
     }
 
     checkGrade(report){
-        return report.grade.includes(searchBar.value)
+        if(searchGrade.value == "ALL")
+            return true
+        return report.grade.includes(searchGrade.value)
     }
 
     checkSelected(checkbox){

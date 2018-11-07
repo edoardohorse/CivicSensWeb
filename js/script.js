@@ -126,7 +126,28 @@ function hideNavSide(){
     
 }
 
+function adjustFilter(select){
+    // debugger
+    document.querySelector('#select__search-grade').hidden  = true
+    document.querySelector('#select__search-type').hidden   = true
+    document.querySelector('#search__bar').hidden           = false
 
+    switch(select.selectedOptions[0].value){
+        case "Grado":{
+            document.querySelector('#search__bar').hidden    = true
+            document.querySelector('#select__search-grade').hidden=false;
+            return;
+        }
+        case "Tipo":{
+            document.querySelector('#search__bar').hidden    = true
+            document.querySelector('#select__search-type').hidden=false;
+            return;
+        }
+        
+    }
+
+    
+}
 
 vex.dialog.buttons.YES.text = 'Ok'
 vex.dialog.buttons.NO.text = 'Annulla'

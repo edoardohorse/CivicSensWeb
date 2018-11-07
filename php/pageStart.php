@@ -16,5 +16,5 @@
     <body>
         <header>
             <span id="menu"  onclick="showNavSide()"></span>
-            <h1>Civic Sense</h1>            
+            <h1>Civic Sens</h1>            
         </header>

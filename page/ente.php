@@ -18,11 +18,18 @@
     </aside>
     <main class="list__wrapper list--hide" id="list__report__wrapper">
         <nav class="nav__report">
-                <select id="select__search">
+                <select id="select__search" onchange="adjustFilter(this)">
                 <option value="Indirizzo">Indirizzo</option>
-                <option value="Città">Data</option>
                 <option value="Grado">Grado</option>
                 <option value="Tipo">Tipo</option>
+            </select>
+            <select id="select__search-grade" hidden>
+                <option value="ALL">Tutti</option>
+                <option value="LOW">Basso</option>
+                <option value="INTERMEDIATE">Media</option>
+                <option value="HIGH">Alta</option>
+            </select>
+            <select id="select__search-type" hidden>
             </select>
             <input type="search" id="search__bar">
             <div class="chooser__list__report chooser__list__report--selected" id="chooser--notfinished" onclick="showReportNotFinished(this)">Aperte</div>

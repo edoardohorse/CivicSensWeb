@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e6a94c28-10ed-4165-82f2-51639738eadb",
-		"name": "CivicSense Web",
+		"name": "CivicSens Web",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -21,12 +21,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/team/Enel2",
+									"raw": "localhost/CivicSensWeb/api/report/team/Enel2",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"team",
@@ -52,12 +52,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/team",
+									"raw": "localhost/CivicSensWeb/api/team",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"team"
 									]
@@ -75,12 +75,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/ente/teams",
+									"raw": "localhost/CivicSensWeb/api/ente/teams",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"ente",
 										"teams"
@@ -99,12 +99,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/ente",
+									"raw": "localhost/CivicSensWeb/api/ente",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"ente"
 									]
@@ -128,12 +128,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/id/1",
+									"raw": "localhost/CivicSensWeb/api/report/id/1",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"id",
@@ -152,12 +152,12 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "localhost/CivicSenseWeb/api/report/id/1",
+											"raw": "localhost/CivicSensWeb/api/report/id/1",
 											"host": [
 												"localhost"
 											],
 											"path": [
-												"CivicSenseWeb",
+												"CivicSensWeb",
 												"api",
 												"report",
 												"id",
@@ -234,12 +234,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/types",
+									"raw": "localhost/CivicSensWeb/api/report/types",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"types"
@@ -257,12 +257,12 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "localhost/CivicSenseWeb/api/report/id/1",
+											"raw": "localhost/CivicSensWeb/api/report/id/1",
 											"host": [
 												"localhost"
 											],
 											"path": [
-												"CivicSenseWeb",
+												"CivicSensWeb",
 												"api",
 												"report",
 												"id",
@@ -332,12 +332,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/photos/1",
+									"raw": "localhost/CivicSensWeb/api/report/photos/1",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"photos",
@@ -357,12 +357,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/history/1",
+									"raw": "localhost/CivicSensWeb/api/report/history/1",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"history",
@@ -382,12 +382,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/ente/reports",
+									"raw": "localhost/CivicSensWeb/api/ente/reports",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"ente",
 										"reports"
@@ -412,12 +412,12 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/delete/1",
+									"raw": "localhost/CivicSensWeb/api/report/delete/1",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"delete",
@@ -454,12 +454,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/delete",
+									"raw": "localhost/CivicSensWeb/api/report/delete",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"delete"
@@ -508,12 +508,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/ente/team/new",
+									"raw": "localhost/CivicSensWeb/api/ente/team/new",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"ente",
 										"team",
@@ -539,12 +539,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/ente/team/delete",
+									"raw": "localhost/CivicSensWeb/api/ente/team/delete",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"ente",
 										"team",
@@ -570,12 +570,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/1/team",
+									"raw": "localhost/CivicSensWeb/api/report/1/team",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"1",
@@ -641,12 +641,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/1/state",
+									"raw": "localhost/CivicSensWeb/api/report/1/state",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"1",
@@ -672,12 +672,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/1/history",
+									"raw": "localhost/CivicSensWeb/api/report/1/history",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"1",
@@ -760,12 +760,12 @@
 									]
 								},
 								"url": {
-									"raw": "localhost/CivicSenseWeb/api/report/new",
+									"raw": "localhost/CivicSensWeb/api/report/new",
 									"host": [
 										"localhost"
 									],
 									"path": [
-										"CivicSenseWeb",
+										"CivicSensWeb",
 										"api",
 										"report",
 										"new"
