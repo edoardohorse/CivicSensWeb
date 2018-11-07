@@ -119,12 +119,14 @@ function getPhotosOfReport($id){
     $report->fetchPhotos();
 
     $urls = [];
+    // var_dump($_SERVER["SERVER_NAME"]);
     foreach($report->getPhotos() as $value){
-        if($_SERVER["SERVER_NAME"] != "192.168.1.181"){
-            array_push($urls, 'https://'.$_SERVER["HTTP_HOST"].'/'.$value);
-        }
+        if(substr($_SERVER["SERVER_NAME"],0,3) == "192" ||
+            $_SERVER["SERVER_NAME"] == "localhost"){
+                array_push($urls, 'http://'.$_SERVER["HTTP_HOST"].'/CivicSenseWeb'.'/'.$value);
+            }
         else{
-            array_push($urls, 'http://'.$_SERVER["HTTP_HOST"].'/CivicSenseWeb'.'/'.$value);
+            array_push($urls, 'https://'.$_SERVER["HTTP_HOST"].'/'.$value);
         }
     }
     // $reportStr = $report->serialize();
