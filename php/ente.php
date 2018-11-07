@@ -30,16 +30,6 @@ class Ente extends Admin{
         $nameTypeReport = '';
         while($row = $res->fetch_assoc()){
             $team = new Team( $row['email'] );
-            $team->fetchReports();
-            
-            // var_dump($team->reports);
-            $keys = array_keys($team->reports);
-            foreach($keys as $key){
-                // var_dump($key);
-                $this->reports[$key]  =$team->reports[$key];
-                //  = $value;
-            }
-
             array_push( $this->teams, $team);
         }
 
@@ -48,6 +38,7 @@ class Ente extends Admin{
 
     public function fetchReports(){
         global $conn;
+        // $this->fetchTeams();
         // $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_REPORT_BY_ENTE);
@@ -56,6 +47,8 @@ class Ente extends Admin{
         while($row = $res->fetch_assoc()){
             $report = new Report( $row );
             // var_dump($report);
+            // array_filter($this->teams[])
+            // if()
             array_push( $this->reports, $report);            
         }
 

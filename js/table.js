@@ -19,7 +19,7 @@ class Table{
     }
 
     createRow(content){
-        let row = this.body.insertRow(0)
+        let row = this.body.insertRow(this.body.children.length)
         row.classList.add('row100')
         row.classList.add('body')
 

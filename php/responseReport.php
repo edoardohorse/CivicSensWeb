@@ -226,9 +226,9 @@ function deleteReports(){
 
 function getEnte(){ 
     global $manager;
-    $manager->fetchTeams();
+    $manager->fetchReports();
     // var_dump($manager);
-    reply('',false,$manager->serialize());
+    reply('',false,$manager->serializeReports());
 }
 function getTeams(){ 
     global $manager;
