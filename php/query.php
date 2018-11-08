@@ -89,14 +89,15 @@ const QUERY_NEW_REPORT      = "INSERT INTO report( city, description, location, 
                                 VALUES( (SELECT id FROM city WHERE name = ?), ? , ? , ?, ?, NOW(), ?, ?)";    
                                 
 const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
-                                                    FROM report as r, (
-                                                        SELECT team.id, team.name, tp.name as type_report, tp.id as type_report_id
-					                                        FROM team, type_report as tp
-					                                        WHERE team.type_report = ?
-					                                        AND team.type_report = tp.id
-				                                        )as tm
-                                                WHERE r.team = tm.id
-                                                AND r.type_report = tm.type_report_id
+                                                FROM report as r RIGHT JOIN (
+                                                    SELECT team.id, team.name, tp.name as type_report, tp.id as type_report_id
+                                                        FROM team, type_report as tp
+                                                        WHERE team.type_report = ?
+                                                        AND team.type_report = tp.id
+                                                    )as tm
+                                                ON r.team = tm.id
+                                                WHERE r.type_report = tm.type_report_id
+                                                OR r.id is null
                                                 group by r.team";
 
 const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
