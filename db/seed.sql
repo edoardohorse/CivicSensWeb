@@ -11,23 +11,23 @@ VALUES
 
 -- User --
 INSERT INTO user (email,type, password,city) VALUES
-('user@a','User','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Enel1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('Enel2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Enel3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Enel4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('Enel5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Idraulico1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Idraulico2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('Idraulico3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Idraulico4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Idraulico5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('Stradale1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Stradale2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Grottaglie'),
-('Stradale3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('Stradale4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
-('Stradale5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Grottaglie'),
-('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Taranto');
+('user@a','User','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
+('Enel1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Taranto'),
+('Enel2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Milano'),
+('Enel3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Napoli'),
+('Enel4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Palermo'),
+('Enel5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Oria'),
+('Idraulico1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Catania'),
+('Idraulico2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Latiano'),
+('Idraulico3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Ostuni'),
+('Idraulico4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Manduria'),
+('Idraulico5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Tortona'),
+('Stradale1@a','Team','1a1dc91c907325c69271ddf0c944bc72','Arezzo'),
+('Stradale2@a','Team','1a1dc91c907325c69271ddf0c944bc72','Perugia'),
+('Stradale3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Foggia'),
+('Stradale4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Andria'),
+('Stradale5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Bari'),
+('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Lecce');
 
 INSERT INTO team(name, type_report,n_member,user) VALUES
 ('Enel1',1,5, 2),
