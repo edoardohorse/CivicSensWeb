@@ -13,8 +13,8 @@ class Ente extends Admin{
 
     const DOMAIN = '@a';
 
-    public function __construct($name){
-        parent::__construct($name);
+    public function __construct($name, $city){
+        parent::__construct($name, $city);
 
         // $this->fetchTeams();
     }
@@ -29,19 +29,27 @@ class Ente extends Admin{
         $i=0;
         $nameTypeReport = '';
         while($row = $res->fetch_assoc()){
-            $team = new Team( $row['email'] );
+            $team = new Team( $row['email'], $this->city );
             array_push( $this->teams, $team);
         }
 
         // var_dump($this->reports);
     }
 
-    public function fetchReports(){
+    public function fetchReports($city = null){
         global $conn;
+        if($city){
+            $this->setCity($city);
+        }
+        else{
+            $city = $this->getCity();
+        }
+
         // $this->fetchTeams();
         // $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_REPORT_BY_ENTE);
+        $stmt->bind_param("s", $city);
         $stmt->execute();
         $res = $stmt->get_result();
         while($row = $res->fetch_assoc()){

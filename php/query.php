@@ -5,9 +5,10 @@ const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.g
 
 const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE r.user         = u.id   
+                                WHERE r.user         = u.email   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
+                                    AND u.city          = ?
                                    
                                 GROUP BY r.id
                                 ORDER BY r.state DESC, r.date DESC";
@@ -132,7 +133,7 @@ const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
 
-const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE email = ?";
+const QUERY_LOGIN             = "SELECT email, type, password, city FROM user WHERE email = ?";
 
 const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
 

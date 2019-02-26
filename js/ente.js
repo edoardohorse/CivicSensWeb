@@ -100,7 +100,7 @@ class Ente extends Admin{
                 team.reports = reports.filter(rep=>rep.team == team.name)
                 // console.log(this.teams.filter(p=>p.name == reports[0].team))
             })
-            
+            document.querySelector("#city").innerHTML = `Sede di ${manager.reports[0].city}`;
         }
         manager.fetchAllReports(callback)
     }

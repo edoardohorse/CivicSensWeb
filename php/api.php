@@ -141,7 +141,8 @@
             new Request('GET','report/id/{#}',          $getReportById_handler,         Permission::Common, $request);          // api/report/id/{id}
             new Request('GET','report/photos/{#}',      $getPhotosOfReport_handler,     Permission::Common, $request);          // api/report/photos/{id}
             new Request('GET','report/history/{#}',     $getHistoryOfReport_handler,    Permission::Common, $request);          // api/report/history/{id}
-            new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
+            new Request('GET','ente/{#}/reports',       $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
+            new Request('GET','ente/reports',       $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
             new Request('GET','report/types',           $getListTypeOfReport_handler,   Permission::Common);                    // api/report/types
     
     // ==== ADMIN Requests

@@ -14,10 +14,10 @@ class Team extends Admin{
     private $nMember;
     public $reports;
 
-    public function __construct($email){
+    public function __construct($email,$city){
         $this->email = $email;
         $this->fetchInfo();
-        parent::__construct($this->name);
+        parent::__construct($this->name,$this->city);
 
     }
     public function getId(){return $this->id;}

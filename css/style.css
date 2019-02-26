@@ -404,6 +404,8 @@ span#menu {
         display: inline-block;
     }
     
-
+    #city__container{
+        text-align: center;
+    }
 }
 

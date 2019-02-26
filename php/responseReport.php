@@ -236,15 +236,16 @@ function getTeams(){
     reply('',false,$manager->serializeTeams());
 }
 
-function getAllReports(){ 
+function getAllReports($city = null){ 
     global $manager;
+    // var_dump($manager->getCity());
     if(isset($manager)){
         $manager->fetchReports();
         reply('',false,$manager->serializeReports());
     }
     else{
         $ente = new Ente('');
-        $ente->fetchReports();
+        $ente->fetchReports($city);
         // var_dump($ente->reports);die();
         reply('',false,$ente->serializeReports());
     }
