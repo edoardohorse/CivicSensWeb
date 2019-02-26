@@ -54,30 +54,11 @@ const QUERY_USER_BY_EMAIL   = "SELECT id, email, name, surname
                                 FROM user
                                 WHERE email = ?";
 
-const QUERY_CITY_BY_NAME    = "SELECT c.id, c.name, l.lan, l.lng
-                                FROM user as u,location as l
-                                WHERE c.location = l.id
-                                and c.name = ?";
+const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password, city)
+                                VALUES( ? , ? , ?, ?)";
 
-const QUERY_BOUND_SOUTH_CITY= "SELECT lan,lng
-                                FROM user as u,location as l
-                                WHERE c.bound_south = l.id
-                                and c.name = ?";
-
-const QUERY_BOUND_NORTH_CITY= "SELECT lan,lng
-                                FROM user as u,location as l
-                                WHERE c.bound_north = l.id
-                                and c.name = ?";
-
-const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password)
-                                VALUES( ? , ? , ? )";
-
-const QUERY_CITY_ID         = "SELECT id FROM city WHERE name = ?";
-
-const QUERY_NEW_LOCATION    = "INSERT INTO location(lan, lng) VALUES( ?, ? )";
-
-const QUERY_NEW_REPORT      = "INSERT INTO report( city, description, location, address,grade,date,type_report, team)
-                                VALUES( (SELECT id FROM city WHERE name = ?), ? , ? , ?, ?, NOW(), ?, ?)";    
+const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, location, address,grade,date,type_report, team,lan,lng,code)
+                                VALUES( (SELECT id FROM user WHERE city = ?), ? , ? , ?, ?, NOW(), ?, ?, ?, ?, ?)";    
                                 
 const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
                                                 FROM report as r RIGHT JOIN (
@@ -99,10 +80,10 @@ const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  t
 // Usata per la creazione di un report
 // permette di ottenere l'id del team con il minor numero
 // di segnalazioni
-const QUERY_TEAM_MIN_REPORT = "SELECT list.*
-                                FROM (".QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT."
-                                ORDER BY n_report ASC) as list
-                                LIMIT 1";
+const QUERY_TEAM_MIN_REPORT = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
+                                    FROM team as tm, type_report as tp, user as u
+                                    WHERE  tm.type_report = tp.id
+                                    AND     tm.user = u.id";
 
 const QUERY_NEW_PHOTOS      = "INSERT INTO photo(name, report) VALUES ( ? , ? )";
 
@@ -129,7 +110,7 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
                                         )
                                         )";
 
-const QUERY_DELETE_REPORT = "DELETE FROM location WHERE id = (SELECT location FROM report WHERE  id =  ?)";
+const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 
 const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name
                                     FROM team as tm, type_report as tp, user as u
@@ -137,16 +118,16 @@ const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name
                                     AND   tm.user        = u.id 
                                     AND   u.email = ?";
                                  
-const QUERY_NEW_CDT         = "INSERT INTO cdt  (code, report)
-                                    VALUES( ? , ? )";
 
-const QUERY_FETCH_CDT       = " SELECT c.code
-                                 FROM cdt as c
-                                 WHERE c.code = ?";
+
+const QUERY_FETCH_CDT       = " SELECT code
+                                 FROM report 
+                                 WHERE code = ?";
 
 const QUERY_EDIT_REPORT_TEAM_BY_NAME = "UPDATE report
                                         SET team = (SELECT id FROM team WHERE team.name = ?)
                                         WHERE id = ?";
+
 const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
