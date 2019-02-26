@@ -15,7 +15,7 @@ const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
 
 const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE  r.user         = u.id   
+                                WHERE  r.user         = u.email 
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                     AND u.city          = ?
@@ -24,7 +24,7 @@ const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
 
 const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE r.user         = u.id   
+                                WHERE r.user         = u.email 
                                     AND r.type_report   = t.id
                                    
                                     AND r.team          = tm.id
@@ -33,7 +33,7 @@ const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
 
 const QUERY_REPORT_BY_TEAM_BY_ID = QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE  r.user         = u.id   
+                                WHERE  r.user         = u.email 
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                    
@@ -43,7 +43,7 @@ const QUERY_REPORT_BY_TEAM_BY_ID = QUERY_HEADER_REPORT."
 
 const QUERY_REPORT_BY_ID = QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE  r.user         = u.id   
+                                WHERE  r.user         = u.email 
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                    
