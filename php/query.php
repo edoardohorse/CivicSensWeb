@@ -1,60 +1,51 @@
 <?php
 
-
-
-
 const QUERY_HEADER_REPORT = "SELECT r.id, r.address, r.description, r.state, r.grade, r.user, DATE_FORMAT(r.date, '%d/%m/%y - %H:%i') as date,
-                                    t.name as type, l.lan, l.lng, c.name as city, tm.name as team, cdt.code as cdt";
+                                    t.name as type, r.lan, r.lng, u.city, tm.name as team, r.code as cdt";
 
 const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
+                                FROM user as u, report as r, type_report as t, team as tm
+                                WHERE r.user         = u.id   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
-                                    AND cdt.report		= r.id
+                                   
                                 GROUP BY r.id
                                 ORDER BY r.state DESC, r.date DESC";
 
 const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
+                                FROM user as u, report as r, type_report as t, team as tm
+                                WHERE  r.user         = u.id   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
-                                    AND cdt.report		= r.id
-                                    AND c.name          = ?
+                                    AND u.city          = ?
                                 GROUP BY r.id
                                 ORDER BY r.state DESC, r.date DESC";
 
 const QUERY_REPORT_BY_CDT =  QUERY_HEADER_REPORT."
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
+                                FROM user as u, report as r, type_report as t, team as tm
+                                WHERE r.user         = u.id   
                                     AND r.type_report   = t.id
-                                    AND cdt.report		= r.id
+                                   
                                     AND r.team          = tm.id
-                                    AND cdt.code        = ?
+                                    AND r.code          = ?
                                     ";
 
 const QUERY_REPORT_BY_TEAM_BY_ID = QUERY_HEADER_REPORT."
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
+                                FROM user as u, report as r, type_report as t, team as tm
+                                WHERE  r.user         = u.id   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
-                                    AND cdt.report		= r.id
+                                   
                                     AND tm.id         = ?
                                     ORDER BY r.state DESC, r.date DESC
                                     ";
 
 const QUERY_REPORT_BY_ID = QUERY_HEADER_REPORT."
-                                FROM city as c, report as r, cdt, type_report as t, location as l, team as tm
-                                WHERE   r.location      = l.id
-                                    AND r.city          = c.id
+                                FROM user as u, report as r, type_report as t, team as tm
+                                WHERE  r.user         = u.id   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
-                                    AND cdt.report		= r.id
+                                   
                                     AND r.id            = ?
                                     ";
 
@@ -64,17 +55,17 @@ const QUERY_USER_BY_EMAIL   = "SELECT id, email, name, surname
                                 WHERE email = ?";
 
 const QUERY_CITY_BY_NAME    = "SELECT c.id, c.name, l.lan, l.lng
-                                FROM city as c, location as l
+                                FROM user as u,location as l
                                 WHERE c.location = l.id
                                 and c.name = ?";
 
 const QUERY_BOUND_SOUTH_CITY= "SELECT lan,lng
-                                FROM city as c, location as l
+                                FROM user as u,location as l
                                 WHERE c.bound_south = l.id
                                 and c.name = ?";
 
 const QUERY_BOUND_NORTH_CITY= "SELECT lan,lng
-                                FROM city as c, location as l
+                                FROM user as u,location as l
                                 WHERE c.bound_north = l.id
                                 and c.name = ?";
 
