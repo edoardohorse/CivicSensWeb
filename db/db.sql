@@ -16,9 +16,10 @@ CREATE TABLE IF NOT EXISTS user(
 CREATE TABLE IF NOT EXISTS type_report(
     id int NOT NULL AUTO_INCREMENT,
     name varchar(200) not null,
+	user  varchar(100),
 
-
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    CONSTRAINT fk_type_report_user         FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE 
 );
 
 
