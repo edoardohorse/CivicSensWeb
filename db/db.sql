@@ -2,26 +2,6 @@ CREATE DATABASE IF NOT EXISTS my_civicsens;
 
 USE my_civicsens;
 
-CREATE TABLE IF NOT EXISTS location(
-    id int NOT NULL AUTO_INCREMENT,
-    lan double NOT NULL,
-    lng double NOT NULL,
-   
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS city(
-    id int NOT NULL AUTO_INCREMENT,
-    name varchar(100) NOT NULL,
-    location int NOT NULL,
-    bound_south int NOT NULL,
-    bound_north int NOT NULL,
-
-    PRIMARY KEY(id)
-    -- CONSTRAINT fk_city_location FOREIGN KEY(location) REFERENCES location(id) ON DELETE CASCADE,
-    -- CONSTRAINT fk_city_location_bound_south FOREIGN KEY(bound_south) REFERENCES location(id) ON DELETE CASCADE,
-    -- CONSTRAINT fk_city_location_bound_north FOREIGN KEY(bound_north) REFERENCES location(id) ON DELETE CASCADE
-);
 
 CREATE TABLE IF NOT EXISTS user(
     id int NOT NULL UNIQUE AUTO_INCREMENT,
@@ -29,13 +9,13 @@ CREATE TABLE IF NOT EXISTS user(
     type enum('Ente','Team','User') DEFAULT 'User',
     password char(32) NOT NULL,
 
-
     PRIMARY KEY(email)
 );
 
 CREATE TABLE IF NOT EXISTS type_report(
     id int NOT NULL AUTO_INCREMENT,
     name varchar(200) not null,
+
 
     PRIMARY KEY(id)
 );
@@ -66,11 +46,15 @@ CREATE TABLE IF NOT EXISTS report(
     type_report int not null,
     team int DEFAULT NULL,
     date datetime not null,
+     lan double NOT NULL,
+    lng double NOT NULL,
+    code varchar(11) NOT NULL UNIQUE,
     
     PRIMARY KEY(id),
     CONSTRAINT fk_report_type_report       FOREIGN KEY(type_report)         REFERENCES type_report(id),
     CONSTRAINT fk_report_team              FOREIGN KEY(team)                REFERENCES team(id),
-    CONSTRAINT fk_report_location   FOREIGN KEY(location)   REFERENCES location(id) ON DELETE CASCADE 
+    CONSTRAINT fk_report_location   FOREIGN KEY(location)   REFERENCES location(id) ON DELETE CASCADE,
+    CONSTRAINT fk_report_user   FOREIGN KEY(user)   REFERENCES user(id) ON DELETE CASCADE 
 );
 
 CREATE TABLE IF NOT EXISTS history_report(
@@ -92,15 +76,6 @@ CREATE TABLE IF NOT EXISTS photo(
    
     PRIMARY KEY(id),
     CONSTRAINT fk_photo_report       FOREIGN KEY(report)       REFERENCES report(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS cdt(
-    id int NOT NULL AUTO_INCREMENT,
-    code varchar(11) NOT NULL UNIQUE,
-    report int NOT NULL,
-   
-    PRIMARY KEY(id),
-    CONSTRAINT fk_cdt_report       FOREIGN KEY(report)       REFERENCES report(id) ON DELETE CASCADE
 );
 
 
