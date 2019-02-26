@@ -56,14 +56,26 @@ class Ente extends Admin{
 
     public function editTeam($idReport, $nameNewTeam){
         $teamToAssign = null;
+        $reportToEdit = null;
         foreach($this->teams as $team){
             if($team->getName() == $nameNewTeam){
                 $teamToAssign = $team;
                 break;
             }
         }
+        // var_dump($idReport);
+        // var_dump($teamToAssign);
+        // var_dump($this->reports);
+        foreach($this->reports as $report){
+            if($report->getId() == $idReport){
+                $reportToEdit = $report;
+                break;
+            }
+        }
         
-        return $this->reports[$idReport]->editTeam( $teamToAssign->getName() );
+        // var_dump($reportToEdit);
+        // die();
+        return $reportToEdit->editTeam( $teamToAssign->getName() );
 
         
     }
