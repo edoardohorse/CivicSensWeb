@@ -27,8 +27,8 @@ INSERT INTO user (email,type, password,city) VALUES
 ('Stradale3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Foggia'),
 ('Stradale4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Andria'),
 ('Stradale5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Bari'),
-('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Lecce'),
-('ente2@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Taranto');
+('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
+('ente2@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Grottaglie');
 
 INSERT INTO team(name, type_report,n_member,user) VALUES
 ('Enel1',1,5, 2),
