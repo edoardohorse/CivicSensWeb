@@ -21,6 +21,7 @@ abstract class MessageSuccess{
 }
 
 abstract class MessageError{
+    const FetchReports      = 'Nessuna segnalazione è stata ancora effettuata';
     const EditTeam          = 'Modifica del gruppo fallita';
     const EditState         = 'Modifica dello stato fallita';
     const DeleteReport      = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
@@ -240,14 +241,24 @@ function getAllReports($city = null){
     global $manager;
     // var_dump($manager->getCity());
     if(isset($manager)){
-        $manager->fetchReports();
-        reply('',false,$manager->serializeReports());
+
+        // Se true vi è almeno un report in quella città
+        if($manager->fetchReports()){
+            reply('',false,$manager->serializeReports());
+        }
+        else{
+            reply(MessageError::FetchReports,true);
+        }
     }
     else{
         $ente = new Ente('');
-        $ente->fetchReports($city);
         // var_dump($ente->reports);die();
-        reply('',false,$ente->serializeReports());
+        if($ente->fetchReports($city)){
+            reply('',false,$ente->serializeReports());
+        }
+        else{
+            reply(MessageError::FetchReports,true);
+        }
     }
 }
 

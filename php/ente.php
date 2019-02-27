@@ -60,6 +60,11 @@ class Ente extends Admin{
             array_push( $this->reports, $report);            
         }
 
+        if(count($this->reports) > 0)
+            return true;
+        
+        return false;
+
     }
 
     public function editTeam($idReport, $nameNewTeam){
