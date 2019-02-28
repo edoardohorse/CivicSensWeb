@@ -238,6 +238,8 @@ function getTeams(){
 }
 
 function getAllReports($city = null){ 
+    // var_dump(urldecode($city));
+    // die();
     global $manager;
     // var_dump($manager->getCity());
     if(isset($manager)){
@@ -251,6 +253,7 @@ function getAllReports($city = null){
         }
     }
     else{
+        $city = urldecode($city);
         $ente = new Ente('');
         // var_dump($ente->reports);die();
         if($ente->fetchReports($city)){
