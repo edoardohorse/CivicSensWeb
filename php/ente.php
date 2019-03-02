@@ -13,7 +13,7 @@ class Ente extends Admin{
 
     const DOMAIN = '@a';
 
-    public function __construct($name, $city){
+    public function __construct($name, $city = null){
         parent::__construct($name, $city);
 
         // $this->fetchTeams();
@@ -59,6 +59,11 @@ class Ente extends Admin{
             // if()
             array_push( $this->reports, $report);            
         }
+
+        if(count($this->reports) > 0)
+            return true;
+        
+        return false;
 
     }
 

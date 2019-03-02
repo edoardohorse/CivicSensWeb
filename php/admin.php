@@ -15,7 +15,7 @@ abstract class Admin{
     
 
 
-    function __construct($name,$city){
+    function __construct($name,$city = null){
         $this->name = $name;
         $this->city = $city;
     }
