@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS report(
     description varchar(300),
     state enum('In attesa','In lavorazione','Finito') DEFAULT 'In attesa',
     grade enum('HIGH','INTERMEDIATE','LOW') NOT NULL DEFAULT 'LOW' ,
-    location int NOT NULL,
     user  varchar(100) NULL,
     type_report int not null,
     team int DEFAULT NULL,

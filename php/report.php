@@ -19,17 +19,6 @@ abstract class ReportState
     
 }
 
-function newLocation($lan, $lng){
-    global $conn;
-
-    $stmt = $conn->prepare(QUERY_NEW_LOCATION);
-    $stmt->bind_param("dd",$lan, $lng);
-    $stmt->execute();
-    // $stmt->bind_result($id);
-    return $conn->insert_id;
-    
-}
-
 class Report{
     private $id;
     private $city;
@@ -67,7 +56,9 @@ class Report{
     static public function newReport(){
         global $conn;
         // var_dump($_POST);
-        $location = newLocation($_POST['lan'], $_POST['lng']);
+        $cdt = Report::newCDT();
+
+        
 
         $stmt = $conn->prepare(QUERY_TEAM_MIN_REPORT);
         $stmt->bind_param("s", $_POST['typeReport']);
@@ -75,23 +66,26 @@ class Report{
         $idTeam = $stmt->get_result()->fetch_assoc()['id'];
         
         // var_dump($idTeam);
-        // var_dump($idTeam);
-        // var_dump($data);
+        // var_dump($_POST);
         $stmt = $conn->prepare(QUERY_NEW_REPORT);
-        $stmt->bind_param("ssisssi",$_POST['city'],
-                                    $_POST['description'],
-                                    $location,
-                                    $_POST['address'],
-                                    $_POST['grade'],
-                                    $_POST['typeReport'],
-                                    $idTeam);
+        $stmt->bind_param("ssssiidds",
+                                    $_POST['city'],             //string
+                                    $_POST['description'],      //string
+                                    $_POST['address'],          //string
+                                    $_POST['grade'],            //string
+                                    $_POST['typeReport'],       //int
+                                    $idTeam,                    //int
+                                    $_POST['lan'],              //double
+                                    $_POST['lng'],              //double
+                                    $cdt                        //string
+                                );
         $stmt->execute();
         
         $id = $conn->insert_id;
-        
+        // var_dump($id);
         $newReport = new Report([$conn->insert_id]);
         $newReport->pushPhotos($id);
-        $cdt = $newReport->newCDT($id);
+        
         $newReport->fetchInfo();
 
         
@@ -103,7 +97,7 @@ class Report{
         return $newReport;
     }
 
-    private function generateRandomString($length = 11) {
+    static private function generateRandomString($length = 11) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -113,7 +107,7 @@ class Report{
         return $randomString;
     }
     
-    private function newCDT($idReport){
+    static private function newCDT(){
         global $conn;
     
         $cdtExisted = true;
@@ -121,7 +115,7 @@ class Report{
         $stmt = $conn->prepare(QUERY_FETCH_CDT);
         while($cdtExisted){
     
-            $newCDT  = $this->generateRandomString();
+            $newCDT  = Report::generateRandomString();
             // var_dump($newCDT);
             $stmt->bind_param("s",$newCDT);
             $stmt->execute();
@@ -133,9 +127,6 @@ class Report{
     
         }
         
-        $stmt = $conn->prepare(QUERY_NEW_CDT);
-        $stmt->bind_param("ss",$newCDT,$idReport);
-        $stmt->execute();    
         return $newCDT;
     }
     
@@ -193,6 +184,7 @@ class Report{
     public function fetchInfo(){
         global $conn;
         $stmt = $conn->prepare(QUERY_REPORT_BY_ID);
+        // var_dump($this->id);
         $stmt->bind_param("i",$this->id);
         $stmt->execute();
         $result = $stmt->get_result();

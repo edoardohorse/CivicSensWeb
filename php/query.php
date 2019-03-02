@@ -15,7 +15,7 @@ const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
 
 const QUERY_REPORT_BY_CITY =  QUERY_HEADER_REPORT."
                                 FROM user as u, report as r, type_report as t, team as tm
-                                WHERE  r.user         = u.email 
+                                WHERE  r.user         = u.email   
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                     AND u.city          = ?
@@ -58,10 +58,10 @@ const QUERY_USER_BY_EMAIL   = "SELECT id, email, name, surname
 const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password, city)
                                 VALUES( ? , ? , ?, ?)";
 
-const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, location, address,grade,date,type_report, team,lan,lng,code)
-                                VALUES( (SELECT id FROM user WHERE city = ?), ? , ? , ?, ?, NOW(), ?, ?, ?, ?, ?)";    
+const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, address,grade,type_report, team,lan,lng,code, date)
+                                VALUES( (SELECT email FROM user WHERE city = ?), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
                                 
-const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
+const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
                                                 FROM report as r RIGHT JOIN (
                                                     SELECT team.id, team.name, tp.name as type_report, tp.id as type_report_id
                                                         FROM team, type_report as tp
@@ -76,15 +76,15 @@ const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = " SELECT tm.id, tm.name, count(r.id
 const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE  tm.type_report = tp.id
-                                    AND     tm.user = u.id";
+                                    AND     tm.user = u.email";
 
 // Usata per la creazione di un report
 // permette di ottenere l'id del team con il minor numero
 // di segnalazioni
-const QUERY_TEAM_MIN_REPORT = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
-                                    FROM team as tm, type_report as tp, user as u
-                                    WHERE  tm.type_report = tp.id
-                                    AND     tm.user = u.id";
+const QUERY_TEAM_MIN_REPORT = "SELECT list.*
+                                FROM (".QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT."
+                                ORDER BY n_report ASC) as list
+                                LIMIT 1";
 
 const QUERY_NEW_PHOTOS      = "INSERT INTO photo(name, report) VALUES ( ? , ? )";
 
@@ -116,7 +116,7 @@ const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE tm.type_report = tp.id
-                                    AND   tm.user        = u.id 
+                                    AND   tm.user        = u.email 
                                     AND   u.email = ?";
                                  
 
@@ -133,7 +133,7 @@ const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
 
-const QUERY_LOGIN             = "SELECT email, type, password, city FROM user WHERE email = ?";
+const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE email = ?";
 
 const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
 
