@@ -163,7 +163,9 @@ class ManagerReport{
 
             let res  = JSON.parse(result.response)
             if(res.error){
-                console.log('errore: '+res.message)
+                this.showErrorEmptyListReport(res.message)
+                console.log('Errore: '+res.message)
+                return;
             }
             else{
                 reports = res.data
@@ -172,7 +174,7 @@ class ManagerReport{
             importRep(reports)
             
             if(this.reportLastSelected){
-                // Aggiorno anche quello segnalato
+                // Aggiorno anche quello selezionato
                 this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
                 this.showReport.call(this,this.reportLastSelected)
             }
@@ -416,6 +418,9 @@ class ManagerReport{
         })
     }
 
+    showErrorEmptyListReport(str){
+        document.getElementById('error__empty__list').textContent = str
+    }
 
 
     hideReportRecap(){

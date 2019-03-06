@@ -55,6 +55,7 @@ class Table{
                         <div class="table100-body js-pscroll">
                             <table>
                                 <tbody>
+                                    <h3 id="error__empty__list"></h3>
                                     ${this.body.outerHTML}
                                 </tbody>
                             </table>
