@@ -51,6 +51,8 @@ const QUERY_REPORT_BY_ID = QUERY_HEADER_REPORT."
                                     ";
 
 
+const QUERY_FETCH_CITY_FROM_ENTE = "SELECT city FROM user WHERE email = ?";
+
 const QUERY_USER_BY_EMAIL   = "SELECT id, email, name, surname
                                 FROM user
                                 WHERE email = ?";
@@ -113,10 +115,10 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 
-const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE tm.type_report = tp.id
-                                    AND   tm.user        = u.email 
+                                    AND   tm.user        = u.id 
                                     AND   u.email = ?";
                                  
 
@@ -133,7 +135,7 @@ const QUERY_EDIT_REPORT_STATE = "UPDATE report
                                 SET state = ? 
                                 WHERE id = ?";
 
-const QUERY_LOGIN             = "SELECT email, type, password FROM user WHERE email = ?";
+const QUERY_LOGIN             = "SELECT email, type, city, password FROM user WHERE email = ?";
 
 const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
 

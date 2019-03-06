@@ -62,7 +62,7 @@ class User{
 
 
         $res = $stmt->get_result();
-        // var_dump($res);
+        
         if($res->num_rows > 0){
             $row = $res->fetch_assoc();
             $this->email = $row['email'];

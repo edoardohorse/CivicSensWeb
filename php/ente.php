@@ -14,6 +14,18 @@ class Ente extends Admin{
     const DOMAIN = '@a';
 
     public function __construct($name, $city = null){
+        $this->email = $name;
+        if($city == null){
+            global $conn;
+
+            $stmt = $conn->prepare(QUERY_FETCH_CITY_FROM_ENTE);
+            $stmt->bind_param("s", $this->email);
+            $stmt->bind_result($city);
+            $stmt->execute();
+            $stmt->fetch();
+
+            $this->city = $city;
+        }
         parent::__construct($name, $city);
 
         // $this->fetchTeams();

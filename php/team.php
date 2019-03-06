@@ -13,7 +13,7 @@ class Team extends Admin{
     private $typeReport;
     private $nMember;
     public $reports;
-
+    
     public function __construct($email,$city){
         $this->email = $email;
         $this->fetchInfo();
@@ -30,14 +30,15 @@ class Team extends Admin{
 
         $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_EMAIL);
         $stmt->bind_param("s", $this->email);
-        $stmt->bind_result($id, $typeReport,$nMember ,$name);
+        $stmt->bind_result($id, $typeReport,$nMember ,$name, $city);
         $stmt->execute();
         $stmt->fetch();
 
-        $this->id = $id;
-        $this->name = $name;
-        $this->typeReport = $typeReport;
-        $this->nMember = $nMember;
+        $this->id           = $id;
+        $this->name         = $name;
+        $this->typeReport   = $typeReport;
+        $this->nMember      = $nMember;
+        $this->city         = $city;
     }
 
     public function fetchReports(){

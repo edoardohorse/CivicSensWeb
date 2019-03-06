@@ -54,10 +54,9 @@
                 break;
             }
         }
-        
-        // var_dump($user);
-        // var_dump($manager);
-
+                
+        // var_dump(rawurlencode($manager->getCity()));
+        setrawcookie('city',rawurlencode($manager->getCity()), time() + 60*60*24*30, '/');
 
         if($page)
             header('location: '.$page);
