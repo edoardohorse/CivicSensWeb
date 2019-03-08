@@ -60,6 +60,8 @@ const QUERY_USER_BY_EMAIL   = "SELECT id, email, name, surname
 const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password, city)
                                 VALUES( ? , ? , ?, ?)";
 
+                                
+
 const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, address,grade,type_report, team,lan,lng,code, date)
                                 VALUES( (SELECT email FROM user WHERE city = ?), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
                                 
@@ -144,4 +146,7 @@ const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM t
 const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report";
 
 const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?"
+
+
+
 ?>
