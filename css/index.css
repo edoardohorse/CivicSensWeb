@@ -17,7 +17,9 @@ body {
 }
 
 input[type=email],
-input[type=password] {
+input[type=password],
+input[type=text]
+{
     width: 100%;
     height: 45px;
     padding-left: 1em;
@@ -29,12 +31,13 @@ input[type=password] {
 }
 
 input[type=email]:focus,
-input[type=password]:focus{
+input[type=password]:focus,
+input[type=text]:focus{
     border-color: rgb(1, 1, 255);
 }
 
 input[type="submit"] {
-    width: 75px;
+    /* width: 75px; */
     height: 35px;
     font-size: 19px;
     background-color: rgb(65, 65, 208);
