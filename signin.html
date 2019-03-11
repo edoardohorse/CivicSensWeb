@@ -1,6 +1,11 @@
 <html>
+       
+        
     <head>
         <title>Signin</title>
+        <link rel="stylesheet" href="css/vex.css" />
+        <link rel="stylesheet" href="css/vex-theme-default.css" />
+
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
         <link rel="stylesheet" href="css/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,27 +14,58 @@
     <body>
         <header><h1>Civic Sens</h1></header>
         <main>
-            <form action="php/signin.php" method="post">
+            <form onsubmit="checkPass(event)" action="php/signin.php" method="post" name="form">
 
                 <label for="user">Email</label>
                 <input type="email" name="email" required value="prova@a">
  
 
                 <label for="pass">Password</label >
-                <input type="password" name="pass" required value="pass">
+                <input id="pass" type="password" name="pass" required value="pass">
 
                 <label for="confermaPass">Conferma password</label >
-                <input type="password" name="confermaPass" required value="confermaPass">
+                <input id="confermaPass" type="password" name="confermaPass" required value="confermaPass">
 
                 <label for="city">Città</label >
                 <input type="text" name="city" required value="city">
                 
             
-                <input type="submit" value="Conferma">
+                <input   type="submit" value="Conferma">
             </form>
 
             
         </main>
 
+        <script src="js/vex.combined.min.js"></script>
+<script>
+vex.dialog.buttons.YES.text = 'Ok'
+vex.dialog.buttons.NO.text = 'Annulla'
+
+vex.defaultOptions.className = 'vex-theme-default'
+
+
+function checkPass(event){
+    event.preventDefault()
+    var pass=document.getElementById("pass").value;
+    var confermaPass=document.getElementById("confermaPass").value;
+    
+    if(pass!=confermaPass){
+
+            //document.form.invia.disabled=true;
+        
+            vex.dialog.alert({
+                    message: "La password confermata è diversa da quella scelta, controllare."                
+                })
+            document.getElementById("confermaPass").value = "";
+            document.getElementById("confermaPass").focus();
+            return
+        }
+    
+    document.getElementsByName("form")[0].submit()    
+}
+
+    
+
+</script>
     </body>
 </html>
