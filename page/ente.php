@@ -66,8 +66,8 @@
         <div class="recap" id="type__recap">
             <span class="recap__text"></span>
             <div class="recap__actions">
-                <button>Aggiungi tipo</button>
-                <button>Rimuovi tipo</button>
+                <button id="addTypeReport">Aggiungi tipo</button>
+                <button id="removeTypeReport">Rimuovi tipo</button>
             </div>
         </div>
     </footer>

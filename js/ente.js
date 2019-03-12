@@ -1,7 +1,8 @@
 // ============== GET
-const URL_FETCH_ENTE            =  '../api/ente/'
-const URL_FETCH_REPORTS_BY_ENTE =  '../api/ente/reports/'
-const URL_FETCH_TEAMS_BY_ENTE   =  '../api/ente/teams/'
+const URL_FETCH_ENTE                =  '../api/ente/'
+const URL_FETCH_REPORTS_BY_ENTE     =  '../api/ente/reports/'
+const URL_FETCH_TEAMS_BY_ENTE       =  '../api/ente/teams/'
+const URL_FETCH_LIST_TYPE_OF_REPORT =  '../api/report/types/{#}/'
 
 // ============== POST
 const URL_ADD_TEAM           =  '../api/ente/team/new'
@@ -35,6 +36,7 @@ class Ente extends Admin{
         managerDet.addDetails(this.detail)
 
         this.init()
+        this.fetchListTypeOfReport()
         this.fetchTeams()
 
         this.refresh = (result)=>{
@@ -46,9 +48,19 @@ class Ente extends Admin{
             manager.fetchAllReports()
         }
 
-        let button = document.querySelector('#team__recap button')
-        button.onclick = this.addTeam.bind(this)
-        button.title = "Crea un nuovo team"
+        
+        let buttonAddTeam = document.querySelector('#team__recap button')
+        buttonAddTeam.onclick = this.addTeam.bind(this)
+        buttonAddTeam.title = "Crea un nuovo team"
+        
+        let buttonAddType = document.querySelector('#addTypeReport')
+        buttonAddType.onclick = this.addTeam.bind(this)
+        buttonAddType.title = "Crea una nuova tipologia di report"
+        
+        let buttonRemoveType = document.querySelector('#removeTypeReport')
+        buttonRemoveType.onclick = this.addTeam.bind(this)
+        buttonRemoveType.title = "Rimuovi tipologia di report"
+        
     }
 
     init(){
@@ -74,18 +86,10 @@ class Ente extends Admin{
                     
                 }
 
-                let listTypeReport = this.teams.map(m=>m.typeReport)
 
-                listTypeReport = listTypeReport.filter(function(item, pos) {
-                    return listTypeReport.indexOf(item) == pos;
-                })
-
-                searchType.innerHTML = ""
-                newEl('option,,, value="ALL" textContent="Tutti"',searchType)
-                listTypeReport.forEach((type)=>{
-                    newEl(`option,,, value="${type}" textContent="${type}"`, searchType)
-                    
-                })
+            
+                
+                
                 
                this.drawTableTeam();
             }
@@ -103,6 +107,25 @@ class Ente extends Admin{
             
         }
         manager.fetchAllReports(callback)
+    }
+
+    fetchListTypeOfReport(){
+        Hub.connect(substitute(URL_FETCH_LIST_TYPE_OF_REPORT,[super.getCity()]), 'GET', null,{
+            onsuccess: (result) => {
+                let res = JSON.parse(result.response)
+                if(!res.error){
+                    this.listTypeReport =  res.data.map(m=>m.name)
+                }
+
+                searchType.innerHTML = ""
+                newEl('option,,, value="ALL" textContent="Tutti"',searchType)
+                this.listTypeReport.forEach((type)=>{
+                    newEl(`option,,, value="${type}" textContent="${type}"`, searchType)
+                    
+                })
+            }
+        })
+
     }
 
     editTeam(id = null){ 
@@ -156,21 +179,16 @@ class Ente extends Admin{
 
         let listNameTeams = this.teams.map(m=>m.name)
 
-        let listTypeReport = this.teams.map(m=>m.typeReport)
-
-        listTypeReport = listTypeReport.filter(function(item, pos) {
-            return listTypeReport.indexOf(item) == pos;
-        })
 
         let form = newEl('div') 
         newEl('input,,, name=name type=text placeholder="Nome team"', form)
         newEl('input,,, name=pass type=password placeholder="Password"', form)
         newEl('select,,, name=type', form).
                 appendChildren(
-                    repeatEl('option', listTypeReport.length ,
+                    repeatEl('option', this.listTypeReport.length ,
                     {
-                        textContent:listTypeReport,
-                        value:listTypeReport
+                        textContent:this.listTypeReport,
+                        value:this.listTypeReport
                     })
                 )
         newEl('input,,, name="member" type=number value=1 min=1 max=15', form)
@@ -272,6 +290,12 @@ class Ente extends Admin{
         
 
     }  
+
+    addTypeReport(){}
+    
+    removeTypeReport(){
+        vex.dialog.alert
+    }
 
     deselectLastTeam(){
         this.teamsLastSelected.el.classList.remove('tr--selected')
