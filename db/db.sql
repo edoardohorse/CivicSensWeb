@@ -5,12 +5,12 @@ USE my_civicsens;
 
 CREATE TABLE IF NOT EXISTS user(
     id int NOT NULL UNIQUE AUTO_INCREMENT,
-    email varchar(100) NOT NULL UNIQUE,
+    email varchar(100) NOT NULL,
     type enum('Ente','Team','User') DEFAULT 'User',
     password char(32) NOT NULL,
 	city varchar(100) NOT NULL,
 
-    PRIMARY KEY(email)
+    PRIMARY KEY(email, city)
 );
 
 CREATE TABLE IF NOT EXISTS type_report(
