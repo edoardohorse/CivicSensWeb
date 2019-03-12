@@ -1,14 +1,4 @@
 
-
-INSERT INTO type_report(name) 
-VALUES
-('Guasti elettrici'),
-('Guasti idraulici'),
-('Smottamento manto stradale'),
-('Igiene Urbana');
-
-
-
 -- User --
 INSERT INTO user (email,type, password,city) VALUES
 ('user@a','User','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
@@ -27,8 +17,15 @@ INSERT INTO user (email,type, password,city) VALUES
 ('Stradale3@a','Team','1a1dc91c907325c69271ddf0c944bc72','Foggia'),
 ('Stradale4@a','Team','1a1dc91c907325c69271ddf0c944bc72','Andria'),
 ('Stradale5@a','Team','1a1dc91c907325c69271ddf0c944bc72','Bari'),
-('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana'),
-('ente2@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Grottaglie');
+('ente@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Grottaglie'),
+('ente2@a','Ente','1a1dc91c907325c69271ddf0c944bc72','Francavilla Fontana');
+
+INSERT INTO type_report(name, user) 
+VALUES
+('Guasti elettrici', 'ente@a'),
+('Guasti idraulici', 'ente@a'),
+('Smottamento manto stradale', 'ente@a'),
+('Igiene Urbana', 'ente@a');
 
 INSERT INTO team(name, type_report,n_member,user) VALUES
 ('Enel1',1,5, 2),

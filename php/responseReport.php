@@ -28,6 +28,7 @@ abstract class MessageError{
     const UpdateHistory     = 'Errore! Nota non aggiunta alla segnalazione';
     const TeamNotAdded      = 'Errore! Team non aggiunto';
     const ChangeName        = 'Errore! Nome del team non cambiato';
+    const FetchListOfReports= 'Non vi sono tipi di segnalazioni per questa città';
 }
 
 function reply($message, $isInError, $data = null){
@@ -87,15 +88,30 @@ function getReports($stmt){
     return $result;
 }
 
-function getListTypeOfReport(){
+function getListTypeOfReport($city){
     global $conn;
+    $city = urldecode($city);
 
-    $result = $conn->query(QUERY_LIST_TYPE_REPORT);
-    $types = [];
+    // var_dump($city);
+    $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+    $stmt->bind_param("s", $city);
+    $stmt->execute();
+    
+
+    $result = $stmt->get_result();
+    $types = [];   
     while($row = $result->fetch_assoc()){
         array_push($types, $row);
     }
-    reply('',false, $types);
+    $nTypes = count($types);
+    // var_dump();
+    if( $nTypes > 0){
+        reply("Ci sono {$nTypes} tipi nella città {$city}",false, $types);
+    }
+    else{
+        reply(MessageError::FetchListOfReports,true, $types);
+
+    }
 }
 
 function getReportById($id){

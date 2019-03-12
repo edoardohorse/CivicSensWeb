@@ -143,7 +143,8 @@ const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,us
 
 const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM team WHERE name = ?)";
 
-const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report";
+const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report WHERE user = 
+                                    (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
 const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?"
 
