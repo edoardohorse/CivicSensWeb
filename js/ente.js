@@ -14,7 +14,7 @@ class Ente extends Admin{
 
         this.tableTeam = new TableTeam('list__team__wrapper')
         
-        this.recapText = document.querySelector('.report__recap__text')
+        this.recapText = document.querySelector('#report__recap__text')
         this.detail = new Details()
         this.detail.addRow(
             {
@@ -46,7 +46,7 @@ class Ente extends Admin{
             manager.fetchAllReports()
         }
 
-        let button = document.querySelector('.team__recap button')
+        let button = document.querySelector('#team__recap button')
         button.onclick = this.addTeam.bind(this)
         button.title = "Crea un nuovo team"
     }
@@ -334,14 +334,24 @@ class Ente extends Admin{
 
     hideTeamRecap(){
         document.querySelector('footer').style.display="none"
-        document.querySelector('.team__recap').style.display="none"
+        document.querySelector('#team__recap').style.display="none"
     }
 
     showTeamRecap(){
         document.querySelector('footer').style.display="block"
-        document.querySelector('.team__recap').style.display="block"
+        document.querySelector('#team__recap').style.display="block"
     }
-   
+
+    hideTypeRecap(){
+        document.querySelector('footer').style.display="none"
+        document.querySelector('#type__recap').style.display="none"
+    }
+    
+    showTypeRecap(){
+        document.querySelector('footer').style.display="block"
+        document.querySelector('#type__recap').style.display="block"
+    }
+
     changeTeamName(){
         let teamToChangeName = this.teamsLastSelected
         let listNameTeams = this.teams.map(m=>m.name)

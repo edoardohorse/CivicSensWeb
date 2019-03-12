@@ -10,7 +10,6 @@
 
     <aside id="nav__side">
         <p class="selected" >Segnalazioni</p>
-        <p>Questo team</p>
         <form action="../php/destroy.php">
             <input type="submit" value="Esci">
         </form>
@@ -39,9 +38,9 @@
 
 
     <footer>
-        <div class="report__recap">
-            <span class="report__recap__text"></span>
-            <div class="report__recap__actions">
+        <div class="recap" id="report__recap">
+            <span class="recap__text"></span>
+            <div class="recap__actions">
                 <button >Elimina selezionate</button>
             </div>
         </div>

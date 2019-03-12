@@ -63,7 +63,7 @@ class ManagerReport{
         this.isMultipleSelection = false
         this.tableReportNotFinished = new TableReport('report--notfinished')
         this.tableReportFinished = new TableReport('report--finished')
-        this.recapText = document.querySelector('.report__recap__text')
+        this.recapText = document.querySelector('#report__recap > .recap__text')
         
         
         this.tableSelected = this.tableReportNotFinished
@@ -425,12 +425,12 @@ class ManagerReport{
 
     hideReportRecap(){
         document.querySelector('footer').style.display="none"
-        document.querySelector('.report__recap').style.display="none"
+        document.querySelector('#report__recap').style.display="none"
     }
 
     showReportRecap(){
         document.querySelector('footer').style.display="block"
-        document.querySelector('.report__recap').style.display="block"
+        document.querySelector('#report__recap').style.display="block"
     }
 }
 
