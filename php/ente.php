@@ -33,9 +33,11 @@ class Ente extends Admin{
 
     public function fetchTeams(){
         global $conn;
+        
         $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
+        $stmt->bind_param("s",$this->city);
         $stmt->execute();
         $res = $stmt->get_result();
         $i=0;
@@ -107,6 +109,7 @@ class Ente extends Admin{
 
         $list = [];
         foreach($teams as $team){
+            $team->fetchReports();
             if($team->getName() == $nameTeamToDelete){
                 $key = array_search($team, $teams);
                 unset($teams[$key]);
@@ -187,6 +190,7 @@ class Ente extends Admin{
 
         // Lista tipi report per ottenere gli id
         $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+        $stmt->bind_param("s",$this->city);
         $stmt->execute();
         $result = $stmt->get_result();
         while($row = $result->fetch_assoc()){
@@ -200,7 +204,7 @@ class Ente extends Admin{
 
         // Registra nuovo utente come team
         $stmt = $conn->prepare(QUERY_USER_SIGN_UP);
-        $stmt->bind_param('sss', $email, $type, $pass);
+        $stmt->bind_param('ssss', $email, $type, $pass, $this->city);
         $stmt->execute();
         $idUser = $conn->insert_id;
         

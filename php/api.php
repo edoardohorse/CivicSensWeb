@@ -165,9 +165,9 @@
 
     // ==== ENTE Requests
         //  [GET]
-            new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // api/team    
+            // new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // api/team    
             new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // api/ente
-            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // api/ente/teams
+            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente);  // api/ente/teams
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
             
             //  [POST]

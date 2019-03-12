@@ -80,7 +80,8 @@ const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id)
 const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE  tm.type_report = tp.id
-                                    AND     tm.user = u.email";
+                                    AND     tm.user =  u.id
+                                    AND 	u.city = ?";
 
 // Usata per la creazione di un report
 // permette di ottenere l'id del team con il minor numero
