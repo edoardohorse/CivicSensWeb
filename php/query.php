@@ -119,11 +119,11 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 
-const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city, count(r.id) as n_report
-                                    FROM team as tm, type_report as tp, user as u, report as r
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city, IFNULL(count(r.id), 0) as n_report
+                                    FROM type_report as tp, user as u, team as tm LEFT JOIN report as r
+                                    ON  tm.id          = r.team
                                     WHERE tm.type_report = tp.id
                                     AND   tm.user        = u.id 
-                                    AND   tm.id          = r.team
                                     AND   u.email = ?
                                     AND   u.city  = ?
                                     GROUP BY tm.id";
