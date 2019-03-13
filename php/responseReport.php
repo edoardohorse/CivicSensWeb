@@ -183,8 +183,10 @@ function editState($id){
 
 function deleteReport($id){ 
     global $manager;
+    
     if($manager->deleteReport($id)){
         reply(MessageSuccess::DeleteReport,false);
+        $manager->fetchReports();
     }
     else{
         reply(MessageError::DeleteReport,true);
