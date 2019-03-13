@@ -16,6 +16,7 @@ class Team extends Admin{
     
     public function __construct($email,$city){
         $this->email = $email;
+        $this->city = $city;
         $this->fetchInfo();
         parent::__construct($this->name,$this->city);
 
@@ -29,8 +30,8 @@ class Team extends Admin{
         global $conn;
 
         $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_EMAIL);
-        $stmt->bind_param("s", $this->email);
-        $stmt->bind_result($id, $typeReport,$nMember ,$name, $city);
+        $stmt->bind_param("ss", $this->email, $this->city);
+        $stmt->bind_result($id, $typeReport,$nMember ,$name, $city, $n_report);
         $stmt->execute();
         $stmt->fetch();
 
@@ -39,6 +40,7 @@ class Team extends Admin{
         $this->typeReport   = $typeReport;
         $this->nMember      = $nMember;
         $this->city         = $city;
+        $this->n_report     = $n_report;
     }
 
     public function fetchReports(){
@@ -90,7 +92,8 @@ class Team extends Admin{
     public function serialize(){
         return array('nMember'=> $this->nMember,
                     'name'=>$this->name,
-                    'typeReport'=>$this->typeReport);
+                    'typeReport'=>$this->typeReport,
+                    'nReport'=>$this->n_report);
     }
 
     public function serializeReports(){

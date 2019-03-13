@@ -63,7 +63,7 @@ const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password, city)
                                 
 
 const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, address,grade,type_report, team,lan,lng,code, date)
-                                VALUES( (SELECT email FROM user WHERE city = ?), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
+                                VALUES( (SELECT email FROM user WHERE city = ? AND type = 'Ente'), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
                                 
 const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
                                                 FROM report as r RIGHT JOIN (
@@ -71,6 +71,7 @@ const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id)
                                                         FROM team, type_report as tp
                                                         WHERE team.type_report = ?
                                                         AND team.type_report = tp.id
+                                                        AND team.user  in  (SELECT id FROM user WHERE city = ? AND type = 'Team')
                                                     )as tm
                                                 ON r.team = tm.id
                                                 WHERE r.type_report = tm.type_report_id
@@ -118,11 +119,14 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 
-const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city
-                                    FROM team as tm, type_report as tp, user as u
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city, count(r.id) as n_report
+                                    FROM team as tm, type_report as tp, user as u, report as r
                                     WHERE tm.type_report = tp.id
                                     AND   tm.user        = u.id 
-                                    AND   u.email = ?";
+                                    AND   tm.id          = r.team
+                                    AND   u.email = ?
+                                    AND   u.city  = ?
+                                    GROUP BY tm.id";
                                  
 
 

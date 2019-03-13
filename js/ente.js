@@ -82,7 +82,7 @@ class Ente extends Admin{
                 // this.typeReports = result.map(t=>t.name)
                 for(let team of result.data){
                     // debugger
-                    this.teams.push( new Team(team.name, team.nMember, team.typeReport) )
+                    this.teams.push( new Team(team.name, team.nMember, team.typeReport, team.nReport) )
                     
                 }
 

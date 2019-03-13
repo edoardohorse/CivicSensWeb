@@ -61,7 +61,7 @@ class Report{
         
 
         $stmt = $conn->prepare(QUERY_TEAM_MIN_REPORT);
-        $stmt->bind_param("s", $_POST['typeReport']);
+        $stmt->bind_param("ss", $_POST['typeReport'], $_POST['city']);
         $stmt->execute();
         $idTeam = $stmt->get_result()->fetch_assoc()['id'];
         
