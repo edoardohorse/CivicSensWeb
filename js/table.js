@@ -255,7 +255,11 @@ class TableTypeReport extends Table{
         
     }
 
-        deleteRow(type){
+    deleteRow(type){
         // this.getParent(report).deleteRow(this.type.indexOf(report))
+    }
+
+    deleteAllRows(){
+        super.cleanBody()
     }
 }

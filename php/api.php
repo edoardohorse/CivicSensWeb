@@ -174,6 +174,8 @@
             new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // api/report/{id}/team    => editTeam [POST] {newTeam}
             new Request('POST','ente/team/new',         $newTeam_handler,               Permission::Ente);             // api/ente/team/neam
             new Request('POST','ente/team/delete',      $deleteTeam_handler,            Permission::Ente);             // api/ente/team/delete
+            new Request('POST','ente/type/new',         $newTypeReport_handler,         Permission::Ente,     $request);    // api/ente/type/new
+            new Request('POST','ente/type/delete',       $deleteTypeReport_handler,      Permission::Ente,     $request);    // api/ente/type/delete
     
 
     // ==== USER Requests

@@ -225,6 +225,47 @@ class Ente extends Admin{
         
     }
 
+    public function newTypeReport($data){
+        global $conn;
+        $name = $data['name'];
+        
+
+        $stmt = $conn->prepare(QUERY_ADD_TYPE_REPORT);
+        $stmt->bind_param('ss', $name, $this->city);
+        $stmt->execute();
+        
+
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function deleteTypeReport($data){
+        global $conn;
+        $name = $data['name'];
+        
+        $rep = array_filter($this->reports, function($t) use($name){return $t->getType() == $name;});
+        $city = $this->city;
+        // var_dump($this->city);die();
+        $stmt = $conn->prepare(QUERY_DELETE_TYPE_REPORT);
+        $stmt->bind_param('ss', $name, $city);
+        
+        if(count($rep) == 0){
+            $stmt->execute();
+        }
+        
+
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function serialize(){
         $result = array();
         

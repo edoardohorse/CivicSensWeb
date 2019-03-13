@@ -17,6 +17,7 @@ abstract class MessageSuccess{
     const TeamAdded         = 'Team aggiunto con successo';
     const ChangeName        = 'Nome cambiato';
     const DeleteTeam        = 'Team eliminato con successo';
+    const TypeReportAdded   = 'Nuova tipologia di report aggiunta';
     const NoMessage         = '';
 }
 
@@ -29,6 +30,8 @@ abstract class MessageError{
     const TeamNotAdded      = 'Errore! Team non aggiunto';
     const ChangeName        = 'Errore! Nome del team non cambiato';
     const FetchListOfReports= 'Non vi sono tipi di segnalazioni per questa città';
+    const TypeReportNotAdded= 'Errore! Nuova tipologia di report non aggiunta';
+    const TypeReportNotDeleted = 'Errore! Non è stato possibile rimuovere questa tipologia';
 }
 
 function reply($message, $isInError, $data = null){
@@ -147,6 +150,9 @@ function getHistoryOfReport($id){
 
 function editTeam($id){    
     global $manager;
+    $manager  = new Ente('ente2@a');
+    $manager->fetchTeams();
+    $manager->fetchReports();
     $newTeam = $_POST['team'];
 
     
@@ -316,6 +322,31 @@ function deleteTeam(){
 
 }
 
+function newTypeReport(){
+    global $manager;
+    $manager = new Ente('ente2@a');
+    $data = $_POST;
+    if($manager->newTypeReport($data)){
+        reply(MessageSuccess::TypeReportAdded,false);
+    }
+    else{
+        reply(MessageError::TypeReportNotAdded,true);
+    }
+}
+
+function deleteTypeReport(){
+    global $conn;
+    $manager = new Ente('ente2@a');
+    $manager->fetchReports();
+    $data = $_POST;
+    if($manager->deleteTypeReport($data)){
+        reply("Tipologia '{$data['name']}' rimossa con successo",false);
+    }
+    else{
+        reply(MessageError::TypeReportNotDeleted,true);
+    }
+}
+
 $getReportsByCity_handler   = 'getReportsByCity';
 $getReportsByTeam_handler   = 'getReportsByTeam';
 $getReports_handler         = 'getReports';
@@ -335,4 +366,6 @@ $newTeam_handler            = 'newTeam';
 $changeTeamName_handler     = 'changeTeamName';
 $deleteTeam_handler         = 'deleteTeam';
 $getListTypeOfReport_handler= 'getListTypeOfReport';
+$newTypeReport_handler      = 'newTypeReport';
+$deleteTypeReport_handler   = 'deleteTypeReport';
 ?>

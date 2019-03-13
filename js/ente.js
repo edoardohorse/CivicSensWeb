@@ -8,6 +8,8 @@ const URL_FETCH_LIST_TYPE_OF_REPORT =  '../api/report/types/{#}/'
 const URL_ADD_TEAM           =  '../api/ente/team/new'
 const URL_DELETE_TEAM           =  '../api/ente/team/delete'
 const URL_CHANGE_NAME_TEAM   =  '../api/team/name'
+const URL_ADD_TYPE_REPORT           =  '../api/ente/type/new'
+const URL_DELETE_TYPE_REPORT           =  '../api/ente/type/delete'
 
 class Ente extends Admin{
     constructor(name){
@@ -38,7 +40,7 @@ class Ente extends Admin{
 
         this.init()
         this.fetchTeams()
-        this.fetchListTypeOfReport()
+        
 
         this.refresh = (result)=>{
             result = JSON.parse(result.response)
@@ -55,11 +57,12 @@ class Ente extends Admin{
         buttonAddTeam.title = "Crea un nuovo team"
         
         let buttonAddType = document.querySelector('#addTypeReport')
-        buttonAddType.onclick = this.addTeam.bind(this)  //TODO da cambiare la callback
+        buttonAddType.onclick = this.addTypeReport.bind(this)  
         buttonAddType.title = "Crea una nuova tipologia di report"
         
         let buttonRemoveType = document.querySelector('#removeTypeReport')
-        buttonRemoveType.onclick = this.addTeam.bind(this) //TODO da cambiare la callback
+        disable(document.querySelector('#removeTypeReport'))
+        buttonRemoveType.onclick = this.removeTypeReport.bind(this) //TODO: da cambiare la callback
         buttonRemoveType.title = "Rimuovi tipologia di report"
         
     }
@@ -70,6 +73,7 @@ class Ente extends Admin{
         
         this.teamsSelected = null
         this.teamsLastSelected = null
+        this.typeLastSelected = null
         this.checkboxes = []
     }
 
@@ -90,7 +94,7 @@ class Ente extends Admin{
 
 
             
-                
+                this.fetchListTypeOfReport()
                 
                 
                this.drawTableTeam();
@@ -112,6 +116,8 @@ class Ente extends Admin{
     }
 
     fetchListTypeOfReport(){
+        this.listTypeReport = []
+
         Hub.connect(substitute(URL_FETCH_LIST_TYPE_OF_REPORT,[super.getCity()]), 'GET', null,{
             onsuccess: (result) => {
                 let res = JSON.parse(result.response)
@@ -189,6 +195,7 @@ class Ente extends Admin{
 
         let listNameTeams = this.teams.map(m=>m.name)
 
+        let listTypeReport = this.listTypeReport.map(m=>m.name);
 
         let form = newEl('div') 
         newEl('input,,, name=name type=text placeholder="Nome team"', form)
@@ -197,8 +204,8 @@ class Ente extends Admin{
                 appendChildren(
                     repeatEl('option', this.listTypeReport.length ,
                     {
-                        textContent:this.listTypeReport,
-                        value:this.listTypeReport
+                        textContent:listTypeReport,
+                        value:listTypeReport
                     })
                 )
         newEl('input,,, name="member" type=number value=1 min=1 max=15', form)
@@ -301,10 +308,70 @@ class Ente extends Admin{
 
     }  
 
-    addTypeReport(){}
+    addTypeReport(){
+        let listTypeReport = this.listTypeReport.map(m=>m.name.toLocaleLowerCase());
+
+        let form = newEl('div') 
+        newEl('input,,, name=name type=text placeholder="Nome tipo"', form)
+
+        vex.dialog.open({
+            message: 'Aggiungi tipo report',
+            input:form,
+            callback:function(data){
+                
+                if(data){
+                    if(data.name){
+                        if(listTypeReport.indexOf(data.name.toLocaleLowerCase()) > -1){
+                            vex.dialog.alert('Nome tipo già usato')    
+                        }
+                        else{
+                            let type = new TypeReport(data.name)
+                            Hub.connect(URL_ADD_TYPE_REPORT, 'POST',{name:data.name},{
+                                onsuccess:(result)=>{
+                                    
+                                    result = JSON.parse(result.response)
+                                    vex.dialog.alert(result.message)
+                                    
+                                    this.fetchListTypeOfReport();
+                                }
+                            })
+                        }
+                    }
+                }
+                else{
+                    vex.dialog.alert('Compila tutti i campi')
+                }
+            
+            }.bind(this)
+        })
+    }
     
     removeTypeReport(){
         
+        let typeToDelete = this.typeLastSelected
+
+        vex.dialog.confirm({
+            message:'Sicuro di voler eliminare la tipologia definitivamente?',
+            callback:function(data){
+                if(data){
+                    // debugger
+                    
+                    Hub.connect(URL_DELETE_TYPE_REPORT, 'POST',{name:typeToDelete.name},{
+                        onsuccess:(result)=>{
+                            
+                        
+                            result = JSON.parse(result.response)
+                            vex.dialog.alert(result.message)
+
+                            this.fetchListTypeOfReport();
+                        }
+                    })
+                    
+
+
+                }
+            }.bind(this)
+        })
     }
 
     deselectLastTeam(){
@@ -322,6 +389,20 @@ class Ente extends Admin{
         this.showTeam(this.teamsLastSelected)
     }}
 
+    selectLastType(type){
+        if(this.typeLastSelected)
+            this.deselectLastType()
+        
+        this.typeLastSelected = type
+        this.typeLastSelected.el.classList.add('tr--selected') 
+        enable(document.querySelector('#removeTypeReport'))
+    }
+
+    deselectLastType(){
+        this.typeLastSelected.el.classList.remove('tr--selected') 
+        this.typeLastSelected = null
+        disable(document.querySelector('#removeTypeReport'))
+    }
 
     deselectTeam(team){
         let index =  this.teamsSelected.indexOf(team)
@@ -336,6 +417,7 @@ class Ente extends Admin{
             this.recapText.textContent = `Selezionate: ${this.teamsSelected.length}`}
 
     drawTableTeam(){
+        this.tableTeam.deleteAllRows();
         this.teams.forEach(team=>{
             
             let row = this.tableTeam.addRow(team)
@@ -349,11 +431,12 @@ class Ente extends Admin{
     }
 
     drawTypeReport(){ 
+        this.tableTypeReport.deleteAllRows();
         this.listTypeReport.forEach(type=>{
             
             let row = this.tableTypeReport.addRow(type)
 
-            // row.addEventListener('click')
+            row.addEventListener('click', this.selectLastType.bind(this,type))
         })
     }
 
@@ -381,6 +464,8 @@ class Ente extends Admin{
     }
 
     showTeamRecap(){
+        this.fetchTeams()        
+
         document.querySelector('footer').style.display="block"
         document.querySelector('#team__recap').style.display="block"
     }

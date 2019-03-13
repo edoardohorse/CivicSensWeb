@@ -43,7 +43,7 @@ function disable(el){
 }
 
 function enable(el){
-    el.style.display ="block"
+    el.style.display ="unset"
 }
 
 

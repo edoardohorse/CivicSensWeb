@@ -28,7 +28,9 @@ abstract class Admin{
     }
 
     protected function getReportFromId($id){
-        return  array_filter($this->reports, function($t) use($id){return $t->getId() == $id;})[0];
+        $array = array_filter($this->reports, function($t) use($id){return $t->getId() == $id;});
+        $report = array_shift($array);
+        return  $report;
     }
 
     abstract public function serialize();

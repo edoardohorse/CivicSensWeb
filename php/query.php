@@ -151,8 +151,10 @@ const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM t
 const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report WHERE user = 
                                     (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
-const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?"
+const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?";
 
+const QUERY_ADD_TYPE_REPORT     = "INSERT INTO type_report (name, user) VALUES ( ?, (SELECT email FROM user WHERE city = ? AND type = 'Ente'))";
 
+const QUERY_DELETE_TYPE_REPORT     = "DELETE FROM type_report WHERE name = ? AND user = (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
 ?>
