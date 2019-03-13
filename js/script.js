@@ -75,6 +75,7 @@ function showReportsEnte(el){
     try{
         document.querySelector('#list__team__wrapper').classList.add('list--hide')
         document.querySelector('#list__type-report__wrapper').classList.add('list--hide')
+        
     }
     catch{
 
@@ -100,6 +101,7 @@ function showTeamsEnte(el){
 
     document.querySelector('#list__team__wrapper').classList.remove('list--hide')
     document.querySelector('#list__report__wrapper').classList.add('list--hide')
+    document.querySelector('#list__type-report__wrapper').classList.add('list--hide')
     managerDet.hide();
 
     manager.hideReportRecap()
@@ -111,6 +113,7 @@ function showTeamsEnte(el){
 function showEditTypeReport(el){
     hideNavSide()
 
+    document.querySelector('#list__type-report__wrapper').classList.remove('list--hide')
     if(el){
         document.querySelector('p.selected').classList.remove('selected')
         el.classList.add('selected')

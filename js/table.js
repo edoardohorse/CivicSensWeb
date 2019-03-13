@@ -242,7 +242,6 @@ class TableTypeReport extends Table{
     }
 
     addRow(type){
-        
         let row = super.createRow([
                 type.name,
                 type.countReport,

@@ -46,6 +46,10 @@
     <main class="list__wrapper list--hide" id="list__team__wrapper">
         
     </main>
+    
+    <main class="list__wrapper list--hide" id="list__type-report__wrapper">
+        
+    </main>
 
     <main id="overlay"></main>
 

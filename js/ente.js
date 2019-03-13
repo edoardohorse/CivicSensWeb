@@ -14,6 +14,7 @@ class Ente extends Admin{
         super(name)
 
         this.tableTeam = new TableTeam('list__team__wrapper')
+        this.tableTypeReport = new TableTypeReport('list__type-report__wrapper')
         
         this.recapText = document.querySelector('#report__recap__text')
         this.detail = new Details()
@@ -36,8 +37,8 @@ class Ente extends Admin{
         managerDet.addDetails(this.detail)
 
         this.init()
-        this.fetchListTypeOfReport()
         this.fetchTeams()
+        this.fetchListTypeOfReport()
 
         this.refresh = (result)=>{
             result = JSON.parse(result.response)
@@ -54,17 +55,18 @@ class Ente extends Admin{
         buttonAddTeam.title = "Crea un nuovo team"
         
         let buttonAddType = document.querySelector('#addTypeReport')
-        buttonAddType.onclick = this.addTeam.bind(this)
+        buttonAddType.onclick = this.addTeam.bind(this)  //TODO da cambiare la callback
         buttonAddType.title = "Crea una nuova tipologia di report"
         
         let buttonRemoveType = document.querySelector('#removeTypeReport')
-        buttonRemoveType.onclick = this.addTeam.bind(this)
+        buttonRemoveType.onclick = this.addTeam.bind(this) //TODO da cambiare la callback
         buttonRemoveType.title = "Rimuovi tipologia di report"
         
     }
 
     init(){
         this.teams = []
+        this.listTypeReport = []
         
         this.teamsSelected = null
         this.teamsLastSelected = null
@@ -114,8 +116,14 @@ class Ente extends Admin{
             onsuccess: (result) => {
                 let res = JSON.parse(result.response)
                 if(!res.error){
-                    this.listTypeReport =  res.data.map(m=>m.name)
+                    
+                    for(let type of res.data){
+                        type.nReport = manager.reports.filter(rep=>rep.type==type.name).length;
+                        this.listTypeReport.push( new TypeReport(type.name, type.nReport) )
+                        
+                    }
                 }
+                
 
                 searchType.innerHTML = ""
                 newEl('option,,, value="ALL" textContent="Tutti"',searchType)
@@ -123,6 +131,8 @@ class Ente extends Admin{
                     newEl(`option,,, value="${type}" textContent="${type}"`, searchType)
                     
                 })
+
+                this.drawTypeReport()
             }
         })
 
@@ -294,7 +304,7 @@ class Ente extends Admin{
     addTypeReport(){}
     
     removeTypeReport(){
-        vex.dialog.alert
+        
     }
 
     deselectLastTeam(){
@@ -335,6 +345,15 @@ class Ente extends Admin{
             
             
 
+        })
+    }
+
+    drawTypeReport(){ 
+        this.listTypeReport.forEach(type=>{
+            
+            let row = this.tableTypeReport.addRow(type)
+
+            // row.addEventListener('click')
         })
     }
 

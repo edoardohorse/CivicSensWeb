@@ -36,6 +36,12 @@ function substitute(str,param = []){
     return str
 }
 
+class TypeReport{
+    constructor(name, countReport = 1){
+        this.name = name
+        this.countReport = countReport
+    }
+}
 
 class ManagerReport{
 
