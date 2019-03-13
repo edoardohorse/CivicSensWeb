@@ -89,8 +89,9 @@ class Ente extends Admin{
                 break;
             }
         }
+        $reportToEdit = array_filter($this->reports, function($t) use($idReport){return $t->getId() == $idReport;})[0];
         
-        return $this->reports[$idReport]->editTeam( $teamToAssign->getName() );
+        return $reportToEdit->editTeam( $teamToAssign->getId() );
 
         
     }
