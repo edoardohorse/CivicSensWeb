@@ -1,9 +1,10 @@
 class Team extends Admin{
-    constructor(name, nMember = null, typeReport = null, reports = null){
+    constructor(name, nMember = null, typeReport = null, nReport = null, reports = null){
         super(name)
         this.nMember = nMember
         this.typeReport = typeReport
         this.reports = reports || []
+        this.nReport = nReport        
         // manager = new ManagerReport(URL_FETCH_REPORTS_BY_TEAM, this.name)
         
         // this.fetchInfo(reports)

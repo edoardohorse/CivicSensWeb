@@ -63,7 +63,7 @@ const QUERY_USER_SIGN_UP   = "INSERT INTO user  (email, type, password, city)
                                 
 
 const QUERY_NEW_REPORT      = "INSERT INTO report(user, description, address,grade,type_report, team,lan,lng,code, date)
-                                VALUES( (SELECT email FROM user WHERE city = ?), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
+                                VALUES( (SELECT email FROM user WHERE city = ? AND type = 'Ente'), ? , ? , ?, ?, ?, ?, ?, ?, NOW())";    
                                 
 const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id) as n_report, tm.type_report
                                                 FROM report as r RIGHT JOIN (
@@ -71,6 +71,7 @@ const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id)
                                                         FROM team, type_report as tp
                                                         WHERE team.type_report = ?
                                                         AND team.type_report = tp.id
+                                                        AND team.user  in  (SELECT id FROM user WHERE city = ? AND type = 'Team')
                                                     )as tm
                                                 ON r.team = tm.id
                                                 WHERE r.type_report = tm.type_report_id
@@ -80,7 +81,8 @@ const QUERY_FETCH_LIST_TEAM_BY_TYPE_REPORT = "SELECT tm.id, tm.name, count(r.id)
 const QUERY_FETCH_LIST_TEAM = "SELECT tm.id, tm.name, tp.name as type_report,  tp.id as type_report_id, u.email
                                     FROM team as tm, type_report as tp, user as u
                                     WHERE  tm.type_report = tp.id
-                                    AND     tm.user = u.email";
+                                    AND     tm.user =  u.id
+                                    AND 	u.city = ?";
 
 // Usata per la creazione di un report
 // permette di ottenere l'id del team con il minor numero
@@ -117,11 +119,14 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 
-const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city
-                                    FROM team as tm, type_report as tp, user as u
+const QUERY_FETCH_TEAM_BY_EMAIL = "SELECT tm.id, tp.name, tm.n_member, tm.name, u.city, IFNULL(count(r.id), 0) as n_report
+                                    FROM type_report as tp, user as u, team as tm LEFT JOIN report as r
+                                    ON  tm.id          = r.team
                                     WHERE tm.type_report = tp.id
                                     AND   tm.user        = u.id 
-                                    AND   u.email = ?";
+                                    AND   u.email = ?
+                                    AND   u.city  = ?
+                                    GROUP BY tm.id";
                                  
 
 
@@ -129,8 +134,8 @@ const QUERY_FETCH_CDT       = " SELECT code
                                  FROM report 
                                  WHERE code = ?";
 
-const QUERY_EDIT_REPORT_TEAM_BY_NAME = "UPDATE report
-                                        SET team = (SELECT id FROM team WHERE team.name = ?)
+const QUERY_EDIT_REPORT_TEAM_BY_ID = "UPDATE report
+                                        SET team = (SELECT id FROM team WHERE team.id = ?)
                                         WHERE id = ?";
 
 const QUERY_EDIT_REPORT_STATE = "UPDATE report
@@ -143,10 +148,13 @@ const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,us
 
 const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM team WHERE name = ?)";
 
-const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report";
+const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report WHERE user = 
+                                    (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
-const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?"
+const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?";
 
+const QUERY_ADD_TYPE_REPORT     = "INSERT INTO type_report (name, user) VALUES ( ?, (SELECT email FROM user WHERE city = ? AND type = 'Ente'))";
 
+const QUERY_DELETE_TYPE_REPORT     = "DELETE FROM type_report WHERE name = ? AND user = (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
 ?>

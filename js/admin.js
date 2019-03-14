@@ -4,7 +4,7 @@ class Admin{
         this.name = name
         this.city = decodeURI(getCookie('city'))
 
-        let button = document.querySelector('.report__recap button')
+        let button = document.querySelector('#report__recap button')
         button.onclick = this.deleteReports.bind(this)
         button.title = "Cancella le segnalazioni permanentemente"
 

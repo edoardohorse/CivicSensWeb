@@ -61,7 +61,7 @@ class Report{
         
 
         $stmt = $conn->prepare(QUERY_TEAM_MIN_REPORT);
-        $stmt->bind_param("s", $_POST['typeReport']);
+        $stmt->bind_param("ss", $_POST['typeReport'], $_POST['city']);
         $stmt->execute();
         $idTeam = $stmt->get_result()->fetch_assoc()['id'];
         
@@ -227,13 +227,13 @@ class Report{
 
     }
 
-    public function editTeam($newTeam){
-        if($newTeam == $this->team)
+    public function editTeam($idNewTeam){
+        if($idNewTeam == $this->team)
             return;
 
         global $conn;
-        $stmt = $conn->prepare(QUERY_EDIT_REPORT_TEAM_BY_NAME);
-        $stmt->bind_param("si",$newTeam, $this->id);
+        $stmt = $conn->prepare(QUERY_EDIT_REPORT_TEAM_BY_ID);
+        $stmt->bind_param("si",$idNewTeam, $this->id);
         $stmt->execute();
         if($stmt->affected_rows > 0){
             $this->fetchInfo();

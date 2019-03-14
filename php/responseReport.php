@@ -17,6 +17,7 @@ abstract class MessageSuccess{
     const TeamAdded         = 'Team aggiunto con successo';
     const ChangeName        = 'Nome cambiato';
     const DeleteTeam        = 'Team eliminato con successo';
+    const TypeReportAdded   = 'Nuova tipologia di report aggiunta';
     const NoMessage         = '';
 }
 
@@ -28,6 +29,9 @@ abstract class MessageError{
     const UpdateHistory     = 'Errore! Nota non aggiunta alla segnalazione';
     const TeamNotAdded      = 'Errore! Team non aggiunto';
     const ChangeName        = 'Errore! Nome del team non cambiato';
+    const FetchListOfReports= 'Non vi sono tipi di segnalazioni per questa città';
+    const TypeReportNotAdded= 'Errore! Nuova tipologia di report non aggiunta';
+    const TypeReportNotDeleted = 'Errore! Non è stato possibile rimuovere questa tipologia';
 }
 
 function reply($message, $isInError, $data = null){
@@ -35,21 +39,6 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
-function getListOfTeams(){
-    global $conn;
-
-    $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
-    $teams = array();
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while($row = $result->fetch_assoc()){
-        array_push($teams, $row['name']);
-    }
-
-
-    reply('',false, $teams);
-
-}
 
 function getReportsByCity($city){
     global $conn;
@@ -87,15 +76,30 @@ function getReports($stmt){
     return $result;
 }
 
-function getListTypeOfReport(){
+function getListTypeOfReport($city){
     global $conn;
+    $city = urldecode($city);
 
-    $result = $conn->query(QUERY_LIST_TYPE_REPORT);
-    $types = [];
+    // var_dump($city);
+    $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+    $stmt->bind_param("s", $city);
+    $stmt->execute();
+    
+
+    $result = $stmt->get_result();
+    $types = [];   
     while($row = $result->fetch_assoc()){
         array_push($types, $row);
     }
-    reply('',false, $types);
+    $nTypes = count($types);
+    // var_dump();
+    if( $nTypes > 0){
+        reply("Ci sono {$nTypes} tipi nella città {$city}",false, $types);
+    }
+    else{
+        reply(MessageError::FetchListOfReports,true, $types);
+
+    }
 }
 
 function getReportById($id){
@@ -146,6 +150,9 @@ function getHistoryOfReport($id){
 
 function editTeam($id){    
     global $manager;
+    $manager  = new Ente('ente2@a');
+    $manager->fetchTeams();
+    $manager->fetchReports();
     $newTeam = $_POST['team'];
 
     
@@ -182,8 +189,10 @@ function editState($id){
 
 function deleteReport($id){ 
     global $manager;
+    
     if($manager->deleteReport($id)){
         reply(MessageSuccess::DeleteReport,false);
+        $manager->fetchReports();
     }
     else{
         reply(MessageError::DeleteReport,true);
@@ -313,7 +322,31 @@ function deleteTeam(){
 
 }
 
-$getListOfTeams_handler     = 'getListOfTeams';
+function newTypeReport(){
+    global $manager;
+    $manager = new Ente('ente2@a');
+    $data = $_POST;
+    if($manager->newTypeReport($data)){
+        reply(MessageSuccess::TypeReportAdded,false);
+    }
+    else{
+        reply(MessageError::TypeReportNotAdded,true);
+    }
+}
+
+function deleteTypeReport(){
+    global $conn;
+    $manager = new Ente('ente2@a');
+    $manager->fetchReports();
+    $data = $_POST;
+    if($manager->deleteTypeReport($data)){
+        reply("Tipologia '{$data['name']}' rimossa con successo",false);
+    }
+    else{
+        reply(MessageError::TypeReportNotDeleted,true);
+    }
+}
+
 $getReportsByCity_handler   = 'getReportsByCity';
 $getReportsByTeam_handler   = 'getReportsByTeam';
 $getReports_handler         = 'getReports';
@@ -333,4 +366,6 @@ $newTeam_handler            = 'newTeam';
 $changeTeamName_handler     = 'changeTeamName';
 $deleteTeam_handler         = 'deleteTeam';
 $getListTypeOfReport_handler= 'getListTypeOfReport';
+$newTypeReport_handler      = 'newTypeReport';
+$deleteTypeReport_handler   = 'deleteTypeReport';
 ?>

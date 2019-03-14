@@ -22,9 +22,15 @@ abstract class Admin{
 
 
     public function deleteReport($id){
-        $tmp = $this->reports[$id];
-        unset($this->reports[$id]);
-        return $tmp->deleteReport();
+       
+        $reportToDelete = $this->getReportFromId($id);
+        return $reportToDelete->deleteReport();
+    }
+
+    protected function getReportFromId($id){
+        $array = array_filter($this->reports, function($t) use($id){return $t->getId() == $id;});
+        $report = array_shift($array);
+        return  $report;
     }
 
     abstract public function serialize();
