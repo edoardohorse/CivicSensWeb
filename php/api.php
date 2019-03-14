@@ -160,7 +160,7 @@
         
         // [POST]
             new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // api/report/{id}/state  => editState [POST] {newState}
-            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Team,   $request);  // api/report/{id}/history  => addToHistory [POST] {newNote}
+            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Common,   $request);  // api/report/{id}/history  => addToHistory [POST] {newNote}
     
 
     // ==== ENTE Requests

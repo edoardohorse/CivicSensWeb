@@ -203,7 +203,9 @@ function updateHistory($id){
     $message = $_POST['history'];
 
     global $manager;
+    $manager = new Team('Stradale1@a','Francavilla Fontana');   
     $manager->fetchReports();
+    // var_dump($manager);
     
     if($manager->updateHistoryOfReport($id,$message)){
         reply(MessageSuccess::UpdateHistory,false);

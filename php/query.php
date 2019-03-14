@@ -114,7 +114,7 @@ const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM =
                                         SELECT id
                                             FROM team
                                             WHERE name = ?
-                                        )
+                                            AND   user = (SELECT email FROM user WHERE city = ? AND type = 'Team')
                                         )";
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";

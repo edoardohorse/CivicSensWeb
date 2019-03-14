@@ -60,16 +60,20 @@ class Team extends Admin{
     }
 
     public function setReportAsInCharge($id){
-        return $this->reports[$id]->editState(ReportState::InCharge);
+        $report = $this->getReportFromId($id);
+        return $report->editState(ReportState::InCharge);
     }
 
     public function setReportAsDone($id){
-        return $this->reports[$id]->editState(ReportState::Done);
+        $report = $this->getReportFromId($id);
+        return $report->editState(ReportState::Done);
     }
 
     public function updateHistoryOfReport($id, $message){
-        if($this->reports[$id]->getState() == ReportState::InCharge)
-            return $this->reports[$id]->updateHistory($message);
+        $report = $this->getReportFromId($id);
+        var_dump($report);
+        if($report->getState() == ReportState::InCharge)
+            return $report->updateHistory($message);
     }
 
     public function changeName($newName){
