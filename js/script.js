@@ -39,11 +39,11 @@ function showReportFinished(){
 }
 
 function disable(el){
-    el.style.display ="none"
+    el.classList.add('disabled')
 }
 
 function enable(el){
-    el.style.display ="unset"
+    el.classList.remove('disabled')
 }
 
 
@@ -174,6 +174,8 @@ function adjustFilter(select){
 
     
 }
+
+
 
 vex.dialog.buttons.YES.text = 'Ok'
 vex.dialog.buttons.NO.text = 'Annulla'

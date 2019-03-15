@@ -174,6 +174,7 @@ class ManagerReport{
                 return;
             }
             else{
+                disable(document.getElementById('error__empty__list'))
                 reports = res.data
             }
                     
@@ -426,6 +427,7 @@ class ManagerReport{
 
     showErrorEmptyListReport(str){
         document.getElementById('error__empty__list').textContent = str
+        enable(document.getElementById('error__empty__list'))
     }
 
 
