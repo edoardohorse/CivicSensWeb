@@ -141,8 +141,9 @@
             new Request('GET','report/id/{#}',          $getReportById_handler,         Permission::Common, $request);          // api/report/id/{id}
             new Request('GET','report/photos/{#}',      $getPhotosOfReport_handler,     Permission::Common, $request);          // api/report/photos/{id}
             new Request('GET','report/history/{#}',     $getHistoryOfReport_handler,    Permission::Common, $request);          // api/report/history/{id}
+            new Request('GET','ente/{#}/reports',       $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
             new Request('GET','ente/reports',           $getAllReports_handler,         Permission::Common, $request);          // api/ente/reports
-            new Request('GET','report/types',           $getListTypeOfReport_handler,   Permission::Common);                    // api/report/types
+            new Request('GET','report/types/{#}',           $getListTypeOfReport_handler,   Permission::Common, $request);                    // api/report/types
     
     // ==== ADMIN Requests
         // [POST]
@@ -155,24 +156,26 @@
 
     // ==== TEAM Requests
         // [GET]
-            new Request('GET','report/team/{#}',        $getReportsByTeam_handler,      Permission::Team,   $request);          // api/report/team/{nameTeam}
+            new Request('GET','report/team/{#}',        $getAllReports_handler,      Permission::Team,   $request);          // api/report/team/{nameTeam}
         
         // [POST]
             new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // api/report/{id}/state  => editState [POST] {newState}
-            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Team,   $request);  // api/report/{id}/history  => addToHistory [POST] {newNote}
+            new Request('POST','report/{#}/history',    $updateHistory_handler,         Permission::Common,   $request);  // api/report/{id}/history  => addToHistory [POST] {newNote}
     
 
     // ==== ENTE Requests
         //  [GET]
-            new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // api/team    
+            // new Request('GET','team',                   $getListOfTeams_handler,        Permission::Ente,   $request);  // api/team    
             new Request('GET','ente',                   $getEnte_handler,               Permission::Ente,   $request);  // api/ente
-            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente,   $request);  // api/ente/teams
+            new Request('GET','ente/teams',             $getTeams_handler,              Permission::Ente);  // api/ente/teams
             //   ente/reports    ↑↑↑↑↑↑↑ defined in COMMON
             
             //  [POST]
             new Request('POST','report/{#}/team',       $editTeam_handler,              Permission::Ente,   $request);  // api/report/{id}/team    => editTeam [POST] {newTeam}
             new Request('POST','ente/team/new',         $newTeam_handler,               Permission::Ente);             // api/ente/team/neam
             new Request('POST','ente/team/delete',      $deleteTeam_handler,            Permission::Ente);             // api/ente/team/delete
+            new Request('POST','ente/type/new',         $newTypeReport_handler,         Permission::Ente,     $request);    // api/ente/type/new
+            new Request('POST','ente/type/delete',       $deleteTypeReport_handler,      Permission::Ente,     $request);    // api/ente/type/delete
     
 
     // ==== USER Requests

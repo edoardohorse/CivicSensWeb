@@ -36,6 +36,12 @@ function substitute(str,param = []){
     return str
 }
 
+class TypeReport{
+    constructor(name, countReport = 1){
+        this.name = name
+        this.countReport = countReport
+    }
+}
 
 class ManagerReport{
 
@@ -63,7 +69,7 @@ class ManagerReport{
         this.isMultipleSelection = false
         this.tableReportNotFinished = new TableReport('report--notfinished')
         this.tableReportFinished = new TableReport('report--finished')
-        this.recapText = document.querySelector('.report__recap__text')
+        this.recapText = document.querySelector('#report__recap > .recap__text')
         
         
         this.tableSelected = this.tableReportNotFinished
@@ -163,16 +169,19 @@ class ManagerReport{
 
             let res  = JSON.parse(result.response)
             if(res.error){
-                console.log('errore: '+res.message)
+                this.showErrorEmptyListReport(res.message)
+                console.log('Errore: '+res.message)
+                return;
             }
             else{
+                disable(document.getElementById('error__empty__list'))
                 reports = res.data
             }
                     
             importRep(reports)
             
             if(this.reportLastSelected){
-                // Aggiorno anche quello segnalato
+                // Aggiorno anche quello selezionato
                 this.reportLastSelected = this.reports.find(rep=>rep.id==this.reportLastSelected.id)
                 this.showReport.call(this,this.reportLastSelected)
             }
@@ -416,16 +425,20 @@ class ManagerReport{
         })
     }
 
+    showErrorEmptyListReport(str){
+        document.getElementById('error__empty__list').textContent = str
+        enable(document.getElementById('error__empty__list'))
+    }
 
 
     hideReportRecap(){
         document.querySelector('footer').style.display="none"
-        document.querySelector('.report__recap').style.display="none"
+        document.querySelector('#report__recap').style.display="none"
     }
 
     showReportRecap(){
         document.querySelector('footer').style.display="block"
-        document.querySelector('.report__recap').style.display="block"
+        document.querySelector('#report__recap').style.display="block"
     }
 }
 

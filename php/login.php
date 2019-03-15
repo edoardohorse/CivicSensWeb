@@ -42,22 +42,21 @@
         switch($user->getType()){
             case TypeUser::Ente:{
                 $page = PATH_ENTE;
-                $_SESSION['manager'] = new Ente($user->getEmail());
+                $_SESSION['manager'] = new Ente($user->getEmail(), $user->getCity());
                 $manager = &$_SESSION['manager'];
                 break;
             }
             case TypeUser::Team:{
                 $page = PATH_TEAM;
-                $_SESSION['manager'] = new Team($user->getEmail());
+                $_SESSION['manager'] = new Team($user->getEmail(),$user->getCity());
                 // var_dump($_SESSION);
                 $manager = &$_SESSION['manager'];
                 break;
             }
         }
-        
-        // var_dump($user);
-        // var_dump($manager);
-
+                
+        // var_dump(rawurlencode($manager->getCity()));
+        setrawcookie('city',rawurlencode($manager->getCity()), time() + 60*60*24*30, '/');
 
         if($page)
             header('location: '.$page);

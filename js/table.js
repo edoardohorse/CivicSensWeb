@@ -55,6 +55,7 @@ class Table{
                         <div class="table100-body js-pscroll">
                             <table>
                                 <tbody>
+                                    <h3 id="error__empty__list" class="disabled"></h3>
                                     ${this.body.outerHTML}
                                 </tbody>
                             </table>
@@ -172,7 +173,8 @@ class TableTeam extends Table{
         const HEADER = [
             'Nome',
             'Tipo',
-            'N° membri'
+            'N° membri',
+            'N° report'
         ]
         super(id, 'list', document.querySelector('#list__team__wrapper'))
         super.addHeader(HEADER)
@@ -185,6 +187,7 @@ class TableTeam extends Table{
                 team.name,
                 team.typeReport,
                 team.nMember,
+                team.nReport
         ])       
 
         row.team = team
@@ -224,5 +227,39 @@ class TableTeamResult extends Table{
         ])       
 
         
+    }
+}
+
+class TableTypeReport extends Table{
+    constructor(id){
+        const HEADER = [
+            'Nome tipologia',
+            'N° segnlazioni associate'
+        ]
+        super(id, 'list', document.querySelector('#list__type-report__wrapper'))
+        super.addHeader(HEADER)
+        super.build()
+    }
+
+    addRow(type){
+        let row = super.createRow([
+                type.name,
+                type.countReport,
+        ])       
+
+        row.type = type
+        type.el = row
+        type.el.hide = false
+
+        return row
+        
+    }
+
+    deleteRow(type){
+        // this.getParent(report).deleteRow(this.type.indexOf(report))
+    }
+
+    deleteAllRows(){
+        super.cleanBody()
     }
 }

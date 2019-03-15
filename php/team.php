@@ -13,11 +13,12 @@ class Team extends Admin{
     private $typeReport;
     private $nMember;
     public $reports;
-
-    public function __construct($email){
+    
+    public function __construct($email,$city){
         $this->email = $email;
+        $this->city = $city;
         $this->fetchInfo();
-        parent::__construct($this->name);
+        parent::__construct($this->name,$this->city);
 
     }
     public function getId(){return $this->id;}
@@ -29,15 +30,17 @@ class Team extends Admin{
         global $conn;
 
         $stmt = $conn->prepare(QUERY_FETCH_TEAM_BY_EMAIL);
-        $stmt->bind_param("s", $this->email);
-        $stmt->bind_result($id, $typeReport,$nMember ,$name);
+        $stmt->bind_param("ss", $this->email, $this->city);
+        $stmt->bind_result($id, $typeReport,$nMember ,$name, $city, $n_report);
         $stmt->execute();
         $stmt->fetch();
 
-        $this->id = $id;
-        $this->name = $name;
-        $this->typeReport = $typeReport;
-        $this->nMember = $nMember;
+        $this->id           = $id;
+        $this->name         = $name;
+        $this->typeReport   = $typeReport;
+        $this->nMember      = $nMember;
+        $this->city         = $city;
+        $this->n_report     = $n_report;
     }
 
     public function fetchReports(){
@@ -50,30 +53,49 @@ class Team extends Admin{
         $stmt->execute();
         $result = $stmt->get_result();
         while($row = $result->fetch_assoc()){
-            $this->reports[ $row['id'] ] = new Report($row);
+            $report = new Report( $row );
+            array_push( $this->reports, $report);  
         }
+
+        if(count($this->reports) > 0)
+            return true;
+        
+        return false;
 
         // var_dump($this->reports);
     }
 
     public function setReportAsInCharge($id){
-        return $this->reports[$id]->editState(ReportState::InCharge);
+        $report = $this->getReportFromId($id);
+        return $report->editState(ReportState::InCharge);
     }
 
     public function setReportAsDone($id){
-        return $this->reports[$id]->editState(ReportState::Done);
+        $report = $this->getReportFromId($id);
+        return $report->editState(ReportState::Done);
     }
 
     public function updateHistoryOfReport($id, $message){
-        if($this->reports[$id]->getState() == ReportState::InCharge)
-            return $this->reports[$id]->updateHistory($message);
+        $report = $this->getReportFromId($id);
+        
+        if($report->getState() == ReportState::InCharge)
+            return $report->updateHistory($message, $this->id);
     }
 
     public function changeName($newName){
         global $conn;
-       
+        
+        $email = $newName.Ente::DOMAIN;
+        $id = $this->id;
+        
+        
         $stmt = $conn->prepare(QUERY_CHANGE_NAME_TEAM);
-        $stmt->bind_param('ss', $newName, $this->name);
+        $stmt->bind_param('si',$newName,$id);
+        $stmt->execute();
+
+        $stmt = $conn->prepare(QUERY_CHANGE_EMAIL_TEAM);
+        $stmt->bind_param('si',$email,$id);
+        
         $stmt->execute();
 
         if($stmt->affected_rows > 0){
@@ -89,7 +111,8 @@ class Team extends Admin{
     public function serialize(){
         return array('nMember'=> $this->nMember,
                     'name'=>$this->name,
-                    'typeReport'=>$this->typeReport);
+                    'typeReport'=>$this->typeReport,
+                    'nReport'=>$this->n_report);
     }
 
     public function serializeReports(){

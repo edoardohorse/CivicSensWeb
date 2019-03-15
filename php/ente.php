@@ -13,35 +13,57 @@ class Ente extends Admin{
 
     const DOMAIN = '@a';
 
-    public function __construct($name){
-        parent::__construct($name);
+    public function __construct($name, $city = null){
+        $this->email = $name;
+        if($city == null){
+            global $conn;
+
+            $stmt = $conn->prepare(QUERY_FETCH_CITY_FROM_ENTE);
+            $stmt->bind_param("s", $this->email);
+            $stmt->bind_result($city);
+            $stmt->execute();
+            $stmt->fetch();
+
+            $this->city = $city;
+        }
+        parent::__construct($name, $city);
 
         // $this->fetchTeams();
     }
 
     public function fetchTeams(){
         global $conn;
+        
         $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
+        $stmt->bind_param("s",$this->city);
         $stmt->execute();
         $res = $stmt->get_result();
         $i=0;
         $nameTypeReport = '';
         while($row = $res->fetch_assoc()){
-            $team = new Team( $row['email'] );
+            $team = new Team( $row['email'], $this->city );
             array_push( $this->teams, $team);
         }
 
         // var_dump($this->reports);
     }
 
-    public function fetchReports(){
+    public function fetchReports($city = null){
         global $conn;
+        if($city){
+            $this->setCity($city);
+        }
+        else{
+            $city = $this->getCity();
+        }
+
         // $this->fetchTeams();
         // $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_REPORT_BY_ENTE);
+        $stmt->bind_param("s", $city);
         $stmt->execute();
         $res = $stmt->get_result();
         while($row = $res->fetch_assoc()){
@@ -51,6 +73,11 @@ class Ente extends Admin{
             // if()
             array_push( $this->reports, $report);            
         }
+
+        if(count($this->reports) > 0)
+            return true;
+        
+        return false;
 
     }
 
@@ -63,28 +90,18 @@ class Ente extends Admin{
                 break;
             }
         }
-        // var_dump($idReport);
-        // var_dump($teamToAssign);
-        // var_dump($this->reports);
-        foreach($this->reports as $report){
-            if($report->getId() == $idReport){
-                $reportToEdit = $report;
-                break;
-            }
-        }
+        $reportToEdit = $this->getReportFromId($idReport);
         
-        // var_dump($reportToEdit);
-        // die();
-        return $reportToEdit->editTeam( $teamToAssign->getName() );
+        return $reportToEdit->editTeam( $teamToAssign->getId() );
 
         
     }
 
     public function deleteTeam($nameTeamToDelete){
-
-        // var_dump($nameTeamToDelete);
+        $this->fetchReports();
+        
         $teamToDelete = array_filter($this->teams, function($t) use($nameTeamToDelete){return $t->getName() == $nameTeamToDelete;});
-        // var_dump($teamToDelete);
+        // echo var_dump($this->teams);die();
 
         $teamToDelete = $teamToDelete[array_keys($teamToDelete)[0]];
 
@@ -94,6 +111,7 @@ class Ente extends Admin{
 
         $list = [];
         foreach($teams as $team){
+            $team->fetchReports();
             if($team->getName() == $nameTeamToDelete){
                 $key = array_search($team, $teams);
                 unset($teams[$key]);
@@ -107,7 +125,7 @@ class Ente extends Admin{
         //var_dump($nReportToAssign);
         // var_dump($list);
         $list = distributeInteger($list,$nReportToAssign);
-        //var_dump($list);
+        // var_dump($list);
 
         foreach($list as $name=>$value){
             if($nReportToAssign <= 0){
@@ -154,7 +172,7 @@ class Ente extends Admin{
 
         global $conn;
         $stmt = $conn->prepare(QUERY_DELETE_TEAM);
-        $stmt->bind_param("s",$nameTeamToDelete);
+        $stmt->bind_param("ss",$nameTeamToDelete, $this->city);
         $stmt->execute();
 
         return $list;
@@ -174,6 +192,7 @@ class Ente extends Admin{
 
         // Lista tipi report per ottenere gli id
         $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+        $stmt->bind_param("s",$this->city);
         $stmt->execute();
         $result = $stmt->get_result();
         while($row = $result->fetch_assoc()){
@@ -187,7 +206,7 @@ class Ente extends Admin{
 
         // Registra nuovo utente come team
         $stmt = $conn->prepare(QUERY_USER_SIGN_UP);
-        $stmt->bind_param('sss', $email, $type, $pass);
+        $stmt->bind_param('ssss', $email, $type, $pass, $this->city);
         $stmt->execute();
         $idUser = $conn->insert_id;
         
@@ -205,6 +224,50 @@ class Ente extends Admin{
         }
 
         
+    }
+
+    public function newTypeReport($data){
+        global $conn;
+       
+
+        $name = $data['name'];
+       
+        
+
+        $stmt = $conn->prepare(QUERY_ADD_TYPE_REPORT);
+        $stmt->bind_param('ss', $name, $this->city);
+        $stmt->execute();
+        
+
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function deleteTypeReport($data){
+        global $conn;
+        $name = $data['name'];
+        
+        $rep = array_filter($this->reports, function($t) use($name){return $t->getType() == $name;});
+        $city = $this->city;
+        // var_dump($this->city);die();
+        $stmt = $conn->prepare(QUERY_DELETE_TYPE_REPORT);
+        $stmt->bind_param('ss', $name, $city);
+        
+        if(count($rep) == 0){
+            $stmt->execute();
+        }
+        
+
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function serialize(){

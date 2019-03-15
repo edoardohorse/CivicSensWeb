@@ -2,14 +2,16 @@ class Admin{
 
     constructor(name){
         this.name = name
+        this.city = decodeURI(getCookie('city'))
 
-
-        let button = document.querySelector('.report__recap button')
+        let button = document.querySelector('#report__recap button')
         button.onclick = this.deleteReports.bind(this)
         button.title = "Cancella le segnalazioni permanentemente"
+
+        document.querySelector("#city").innerHTML = `Sede di ${this.city}`;
     }
 
-    
+    getCity(){return this.city}    
 
     deleteReports(){
         let confirm = false
@@ -42,3 +44,9 @@ class Admin{
 
 
 }
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }

@@ -34,6 +34,7 @@ class User{
     private $email;
     private $type = Permission::Common;
     private $pass;
+    private $city;
     private $isLogged = false;
     private $isAdmin = false;
 
@@ -41,6 +42,8 @@ class User{
     public function getType(){return $this->type;}    
     public function setType($t){$this->type = $t;}    
     public function getPass(){return $this->pass;}
+    public function getCity(){return $this->city;}
+    public function setCity($city){ return $this->city = $city;}
     public function isAdmin(){return $this->isAdmin;}
     
     public function setAdmin($admin){$this->isAdmin = $admin;}
@@ -59,12 +62,13 @@ class User{
 
 
         $res = $stmt->get_result();
-        // var_dump($res);
+        
         if($res->num_rows > 0){
             $row = $res->fetch_assoc();
             $this->email = $row['email'];
             $this->type = $row['type'];
             $this->pass = $row['password'];
+            $this->city = $row['city'];
         }
 
         switch($this->type){

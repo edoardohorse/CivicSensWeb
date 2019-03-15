@@ -16,5 +16,8 @@
     <body>
         <header>
             <span id="menu"  onclick="showNavSide()"></span>
-            <h1>Civic Sens</h1>            
+            <h1>Civic Sens</h1>      
+            <div id="city__container">
+                <h5 id="city"></h5>
+            </div>            
         </header>

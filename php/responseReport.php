@@ -17,16 +17,21 @@ abstract class MessageSuccess{
     const TeamAdded         = 'Team aggiunto con successo';
     const ChangeName        = 'Nome cambiato';
     const DeleteTeam        = 'Team eliminato con successo';
+    const TypeReportAdded   = 'Nuova tipologia di report aggiunta';
     const NoMessage         = '';
 }
 
 abstract class MessageError{
+    const FetchReports      = 'Nessuna segnalazione è stata ancora effettuata';
     const EditTeam          = 'Modifica del gruppo fallita';
     const EditState         = 'Modifica dello stato fallita';
     const DeleteReport      = 'È stato risconstrato un errore, la segnalazione non è stata eliminata';
     const UpdateHistory     = 'Errore! Nota non aggiunta alla segnalazione';
     const TeamNotAdded      = 'Errore! Team non aggiunto';
     const ChangeName        = 'Errore! Nome del team non cambiato';
+    const FetchListOfReports= 'Non vi sono tipi di segnalazioni per questa città';
+    const TypeReportNotAdded= 'Errore! Nuova tipologia di report non aggiunta';
+    const TypeReportNotDeleted = 'Errore! Non è stato possibile rimuovere questa tipologia';
 }
 
 function reply($message, $isInError, $data = null){
@@ -34,40 +39,8 @@ function reply($message, $isInError, $data = null){
     $response = array('error'=>$isInError, 'message'=>$message, 'data'=>$data);
 }
 
-function getListOfTeams(){
-    global $conn;
-
-    $stmt = $conn->prepare(QUERY_FETCH_LIST_TEAM);
-    $teams = array();
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while($row = $result->fetch_assoc()){
-        array_push($teams, $row['name']);
-    }
 
 
-    reply('',false, $teams);
-
-}
-
-function getReportsByCity($city){
-    global $conn;
-   
-    $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
-    $stmt->bind_param("s",$city);
-    
-    $result = getReports($stmt);
-
-    reply(MessageSuccess::NoMessage,false,$result);
-
-}
-
-function getReportsByTeam($teamName){
-    global $manager;
-    $manager->fetchReports();
-    reply(MessageSuccess::NoMessage,false,$manager->serializeReports());
-
-}
 
 function getReports($stmt){
     global $conn;
@@ -86,15 +59,30 @@ function getReports($stmt){
     return $result;
 }
 
-function getListTypeOfReport(){
+function getListTypeOfReport($city){
     global $conn;
+    $city = urldecode($city);
 
-    $result = $conn->query(QUERY_LIST_TYPE_REPORT);
-    $types = [];
+    // var_dump($city);
+    $stmt = $conn->prepare(QUERY_LIST_TYPE_REPORT);
+    $stmt->bind_param("s", $city);
+    $stmt->execute();
+    
+
+    $result = $stmt->get_result();
+    $types = [];   
     while($row = $result->fetch_assoc()){
         array_push($types, $row);
     }
-    reply('',false, $types);
+    $nTypes = count($types);
+    // var_dump();
+    if( $nTypes > 0){
+        reply("Ci sono {$nTypes} tipi nella città {$city}",false, $types);
+    }
+    else{
+        reply(MessageError::FetchListOfReports,true, $types);
+
+    }
 }
 
 function getReportById($id){
@@ -145,6 +133,9 @@ function getHistoryOfReport($id){
 
 function editTeam($id){    
     global $manager;
+    // $manager  = new Ente('ente2@a');
+    // $manager->fetchTeams();
+    $manager->fetchReports();
     $newTeam = $_POST['team'];
 
     
@@ -181,8 +172,10 @@ function editState($id){
 
 function deleteReport($id){ 
     global $manager;
+    
     if($manager->deleteReport($id)){
         reply(MessageSuccess::DeleteReport,false);
+        $manager->fetchReports();
     }
     else{
         reply(MessageError::DeleteReport,true);
@@ -193,7 +186,9 @@ function updateHistory($id){
     $message = $_POST['history'];
 
     global $manager;
-    $manager->fetchReports();
+    // $manager = new Team('Stradale1@a','Francavilla Fontana');   
+    // $manager->fetchReports();
+    // var_dump($manager);
     
     if($manager->updateHistoryOfReport($id,$message)){
         reply(MessageSuccess::UpdateHistory,false);
@@ -236,17 +231,32 @@ function getTeams(){
     reply('',false,$manager->serializeTeams());
 }
 
-function getAllReports(){ 
+function getAllReports($city = null){ 
+    // var_dump(urldecode($city));
+    // die();
     global $manager;
+    // var_dump($manager->getCity());
     if(isset($manager)){
-        $manager->fetchReports();
-        reply('',false,$manager->serializeReports());
+
+        // Se true vi è almeno un report in quella città
+        if($manager->fetchReports()){
+            reply('',false,$manager->serializeReports());
+        }
+        else{
+            reply(MessageError::FetchReports,true);
+        }
     }
     else{
+        
+        $city = urldecode($city);
         $ente = new Ente('');
-        $ente->fetchReports();
         // var_dump($ente->reports);die();
-        reply('',false,$ente->serializeReports());
+        if($ente->fetchReports($city)){
+            reply('',false,$ente->serializeReports());
+        }
+        else{
+            reply(MessageError::FetchReports,true);
+        }
     }
 }
 
@@ -291,16 +301,38 @@ function changeTeamName(){
 function deleteTeam(){
     global $manager;
     // $manager = new Ente('');
-    // $manager->fetchTeams();
-    
+    // echo var_dump($manager);die();
     
     reply(MessageSuccess::DeleteTeam,false, $manager->deleteTeam($_POST['team']));
 
 }
 
-$getListOfTeams_handler     = 'getListOfTeams';
-$getReportsByCity_handler   = 'getReportsByCity';
-$getReportsByTeam_handler   = 'getReportsByTeam';
+function newTypeReport(){
+    global $manager;
+    // $manager = new Ente('ente@a');
+    $data = $_POST;
+    // $manager->fetchReports();
+    if($manager->newTypeReport($data)){
+        reply(MessageSuccess::TypeReportAdded,false);
+    }
+    else{
+        reply(MessageError::TypeReportNotAdded,true);
+    }
+}
+
+function deleteTypeReport(){
+    global $manager;
+    // $manager = new Ente('ente2@a');
+    $manager->fetchReports();
+    $data = $_POST;
+    if($manager->deleteTypeReport($data)){
+        reply("Tipologia '{$data['name']}' rimossa con successo",false);
+    }
+    else{
+        reply(MessageError::TypeReportNotDeleted,true);
+    }
+}
+
 $getReports_handler         = 'getReports';
 $getReportById_handler      = 'getReportById';
 $getPhotosOfReport_handler  = 'getPhotosOfReport';
@@ -318,4 +350,6 @@ $newTeam_handler            = 'newTeam';
 $changeTeamName_handler     = 'changeTeamName';
 $deleteTeam_handler         = 'deleteTeam';
 $getListTypeOfReport_handler= 'getListTypeOfReport';
+$newTypeReport_handler      = 'newTypeReport';
+$deleteTypeReport_handler   = 'deleteTypeReport';
 ?>

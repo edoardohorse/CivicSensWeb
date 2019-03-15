@@ -39,11 +39,11 @@ function showReportFinished(){
 }
 
 function disable(el){
-    el.style.display ="none"
+    el.classList.add('disabled')
 }
 
 function enable(el){
-    el.style.display ="block"
+    el.classList.remove('disabled')
 }
 
 
@@ -74,6 +74,8 @@ function showReportsEnte(el){
     document.querySelector('#list__report__wrapper').classList.remove('list--hide')
     try{
         document.querySelector('#list__team__wrapper').classList.add('list--hide')
+        document.querySelector('#list__type-report__wrapper').classList.add('list--hide')
+        
     }
     catch{
 
@@ -82,6 +84,7 @@ function showReportsEnte(el){
 
     try{
         ente.hideTeamRecap()
+        ente.hideTypeRecap()
     }
     catch{}
 
@@ -98,10 +101,30 @@ function showTeamsEnte(el){
 
     document.querySelector('#list__team__wrapper').classList.remove('list--hide')
     document.querySelector('#list__report__wrapper').classList.add('list--hide')
+    document.querySelector('#list__type-report__wrapper').classList.add('list--hide')
     managerDet.hide();
 
     manager.hideReportRecap()
+    ente.hideTypeRecap();
     ente.showTeamRecap()
+    document.querySelector('#nav__side > form > input[type="submit"]').classList.add('push--up')
+}
+
+function showEditTypeReport(el){
+    hideNavSide()
+
+    document.querySelector('#list__type-report__wrapper').classList.remove('list--hide')
+    if(el){
+        document.querySelector('p.selected').classList.remove('selected')
+        el.classList.add('selected')
+    }
+    document.querySelector('#list__team__wrapper').classList.add('list--hide')
+    document.querySelector('#list__report__wrapper').classList.add('list--hide')
+    managerDet.hide();
+
+    manager.hideReportRecap()
+    ente.hideTeamRecap()
+    ente.showTypeRecap()
     document.querySelector('#nav__side > form > input[type="submit"]').classList.add('push--up')
 }
 
@@ -151,6 +174,8 @@ function adjustFilter(select){
 
     
 }
+
+
 
 vex.dialog.buttons.YES.text = 'Ok'
 vex.dialog.buttons.NO.text = 'Annulla'

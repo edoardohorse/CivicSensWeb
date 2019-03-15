@@ -10,8 +10,9 @@
         
     
     <aside id="nav__side">
-        <p class="selected" onclick="showReportsEnte(this)">Segnalazioni</p>
-        <p onclick="showTeamsEnte(this)">Team</p>
+        <p class="selected" onclick="showReportsEnte(this)" >Segnalazioni</p>
+        <p                  onclick="showTeamsEnte(this)"   >Team</p>
+        <p                  onclick="showEditTypeReport(this)"   >Tipo report</p>
         <form action="../php/destroy.php">
             <input type="submit" value="Esci">
         </form>
@@ -45,21 +46,32 @@
     <main class="list__wrapper list--hide" id="list__team__wrapper">
         
     </main>
+    
+    <main class="list__wrapper list--hide" id="list__type-report__wrapper">
+        
+    </main>
 
     <main id="overlay"></main>
 
     <footer>
-        <div class="report__recap">
-            <span class="report__recap__text"></span>
-            <div class="report__recap__actions">
+        <div class="recap" id="report__recap">
+            <span class="recap__text"></span>
+            <div class="recap__actions">
                 <button >Elimina selezionate</button>
             </div>
         </div>
 
-        <div class="team__recap">
-            <span class="team__recap__text"></span>
-            <div class="team__recap__actions">
+        <div class="recap" id="team__recap">
+            <span class="recap__text"></span>
+            <div class="recap__actions">
                 <button >Nuovo team</button>
+            </div>
+        </div>
+        <div class="recap" id="type__recap">
+            <span class="recap__text"></span>
+            <div class="recap__actions">
+                <button id="addTypeReport">Aggiungi tipo</button>
+                <button id="removeTypeReport">Rimuovi tipo</button>
             </div>
         </div>
     </footer>
