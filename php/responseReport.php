@@ -338,8 +338,8 @@ function newTypeReport(){
 }
 
 function deleteTypeReport(){
-    global $conn;
-    $manager = new Ente('ente2@a');
+    global $manager;
+    // $manager = new Ente('ente2@a');
     $manager->fetchReports();
     $data = $_POST;
     if($manager->deleteTypeReport($data)){
