@@ -15,4 +15,6 @@ $stmt->bind_param("ssss",
                     $_POST['city']);
 $stmt->execute();
 
+
+header('location: ../index.html');
 ?>
