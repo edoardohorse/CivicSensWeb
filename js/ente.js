@@ -134,7 +134,7 @@ class Ente extends Admin{
                 searchType.innerHTML = ""
                 newEl('option,,, value="ALL" textContent="Tutti"',searchType)
                 this.listTypeReport.forEach((type)=>{
-                    newEl(`option,,, value="${type}" textContent="${type}"`, searchType)
+                    newEl(`option,,, value="${type.name}" textContent="${type.name}"`, searchType)
                     
                 })
 
