@@ -326,8 +326,9 @@ function deleteTeam(){
 
 function newTypeReport(){
     global $manager;
-    $manager = new Ente('ente2@a');
+    // $manager = new Ente('ente@a');
     $data = $_POST;
+    // $manager->fetchReports();
     if($manager->newTypeReport($data)){
         reply(MessageSuccess::TypeReportAdded,false);
     }

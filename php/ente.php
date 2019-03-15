@@ -63,7 +63,7 @@ class Ente extends Admin{
         // $this->teams = [];
         $this->reports = [];
         $stmt = $conn->prepare(QUERY_REPORT_BY_ENTE);
-        $stmt->bind_param("s", $city);
+        $stmt->bind_param("ss", $city, $this->email);
         $stmt->execute();
         $res = $stmt->get_result();
         while($row = $res->fetch_assoc()){
@@ -227,7 +227,10 @@ class Ente extends Admin{
 
     public function newTypeReport($data){
         global $conn;
+       
+
         $name = $data['name'];
+       
         
 
         $stmt = $conn->prepare(QUERY_ADD_TYPE_REPORT);
