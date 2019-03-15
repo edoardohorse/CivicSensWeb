@@ -97,10 +97,10 @@ class Ente extends Admin{
     }
 
     public function deleteTeam($nameTeamToDelete){
-
-        // var_dump($nameTeamToDelete);
+        $this->fetchReports();
+        
         $teamToDelete = array_filter($this->teams, function($t) use($nameTeamToDelete){return $t->getName() == $nameTeamToDelete;});
-        // var_dump($teamToDelete);
+        // echo var_dump($this->teams);die();
 
         $teamToDelete = $teamToDelete[array_keys($teamToDelete)[0]];
 
@@ -124,7 +124,7 @@ class Ente extends Admin{
         //var_dump($nReportToAssign);
         // var_dump($list);
         $list = distributeInteger($list,$nReportToAssign);
-        //var_dump($list);
+        // var_dump($list);
 
         foreach($list as $name=>$value){
             if($nReportToAssign <= 0){
@@ -171,7 +171,7 @@ class Ente extends Admin{
 
         global $conn;
         $stmt = $conn->prepare(QUERY_DELETE_TEAM);
-        $stmt->bind_param("s",$nameTeamToDelete);
+        $stmt->bind_param("ss",$nameTeamToDelete, $this->city);
         $stmt->execute();
 
         return $list;

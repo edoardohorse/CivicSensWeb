@@ -301,8 +301,7 @@ function changeTeamName(){
 function deleteTeam(){
     global $manager;
     // $manager = new Ente('');
-    // $manager->fetchTeams();
-    
+    // echo var_dump($manager);die();
     
     reply(MessageSuccess::DeleteTeam,false, $manager->deleteTeam($_POST['team']));
 
