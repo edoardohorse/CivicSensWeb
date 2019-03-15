@@ -133,8 +133,8 @@ function getHistoryOfReport($id){
 
 function editTeam($id){    
     global $manager;
-    $manager  = new Ente('ente2@a');
-    $manager->fetchTeams();
+    // $manager  = new Ente('ente2@a');
+    // $manager->fetchTeams();
     $manager->fetchReports();
     $newTeam = $_POST['team'];
 
@@ -186,8 +186,8 @@ function updateHistory($id){
     $message = $_POST['history'];
 
     global $manager;
-    $manager = new Team('Stradale1@a','Francavilla Fontana');   
-    $manager->fetchReports();
+    // $manager = new Team('Stradale1@a','Francavilla Fontana');   
+    // $manager->fetchReports();
     // var_dump($manager);
     
     if($manager->updateHistoryOfReport($id,$message)){
@@ -247,6 +247,7 @@ function getAllReports($city = null){
         }
     }
     else{
+        
         $city = urldecode($city);
         $ente = new Ente('');
         // var_dump($ente->reports);die();

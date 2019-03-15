@@ -300,13 +300,12 @@ class Report{
         }
     }
     
-    public function updateHistory($message){
+    public function updateHistory($message, $idTeam){
         global $conn;
 
-        var_dump($message, $this->id, $this->team, $this->city);
         $stmt = $conn->prepare(QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM);
-        $stmt->bind_param("siss",$message, $this->id, $this->team, $this->city);
-        $stmt->execute();
+        $stmt->bind_param("sii",$message, $this->id, $idTeam);
+        $stmt->execute();    
         if($stmt->affected_rows > 0){
             $this->fetchInfo();
             return true;

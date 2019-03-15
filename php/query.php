@@ -9,7 +9,6 @@ const QUERY_REPORT_BY_ENTE =  QUERY_HEADER_REPORT."
                                     AND r.type_report   = t.id
                                     AND r.team          = tm.id
                                     AND u.city          = ?
-                                    AND u.email         = ?
                                    
                                 GROUP BY r.id
                                 ORDER BY r.state DESC, r.date DESC";
@@ -103,12 +102,7 @@ const QUERY_ADD_HISTORY_REPORT = "INSERT INTO history_report(note,team,date,repo
 
 const QUERY_ADD_HISTORY_REPORT_BY_NAME_TEAM = 
                                 "INSERT INTO history_report(note,report,date,team)
-                                    VALUES ( ? , ? ,NOW() , (
-                                        SELECT id
-                                            FROM team
-                                            WHERE name = ?
-                                            AND   user = (SELECT email FROM user WHERE city = ? AND type = 'Team')
-                                        )";
+                                    VALUES ( ? , ? ,NOW() , ?)";
 
 const QUERY_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
 

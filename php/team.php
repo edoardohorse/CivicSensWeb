@@ -77,9 +77,9 @@ class Team extends Admin{
 
     public function updateHistoryOfReport($id, $message){
         $report = $this->getReportFromId($id);
-        var_dump($report);
+        
         if($report->getState() == ReportState::InCharge)
-            return $report->updateHistory($message);
+            return $report->updateHistory($message, $this->id);
     }
 
     public function changeName($newName){
