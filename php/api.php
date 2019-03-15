@@ -156,7 +156,7 @@
 
     // ==== TEAM Requests
         // [GET]
-            new Request('GET','report/team/{#}',        $getReportsByTeam_handler,      Permission::Team,   $request);          // api/report/team/{nameTeam}
+            new Request('GET','report/team/{#}',        $getAllReports_handler,      Permission::Team,   $request);          // api/report/team/{nameTeam}
         
         // [POST]
             new Request('POST','report/{#}/state',      $editState_handler,             Permission::Team,   $request);  // api/report/{id}/state  => editState [POST] {newState}
