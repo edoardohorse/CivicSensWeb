@@ -28,6 +28,12 @@ class Ente extends Admin{
                 col     :12,
             },
             {
+                label   :'Email',
+                content :newEl('span, team__email'),
+                divided :true,
+                col     :12,
+            },
+            {
                 label   :'Numero membri',
                 content :newEl('span,team__member'),
                 divided :true,
@@ -88,7 +94,7 @@ class Ente extends Admin{
                 // this.typeReports = result.map(t=>t.name)
                 for(let team of result.data){
                     // debugger
-                    this.teams.push( new Team(team.name, team.nMember, team.typeReport, team.nReport) )
+                    this.teams.push( new Team(team.name, team.nMember, team.typeReport, team.nReport, team.email) )
                     
                 }
 
@@ -458,9 +464,11 @@ class Ente extends Admin{
         
         let teamMember          = document.getElementById('team__member')
         let teamType            = document.getElementById('team__type')
+        let teamEmail            = document.getElementById('team__email')
 
         teamType.textContent    = team.typeReport
         teamMember.textContent  = team.nMember
+        teamEmail.textContent  = team.email
       
         // console.log(team)
     }

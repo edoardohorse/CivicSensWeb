@@ -85,7 +85,7 @@ class Team extends Admin{
     public function changeName($newName){
         global $conn;
         
-        $email = $newName.Ente::DOMAIN;
+        $email = $newName.Ente::getDomain($this->city);
         $id = $this->id;
         
         
@@ -112,7 +112,8 @@ class Team extends Admin{
         return array('nMember'=> $this->nMember,
                     'name'=>$this->name,
                     'typeReport'=>$this->typeReport,
-                    'nReport'=>$this->n_report);
+                    'nReport'=>$this->n_report,
+                    'email'=>$this->email);
     }
 
     public function serializeReports(){

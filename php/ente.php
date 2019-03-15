@@ -10,22 +10,24 @@ class Ente extends Admin{
 
     public $reports = array();
     public $teams = array();
-
-    const DOMAIN = '@a';
+    private $domain;
+    
+    static function getDomain($city){return "@".strtolower($city);}
 
     public function __construct($name, $city = null){
         $this->email = $name;
         if($city == null){
             global $conn;
-
+            
             $stmt = $conn->prepare(QUERY_FETCH_CITY_FROM_ENTE);
             $stmt->bind_param("s", $this->email);
             $stmt->bind_result($city);
             $stmt->execute();
             $stmt->fetch();
-
+            
             $this->city = $city;
         }
+        $this->domain = Ente::getDomain($this->city);
         parent::__construct($name, $city);
 
         // $this->fetchTeams();
@@ -182,7 +184,7 @@ class Ente extends Admin{
     // param data.member, data.name, data.type
     public function newTeam($data){
         global $conn;
-        $email = $data['name'].Ente::DOMAIN;       // TODO: Gestire email
+        $email = $data['name'].Ente::getDomain($this->city);       // TODO: Gestire email
         $pass = MD5($data['pass']);
         $member = (int)$data['member'];
         $nameTypeReport   = $data['type'];
