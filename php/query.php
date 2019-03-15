@@ -133,12 +133,14 @@ const QUERY_LOGIN             = "SELECT email, type, city, password FROM user WH
 
 const QUERY_ADD_TEAM          = "INSERT INTO team (name, type_report,n_member,user) VALUES ( ?, ? , ?, ?)";
 
-const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM team WHERE name = ?)";
+const QUERY_DELETE_TEAM       = "DELETE FROM user WHERE id = (SELECT user FROM team WHERE name = ? AND city = ?)";
 
 const QUERY_LIST_TYPE_REPORT  = "SELECT * FROM type_report WHERE user = 
                                     (SELECT email FROM user WHERE city = ? AND type = 'Ente')";
 
-const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE name=?";
+const QUERY_CHANGE_NAME_TEAM = "UPDATE team SET name=? WHERE id=?";
+
+const QUERY_CHANGE_EMAIL_TEAM = "UPDATE user SET email= ? WHERE id = (SELECT id FROM team WHERE id = ?);";
 
 const QUERY_ADD_TYPE_REPORT     = "INSERT INTO type_report (name, user) VALUES ( ?, (SELECT email FROM user WHERE city = ? AND type = 'Ente'))";
 

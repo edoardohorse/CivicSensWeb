@@ -84,9 +84,18 @@ class Team extends Admin{
 
     public function changeName($newName){
         global $conn;
-       
+        
+        $email = $newName.Ente::DOMAIN;
+        $id = $this->id;
+        
+        
         $stmt = $conn->prepare(QUERY_CHANGE_NAME_TEAM);
-        $stmt->bind_param('ss', $newName, $this->name);
+        $stmt->bind_param('si',$newName,$id);
+        $stmt->execute();
+
+        $stmt = $conn->prepare(QUERY_CHANGE_EMAIL_TEAM);
+        $stmt->bind_param('si',$email,$id);
+        
         $stmt->execute();
 
         if($stmt->affected_rows > 0){
