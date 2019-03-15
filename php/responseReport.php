@@ -40,24 +40,7 @@ function reply($message, $isInError, $data = null){
 }
 
 
-function getReportsByCity($city){
-    global $conn;
-   
-    $stmt = $conn->prepare(QUERY_REPORT_BY_CITY);
-    $stmt->bind_param("s",$city);
-    
-    $result = getReports($stmt);
 
-    reply(MessageSuccess::NoMessage,false,$result);
-
-}
-
-function getReportsByTeam($teamName){
-    global $manager;
-    $manager->fetchReports();
-    reply(MessageSuccess::NoMessage,false,$manager->serializeReports());
-
-}
 
 function getReports($stmt){
     global $conn;
@@ -350,8 +333,6 @@ function deleteTypeReport(){
     }
 }
 
-$getReportsByCity_handler   = 'getReportsByCity';
-$getReportsByTeam_handler   = 'getReportsByTeam';
 $getReports_handler         = 'getReports';
 $getReportById_handler      = 'getReportById';
 $getPhotosOfReport_handler  = 'getPhotosOfReport';

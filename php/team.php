@@ -53,8 +53,14 @@ class Team extends Admin{
         $stmt->execute();
         $result = $stmt->get_result();
         while($row = $result->fetch_assoc()){
-            $this->reports[ $row['id'] ] = new Report($row);
+            $report = new Report( $row );
+            array_push( $this->reports, $report);  
         }
+
+        if(count($this->reports) > 0)
+            return true;
+        
+        return false;
 
         // var_dump($this->reports);
     }
