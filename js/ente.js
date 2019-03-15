@@ -243,7 +243,7 @@ class Ente extends Admin{
 
     deleteTeam(){
 
-        // debugger
+        
         let teamToDelete = this.teamsLastSelected
         let listTeamsByType = this.teams.filter(t=>{ return teamToDelete != t? t.typeReport == teamToDelete.typeReport: false})
         // let form = newEl('div')
@@ -255,6 +255,13 @@ class Ente extends Admin{
         //                 value:listNameTeams
         //             })
         //         )
+
+        if(listTeamsByType.length == 0 && teamToDelete.nReport > 0){
+            vex.dialog.alert({
+                message: 'Non puoi eliminare l\'unico team se ha report associati',
+            })
+            return 
+        }
 
         vex.dialog.confirm({
             message:'Sicuro di voler eliminare il team definitivamente?',
