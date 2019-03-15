@@ -520,9 +520,19 @@ class Ente extends Admin{
         
         let reportToDelete =manager.reportLastSelected
 
-        reportToDelete.tmpHub.onsuccess = this.fetchInfo.bind(this)
-        reportToDelete.deleteReport();
+        vex.dialog.confirm({
+            message:'Sicuro di voler eliminare il report definitivamente?',
+            callback:function(data){
+                if(data){
+                    reportToDelete.tmpHub.onsuccess = this.fetchInfo.bind(this)
+                    reportToDelete.deleteReport();
+            
+                    managerDet.hide();
+                }
+            }.bind(this)
+        })
+        
 
-        managerDet.hide();
+        
     }
 }
