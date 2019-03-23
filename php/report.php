@@ -216,13 +216,27 @@ class Report{
                 </body>
             </html>
             ";
-    
-        $headers[] = 'MIME-Version: 1.0';
-        $headers[] = 'Content-type: text/html; charset=utf-8';
-    
-        $headers[] = 'From: Team GERCS <civicsens@altervista.org>';
-    
-        mail($to,$subject,$message, implode("\r\n", $headers));
+
+
+        $siteEmailAddress = "civicsens@altervista.org"; 
+        $headers = "";  
+        $headers .= "From: ".$siteEmailAddress."\r\n";  
+        $headers .= "Reply-To: ".$siteEmailAddress."\r\n";  
+        $headers .= "X-Mailer: PHP/".phpversion();  
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=utf-8\r\n";  
+        
+
+        if (!mail($to, $subject, $message, $headers)){  
+            $lOk = false;  
+            $description = "Invio mail fallito";  
+            $mailSendFail = true;  
+        }  
+        else{  
+            $lOk = true;  
+            $description = "Invio mail eseguito";  
+        } 
+    // echo $description; 
         
 
     }

@@ -1,5 +1,5 @@
-Il prototipo di navigazione è stato realizzato con Axure, grazie alla licenza per studenti. 
-In mancanza del software Axure è possibile aprire il prototipo dalla cartella Prototipo di navigazione/start.html.
+Il prototipo funzionale è stato realizzato con Axure, grazie alla licenza per studenti. 
+In mancanza del software Axure è possibile aprire il prototipo dalla cartella Prototipo funzionale/start.html.
 Si sconsiglia l'utilizzo di Google Chrome, in quanto nemmeno con l'enstensione è possibile visualizzare il prototipo e si consiglia l'utilizzo di:
 - Edge;
 - Mozilla Firefox.
