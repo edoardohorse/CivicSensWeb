@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProjectTreeState projectID=".2jSluaGAqACtQDr" projectPath="C:\Users\Megafusto\Desktop\CivicSensWeb\documentazione\redmine\UML Sprint 1\Modelli.vpp">
 	<TreeState name="ModelRepository" viewX="0" viewY="0"/>
-	<TreeState name="DiagramNavigator" viewX="0" viewY="0">
+	<TreeState name="DiagramNavigator" viewX="0" viewY="108">
 		<ExpandedPath>DiagramNavigator</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,UML Diagrams</ExpandedPath>
 		<ExpandedPath>UseCaseDiagram</ExpandedPath>
@@ -9,7 +9,7 @@
 		<ExpandedPath>InteractionDiagram</ExpandedPath>
 		<ExpandedPath>ComponentDiagram</ExpandedPath>
 		<ExpandedPath>DeploymentDiagram</ExpandedPath>
-		<SelectedPath>InteractionDiagram,XMYmseaGAqACtRLV</SelectedPath>
+		<SelectedPath>ComponentDiagram,P2PGg.aFYGhKyDkG</SelectedPath>
 	</TreeState>
 	<TreeState name="ClassBrowser" viewX="0" viewY="0"/>
 	<TreeState name="LogicalView" viewX="0" viewY="0"/>
