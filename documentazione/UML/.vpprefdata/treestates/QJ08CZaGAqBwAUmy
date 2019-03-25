@@ -5,9 +5,9 @@
 		<ExpandedPath>DiagramNavigator</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,UML Diagrams</ExpandedPath>
 		<ExpandedPath>UseCaseDiagram</ExpandedPath>
+		<ExpandedPath>ClassDiagram</ExpandedPath>
 		<ExpandedPath>InteractionDiagram</ExpandedPath>
 		<ExpandedPath>ComponentDiagram</ExpandedPath>
-		<SelectedPath>UseCaseDiagram,Kwy1luaGAqACtQ2s</SelectedPath>
 	</TreeState>
 	<TreeState name="ClassBrowser" viewX="0" viewY="0"/>
 	<TreeState name="LogicalView" viewX="0" viewY="0"/>
