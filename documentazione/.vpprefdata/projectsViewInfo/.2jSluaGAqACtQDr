@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProjectsViewInfo>
-	<DiagramOpenInfos activeDiagramId="j7yKg.aFYGhKyCAy">
-		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="P2PGg.aFYGhKyDkG" maximized="false" offsetX="0" offsetY="0"/>
+	<DiagramOpenInfos activeDiagramId="P2PGg.aFYGhKyDkG">
+		<Info bounds="Re:0.0,0.0,1534.0,590.0" diagramId="P2PGg.aFYGhKyDkG" maximized="true" offsetX="0" offsetY="0"/>
 		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="FUO_MeaGAqACtQ5T" maximized="false" offsetX="0" offsetY="0"/>
-		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="j7yKg.aFYGhKyCAy" maximized="true" offsetX="0" offsetY="0"/>
+		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="j7yKg.aFYGhKyCAy" maximized="false" offsetX="0" offsetY="0"/>
+		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="U3d4VZaGAqBwAdpv" maximized="false" offsetX="0" offsetY="120"/>
+		<Info bounds="Re:0.0,0.0,1323.0,590.0" diagramId="kuz4VZaGAqBwAdu9" maximized="false" offsetX="0" offsetY="0"/>
 	</DiagramOpenInfos>
 </ProjectsViewInfo>
